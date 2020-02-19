@@ -13,8 +13,7 @@ if user_choice == 1
   puts 'Введите название станции'
   station_name = gets.chomp
   @new_station = Station.new(station_name)
-else
-  elsif user_choice == 2
+elsif user_choice == 2
   puts 'Введите тип поезда'
   train_type = gets.chomp.to_s
   if train_type == 'cargo'
