@@ -1,10 +1,8 @@
 class Train
   attr_reader :id, :wagons, :current_station
 
-  def initialize (id, wagons)
+  def initialize (id)
     @id = id
-    # нужно придумать отностиельно вагонов при инициализации поезда 
-    # @wagons = wagons
     @speed = 0
   end
 
