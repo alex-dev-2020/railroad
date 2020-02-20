@@ -21,9 +21,9 @@ elsif user_choice == 2
   puts 'Введите тип поезда'
   train_type = gets.chomp.to_s
   if train_type == 'cargo'
-    new_train = PassTrain.new
-  else
     new_train = CargoTrain.new
+  else
+    new_train = PassTrain.new
   end
 end
 
