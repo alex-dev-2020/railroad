@@ -1,0 +1,4 @@
+class PassTrain < Train
+
+
+end
