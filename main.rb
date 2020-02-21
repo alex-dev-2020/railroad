@@ -9,21 +9,39 @@ require_relative 'cargo_wagon'
 
 
 # Создать программу в файле main.rb, которая будет позволять пользователю через текстовый интерфейс делать следующее:
-puts "Главное меню :"
-puts " 1.Создать станцию \n 2.Создать поезд \n 3.Создать маршрут и управлять станциями в нем (добавить, удалить) \n 4.Назначить маршрут поезду \n 5.Добавить вагоны к поезду \n 6.Отцепить вагоны от поезда \n 7.Переместить поезд по маршруту вперед и назад \n 8.Просмотреть список станций и список поездов на станции\n"
+class Railroad
 
-user_choice = gets.chomp.to_i
-if user_choice == 1
-  puts 'Введите название станции'
-  station_name = gets.chomp
-  @new_station = Station.new(station_name)
-elsif user_choice == 2
-  puts 'Введите тип поезда'
-  train_type = gets.chomp.to_s
-  if train_type == 'cargo'
-    new_train = CargoTrain.new
-  else
-    new_train = PassTrain.new
+
+  attr_reader :stations, :routes, :trains
+
+  def initialize
+    @stations = []
+    @routes = []
+    @trains = []
+  end
+
+  puts "Главное меню :"
+  puts " 1.Создать станцию \n 2.Создать поезд \n 3.Создать маршрут и управлять станциями в нем (добавить, удалить) \n 4.Назначить маршрут поезду \n 5.Добавить вагоны к поезду \n 6.Отцепить вагоны от поезда \n 7.Переместить поезд по маршруту вперед и назад \n 8.Просмотреть список станций и список поездов на станции\n"
+
+  user_choice = gets.chomp.to_i
+  if user_choice == 1
+    puts 'Введите название станции'
+    station_name = gets.chomp.to_s
+    new_station = Station.new(station_name)
+    # only for test purspose
+    puts new_station.name
+    # @stations <<  new_station
+  elsif user_choice == 2
+    puts 'Введите тип поезда'
+    train_type = gets.chomp.to_s
+    puts 'Введите номер поезда'
+    train_name = gets.chomp.to_s
+    if train_type == 'cargo'
+      new_train = CargoTrain.new(train_name)
+    else
+      new_train = PassTrain.new(train_name)
+    end
+    # only for test purspose
+    puts new_train
   end
 end
-
