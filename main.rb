@@ -14,11 +14,11 @@ class Railroad
 
   attr_reader :stations, :routes, :trains
 
-  def initialize
-    @stations = []
-    @routes = []
-    @trains = []
-  end
+
+  @stations = []
+  @routes = []
+  @trains = []
+
 
   puts "Главное меню :"
   puts " 1.Создать станцию \n 2.Создать поезд \n 3.Создать маршрут и управлять станциями в нем (добавить, удалить) \n 4.Назначить маршрут поезду \n 5.Добавить вагоны к поезду \n 6.Отцепить вагоны от поезда \n 7.Переместить поезд по маршруту вперед и назад \n 8.Просмотреть список станций и список поездов на станции\n"
@@ -30,7 +30,8 @@ class Railroad
     new_station = Station.new(station_name)
     # only for test purspose
     puts new_station.name
-    # @stations <<  new_station
+    @stations <<  new_station
+    puts @stations
   elsif user_choice == 2
     puts 'Введите тип поезда'
     train_type = gets.chomp.to_s
@@ -43,6 +44,8 @@ class Railroad
     end
     # only for test purspose
     puts new_train
+    @trains << new_train
+    puts @trains
   elsif user_choice == 3
     puts 'Введите название первой станции маршрута'
     first_station_ = gets.chomp.to_s
@@ -51,5 +54,11 @@ class Railroad
     new_route = Route.new(first_station_, last_station_)
     # only for test purspose
     puts new_route.stations
+    @routes << new_route
+    puts @routes
+  elsif user_choice == 4
+    #n 4.Назначить маршрут поезду
+    #  нужно вывести список текущих маршрутов
+     puts @routes
   end
 end
