@@ -1,8 +1,8 @@
 class Train
-  attr_reader :id, :current_station
+  attr_reader :name, :current_station
 
-  def initialize (id)
-    @id = id
+  def initialize (name)
+    @name = name
     @speed = 0
   end
 
