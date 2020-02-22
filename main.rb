@@ -46,7 +46,18 @@ elsif user_choice == '3'
   my_railroad.routes << new_route
 elsif user_choice == '4'
   #n 4.Назначить маршрут поезду
+  # Нужно вывести список текущих поездов
+  puts 'Список существующих поездов:'
+  my_railroad.trains.each_index { |index| print index + 1, ' ', my_railroad.trains.at(index), puts }
+  puts "\nВведите номер  нужного поезда "
+  accepting_train_index = gets.chomp.to_i - 1
+  accepting_train = my_railroad.routes.at(accepting_train_index)
+  puts accepting_train
   #  нужно вывести список текущих маршрутов
   puts 'Список текущих маршрутов:'
   my_railroad.routes.each_index { |index| print index + 1, ' ', my_railroad.routes.at(index), puts }
+  puts "\nВведите номер требуемого маршрута"
+  accepted_route_index = gets.chomp.to_i - 1
+  accepted_route = my_railroad.routes.at(accepted_route_index)
+  puts accepted_route
 end

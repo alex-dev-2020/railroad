@@ -13,7 +13,7 @@ class Railroad
 
   def initialize
     @stations = ['just for test']
-    @routes = ['just for fun']
-    @trains = ['just for luls']
+    @routes = ['just for fun', 'just for test', 'just for luls']
+    @trains = ['just for luls', 'just for test', 'just for fun']
   end
 end
