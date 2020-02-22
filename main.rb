@@ -37,17 +37,13 @@ elsif user_choice == '2'
     new_train = PassTrain.new(train_name)
   end
   my_railroad.trains << new_train
-elsif user_choice == 3
+elsif user_choice == '3'
   puts 'Введите название первой станции маршрута'
-  first_station_ = gets.chomp.to_s
+  first_station = gets.chomp.to_s
   puts 'Введите название последней станции маршрута'
-  last_station_ = gets.chomp.to_s
-  new_route = Route.new(first_station_, last_station_)
-  # only for test purspose
-  puts new_route.stations
-  # нужно реализовать добавление/удаление станций из маршрута
-  @@routes << new_route
-  puts @@routes
+  last_station = gets.chomp.to_s
+  new_route = Route.new(first_station, last_station)
+  my_railroad.routes << new_route
 elsif user_choice == 4
   #n 4.Назначить маршрут поезду
   #  нужно вывести список текущих маршрутов
