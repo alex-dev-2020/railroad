@@ -19,4 +19,10 @@ class Train
     @speed = 0
   end
 
+  def accept_route(route)
+    @route = route
+    @current_station = @route.stations.first
+    @current_station_index = @route.stations.index(@current_station)
+    @current_station.train_in(self)
+  end
 end
