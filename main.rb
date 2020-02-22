@@ -48,7 +48,5 @@ elsif user_choice == '4'
   #n 4.Назначить маршрут поезду
   #  нужно вывести список текущих маршрутов
   puts 'Список текущих маршрутов:'
-  puts my_railroad.routes
-  routes_index = my_railroad.routes.index
-  print routes_index
+  my_railroad.routes.each_index { |index| print index + 1, ' ', my_railroad.routes.at(index), puts }
 end
