@@ -44,9 +44,11 @@ elsif user_choice == '3'
   last_station = gets.chomp.to_s
   new_route = Route.new(first_station, last_station)
   my_railroad.routes << new_route
-elsif user_choice == 4
+elsif user_choice == '4'
   #n 4.Назначить маршрут поезду
   #  нужно вывести список текущих маршрутов
-  puts @@routes
-  routes_index = @@routes.index
+  puts 'Список текущих маршрутов:'
+  puts my_railroad.routes
+  routes_index = my_railroad.routes.index
+  print routes_index
 end
