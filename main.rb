@@ -52,7 +52,7 @@ elsif user_choice == '4'
   # Нужно вывести список текущих поездов
   puts 'Список существующих поездов:'
   my_railroad.trains.each_index { |index| print index + 1, ' ', my_railroad.trains.at(index), puts }
-  puts "\nВведите номер  нужного поезда "
+  puts "\nВведите номер нужного поезда "
   accepting_train_index = gets.chomp.to_i - 1
   accepting_train = my_railroad.trains.at(accepting_train_index)
   #  only for test purpose
@@ -68,4 +68,27 @@ elsif user_choice == '4'
   accepting_train.accept_route(accepted_route)
   #  only for test purpose
   puts accepting_train.current_station.name
+elsif user_choice == '5'
+  #n 5.Добавить  вагоны к поезду
+  # Нужно вывести список текущих поездов
+  puts 'Список существующих поездов:'
+  my_railroad.trains.each_index { |index| print index + 1, ' ', my_railroad.trains.at(index), puts }
+  puts "\nВведите номер нужного поезда "
+  accepting_train_index = gets.chomp.to_i - 1
+  # определяем объект выбранный пользователем
+  accepting_train = my_railroad.trains.at(accepting_train_index)
+  # определяем класс объекта выбранного пользователем
+  accepting_train_class = my_railroad.trains.at(accepting_train_index).class
+  # ветвление
+  if accepting_train_class == CargoTrain
+    wagon = CargoWagon.new
+    accepting_train.add_wagon(wagon)
+  elsif accepting_train_class == PassTrain
+    wagon = PassWagon.new
+    accepting_train.add_wagon(wagon)
+  end
+  #  only for test purpose
+  # puts accepting_train_class
+  #  only for test purpose
+  print accepting_train.wagons
 end

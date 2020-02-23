@@ -1,9 +1,11 @@
 class Train
-  attr_reader :name, :current_station
+  attr_reader :name, :wagons, :current_station
 
   def initialize (name)
     @name = name
+    @wagons = []
     @speed = 0
+    # wagon_quantity.times { add_wagon }
   end
 
   def speed_up(delta)
@@ -17,6 +19,14 @@ class Train
 
   def stop
     @speed = 0
+  end
+
+  def add_wagon
+    @wagons += 1 if @speed == 0
+  end
+
+  def detach_wagon
+    @wagons -= 1 if @speed == 0 && wagons > 0
   end
 
   def accept_route(route)
