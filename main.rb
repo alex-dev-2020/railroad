@@ -54,7 +54,8 @@ elsif user_choice == '4'
   my_railroad.trains.each_index { |index| print index + 1, ' ', my_railroad.trains.at(index), puts }
   puts "\nВведите номер  нужного поезда "
   accepting_train_index = gets.chomp.to_i - 1
-  accepting_train = my_railroad.routes.at(accepting_train_index)
+  accepting_train = my_railroad.trains.at(accepting_train_index)
+  #  only for test purpose
   puts accepting_train
   #  нужно вывести список текущих маршрутов
   puts 'Список текущих маршрутов:'
@@ -62,5 +63,9 @@ elsif user_choice == '4'
   puts "\nВведите номер требуемого маршрута"
   accepted_route_index = gets.chomp.to_i - 1
   accepted_route = my_railroad.routes.at(accepted_route_index)
+  #  only for test purpose
   puts accepted_route
+  accepting_train.accept_route(accepted_route)
+  #  only for test purpose
+  puts accepting_train.current_station.name
 end
