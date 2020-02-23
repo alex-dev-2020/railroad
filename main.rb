@@ -12,7 +12,10 @@ require_relative 'cargo_wagon'
 # Создать программу в файле main.rb, которая будет позволять пользователю через текстовый интерфейс делать следующее:
 
 my_railroad = Railroad.new
-
+my_railroad.seed
+puts my_railroad.stations
+puts my_railroad.trains
+puts my_railroad.routes
 
 def main_menu
   puts "Главное меню :"
