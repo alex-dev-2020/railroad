@@ -51,7 +51,7 @@ elsif user_choice == '4'
   #n 4.Назначить маршрут поезду
   # Нужно вывести список текущих поездов
   puts 'Список существующих поездов:'
-  my_railroad.trains.each_index { |index| print index + 1, ' ', my_railroad.trains.at(index), puts }
+  my_railroad.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
   puts "\nВведите номер нужного поезда "
   accepting_train_index = gets.chomp.to_i - 1
   accepting_train = my_railroad.trains.at(accepting_train_index)
@@ -59,7 +59,7 @@ elsif user_choice == '4'
   puts accepting_train
   #  нужно вывести список текущих маршрутов
   puts 'Список текущих маршрутов:'
-  my_railroad.routes.each_index { |index| print index + 1, ' ', my_railroad.routes.at(index), puts }
+  my_railroad.routes.each.with_index(1) { |index, route| puts "#{route} #{index}" }
   puts "\nВведите номер требуемого маршрута"
   accepted_route_index = gets.chomp.to_i - 1
   accepted_route = my_railroad.routes.at(accepted_route_index)
@@ -72,7 +72,7 @@ elsif user_choice == '5'
   #n 5.Добавить  вагоны к поезду
   # Нужно вывести список текущих поездов
   puts 'Список существующих поездов:'
-  my_railroad.trains.each_index { |index| print index + 1, ' ', my_railroad.trains.at(index), puts }
+  my_railroad.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
   puts "\nВведите номер нужного поезда "
   accepting_train_index = gets.chomp.to_i - 1
   # определяем объект выбранный пользователем
@@ -95,7 +95,7 @@ elsif user_choice == '6'
   #п 6.Отцепить вагоны от поезда
   # Нужно вывести список текущих поездов
   puts 'Список существующих поездов:'
-  my_railroad.trains.each_index { |index| print index + 1, ' ', my_railroad.trains.at(index), puts }
+  my_railroad.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
   puts "\nВведите номер нужного поезда "
   donor_train_index = gets.chomp.to_i - 1
   # определяем объект выбранный пользователем
