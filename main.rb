@@ -125,5 +125,13 @@ elsif user_choice == '6'
 elsif user_choice == '8'
   # Вывод списка станций  - построчно
   my_railroad.stations.each.with_index(1) { |station, index| puts "#{index } #{station.name}" }
+  #  Нужно теперь реализовать выбор станции
+  puts "\nВведите номер станции"
+  selected_station_index = gets.chomp.to_i - 1
+  selected_station = my_railroad.stations.at(selected_station_index)
+  puts 'Выбрана станция:'
+  puts selected_station.name
+  puts 'Список поездов на станции:'
+  puts selected_station.trains
 end
 
