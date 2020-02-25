@@ -3,7 +3,7 @@ class Train
 
   def initialize (name)
     @name = name
-    @wagons = []
+    @wagons = ['zero_wagon','test_wagon']
     @speed = 0
     # wagon_quantity.times { add_wagon }
   end

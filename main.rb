@@ -102,5 +102,22 @@ elsif user_choice == '6'
   donor_train = my_railroad.trains.at(donor_train_index)
   # определяем класс объекта выбранного пользователем
   donor_train_class = my_railroad.trains.at(donor_train_index).class
+  puts donor_train_class
+  # Нужно вывести список вагонов выбранного поезда
+  print donor_train.wagons
+  donor_train.wagons.pop
+  # just for test
+  puts
+  puts 'Вагон отцеплен'
+  print donor_train.wagons
+  #  ветвление не нужно скорее всего, но нужен аргумент (wagon)
+  # if accepting_train_class == CargoTrain
+  #   wagon = CargoWagon.new
+  #   donor_train.detach_wagon(wagon)
+  # elsif accepting_train_class == PassTrain
+  #   wagon = PassWagon.new
+  #   donor_train.detach_wagon(wagon)
+  # end
+  # detach_wagon(wagon)
 end
 
