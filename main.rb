@@ -119,5 +119,11 @@ elsif user_choice == '6'
   #   donor_train.detach_wagon(wagon)
   # end
   # detach_wagon(wagon)
+  # 7.Переместить поезд по маршруту вперед и назад
+  #
+  # 8.Просмотреть список станций и список поездов на станции
+elsif user_choice == '8'
+  # Вывод списка станций  - построчно
+  my_railroad.stations.each.with_index(1) { |station, index| puts "#{index } #{station.name}" }
 end
 
