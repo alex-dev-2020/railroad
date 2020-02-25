@@ -120,9 +120,28 @@ elsif user_choice == '6'
   # end
   # detach_wagon(wagon)
   # 7.Переместить поезд по маршруту вперед и назад
+  elsif user_choice == '7'
+  # Нужно вывести список текущих поездов
+  puts 'Список существующих поездов:'
+  my_railroad.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
+  # определяем объект выбранный пользователем
+  puts "\nВведите номер нужного поезда "
+  selected_train_index = gets.chomp.to_i - 1
+  selected_train = my_railroad.trains.at(selected_train_index)
+  # just for test
+  puts 'Выбран поезд:'
+  puts selected_train
+  puts 'Выберите направление движения:'
+  puts '1-веперед, 2 - назад'
+  selected_ditrction = gets.chomp.to_i
+    if selected_ditrction == '1'
+    # метод move forward 
+    else 
+    # метод move back
+    end
   #
   # 8.Просмотреть список станций и список поездов на станции
-elsif user_choice == '8'
+  elsif user_choice == '8'
   # Вывод списка станций  - построчно
   my_railroad.stations.each.with_index(1) { |station, index| puts "#{index } #{station.name}" }
   #  Нужно теперь реализовать выбор станции
