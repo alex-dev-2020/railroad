@@ -89,6 +89,18 @@ elsif user_choice == '5'
   end
   #  only for test purpose
   # puts accepting_train_class
-  #  only for test purpose
+  # only for test purpose
   print accepting_train.wagons
+elsif user_choice == '6'
+  #п 6.Отцепить вагоны от поезда
+  # Нужно вывести список текущих поездов
+  puts 'Список существующих поездов:'
+  my_railroad.trains.each_index { |index| print index + 1, ' ', my_railroad.trains.at(index), puts }
+  puts "\nВведите номер нужного поезда "
+  donor_train_index = gets.chomp.to_i - 1
+  # определяем объект выбранный пользователем
+  donor_train = my_railroad.trains.at(donor_train_index)
+  # определяем класс объекта выбранного пользователем
+  donor_train_class = my_railroad.trains.at(donor_train_index).class
 end
+
