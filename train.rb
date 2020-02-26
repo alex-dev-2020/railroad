@@ -35,4 +35,28 @@ class Train
     @current_station_index = @route.stations.index(@current_station)
     @current_station.train_in(self)
   end
+  
+  def previous_station
+    previous_station =  (@current_station != @route.stations.first) ? @route.stations[@current_station_index - 1] : warning_route_border
+  end
+
+  def next_station
+    next_station = (@current_station != @route.stations.last) ?  @route.stations[@current_station_index + 1] : warning_route_border
+  end
+  
+  def warning_route_border
+   puts "Граница маршрута"
+  end
+
+  def move_forward
+    @current_station.train_out(self)
+    next_station.train_in(self)
+    @current_station_index += 1
+  end
+
+  def move_back
+    @current_station.train_out(self) 
+    previous_station.train_in(self)
+    @current_station_index -= 1
+  end
 end

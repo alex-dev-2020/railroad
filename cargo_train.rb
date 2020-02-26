@@ -11,7 +11,7 @@ class CargoTrain < Train
     if @wagons.length > 0 && @speed == 0
       @wagons.delete(wagon)
     else
-      puts 'Конечные точки маршрута удалить нельзя!'
+      puts 'У поезда больше нет вагонов!!'
     end
   end
 end

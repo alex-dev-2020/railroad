@@ -132,14 +132,28 @@ elsif user_choice == '6'
   puts 'Выбран поезд:'
   puts selected_train
   # по хорошему - надо бы маршрут назначить для начала
+   #  нужно вывести список текущих маршрутов
+  puts 'Список текущих маршрутов:'
+  my_railroad.routes.each.with_index(1) { |index, route| puts "#{route} #{index}" }
+  puts "\nВведите номер требуемого маршрута"
+  accepted_route_index = gets.chomp.to_i - 1
+  accepted_route = my_railroad.routes.at(accepted_route_index)
+  #  only for test purpose - назначаем маршрут выбранному поезду
+  puts accepted_route
+  selected_train.accept_route(accepted_route)
+  #  only for test purpose - убеждаемся что поезд стоит на первой станции маршрута
+  puts selected_train.current_station.name
   puts 'Выберите направление движения:'
   puts '1-веперед, 2 - назад'
   selected_direction = gets.chomp.to_i
-    if selected_direction == '1'
-    # метод move forward 
-    else 
-    # метод move back
-    end
+  if selected_direction == '1'
+      selected_train.move_forward
+  elsif selected_direction == '2'
+      selected_train.move_back
+  end
+  # 
+  puts 'Новая станация'
+  puts selected_train.current_station.name
   #
   # 8.Просмотреть список станций и список поездов на станции
   elsif user_choice == '8'
