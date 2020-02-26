@@ -131,10 +131,11 @@ elsif user_choice == '6'
   # just for test
   puts 'Выбран поезд:'
   puts selected_train
+  # по хорошему - надо бы маршрут назначить для начала
   puts 'Выберите направление движения:'
   puts '1-веперед, 2 - назад'
-  selected_ditrction = gets.chomp.to_i
-    if selected_ditrction == '1'
+  selected_direction = gets.chomp.to_i
+    if selected_direction == '1'
     # метод move forward 
     else 
     # метод move back
