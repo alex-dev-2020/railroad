@@ -18,7 +18,7 @@ puts my_railroad.trains
 puts my_railroad.routes
 
 def main_menu
-  puts "Главное меню :"
+  puts 'Главное меню :'
   puts "\n 1.Создать станцию \n 2.Создать поезд \n 3.Создать маршрут и управлять станциями в нем (добавить, удалить) \n 4.Назначить маршрут поезду \n 5.Добавить вагоны к поезду \n 6.Отцепить вагоны от поезда \n 7.Переместить поезд по маршруту вперед и назад \n 8.Просмотреть список станций и список поездов на станции\n"
 end
 
@@ -52,7 +52,7 @@ elsif user_choice == '4'
   # Нужно вывести список текущих поездов
   puts 'Список существующих поездов:'
   my_railroad.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
-  puts "\nВведите номер нужного поезда "
+  puts 'Введите номер нужного поезда'
   accepting_train_index = gets.chomp.to_i - 1
   accepting_train = my_railroad.trains.at(accepting_train_index)
   #  only for test purpose
@@ -60,7 +60,7 @@ elsif user_choice == '4'
   #  нужно вывести список текущих маршрутов
   puts 'Список текущих маршрутов:'
   my_railroad.routes.each.with_index(1) { |index, route| puts "#{route} #{index}" }
-  puts "\nВведите номер требуемого маршрута"
+  puts 'Введите номер требуемого маршрута'
   accepted_route_index = gets.chomp.to_i - 1
   accepted_route = my_railroad.routes.at(accepted_route_index)
   #  only for test purpose
@@ -73,7 +73,7 @@ elsif user_choice == '5'
   # Нужно вывести список текущих поездов
   puts 'Список существующих поездов:'
   my_railroad.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
-  puts "\nВведите номер нужного поезда "
+  puts 'Введите номер нужного поезда'
   accepting_train_index = gets.chomp.to_i - 1
   # определяем объект выбранный пользователем
   accepting_train = my_railroad.trains.at(accepting_train_index)
@@ -87,8 +87,6 @@ elsif user_choice == '5'
     wagon = PassWagon.new
     accepting_train.add_wagon(wagon)
   end
-  #  only for test purpose
-  # puts accepting_train_class
   # only for test purpose
   print accepting_train.wagons
 elsif user_choice == '6'
@@ -110,32 +108,23 @@ elsif user_choice == '6'
   puts
   puts 'Вагон отцеплен'
   print donor_train.wagons
-  #  ветвление не нужно скорее всего, но нужен аргумент (wagon)
-  # if accepting_train_class == CargoTrain
-  #   wagon = CargoWagon.new
-  #   donor_train.detach_wagon(wagon)
-  # elsif accepting_train_class == PassTrain
-  #   wagon = PassWagon.new
-  #   donor_train.detach_wagon(wagon)
-  # end
-  # detach_wagon(wagon)
   # 7.Переместить поезд по маршруту вперед и назад
-  elsif user_choice == '7'
+elsif user_choice == '7'
   # Нужно вывести список текущих поездов
   puts 'Список существующих поездов:'
   my_railroad.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
   # определяем объект выбранный пользователем
-  puts "\nВведите номер нужного поезда "
+  puts 'Введите номер нужного поезда'
   selected_train_index = gets.chomp.to_i - 1
   selected_train = my_railroad.trains.at(selected_train_index)
   # just for test
   puts 'Выбран поезд:'
   puts selected_train
   # по хорошему - надо бы маршрут назначить для начала
-   #  нужно вывести список текущих маршрутов
+  #  нужно вывести список текущих маршрутов
   puts 'Список текущих маршрутов:'
   my_railroad.routes.each.with_index(1) { |index, route| puts "#{route} #{index}" }
-  puts "\nВведите номер требуемого маршрута"
+  puts 'Введите номер требуемого маршрута'
   accepted_route_index = gets.chomp.to_i - 1
   accepted_route = my_railroad.routes.at(accepted_route_index)
   #  only for test purpose - назначаем маршрут выбранному поезду
@@ -144,23 +133,21 @@ elsif user_choice == '6'
   #  only for test purpose - убеждаемся что поезд стоит на первой станции маршрута
   puts selected_train.current_station.name
   puts 'Выберите направление движения:'
-  puts '1-веперед, 2 - назад'
+  puts '1-вперед, 2 - назад'
   selected_direction = gets.chomp.to_i
-  if selected_direction == '1'
-      selected_train.move_forward
-  elsif selected_direction == '2'
-      selected_train.move_back
+  if selected_direction == 1
+    selected_train.move_forward
+  elsif selected_direction == 2
+    selected_train.move_back
   end
-  # 
   puts 'Новая станация'
-  puts selected_train.current_station.name
-  #
+  puts selected_train.current_station.namessss
   # 8.Просмотреть список станций и список поездов на станции
-  elsif user_choice == '8'
+elsif user_choice == '8'
   # Вывод списка станций  - построчно
   my_railroad.stations.each.with_index(1) { |station, index| puts "#{index } #{station.name}" }
   #  Нужно теперь реализовать выбор станции
-  puts "\nВведите номер станции"
+  puts 'Введите номер станции'
   selected_station_index = gets.chomp.to_i - 1
   selected_station = my_railroad.stations.at(selected_station_index)
   puts 'Выбрана станция:'

@@ -3,7 +3,7 @@ class Train
 
   def initialize (name)
     @name = name
-    @wagons = ['zero_wagon','test_wagon']
+    @wagons = ['zero_wagon', 'test_wagon']
     @speed = 0
     # wagon_quantity.times { add_wagon }
   end
@@ -21,31 +21,27 @@ class Train
     @speed = 0
   end
 
-  def add_wagon
-    @wagons += 1 if @speed == 0
-  end
-
-  def detach_wagon
-    @wagons -= 1 if @speed == 0 && wagons > 0
-  end
-
   def accept_route(route)
     @route = route
     @current_station = @route.stations.first
     @current_station_index = @route.stations.index(@current_station)
     @current_station.train_in(self)
   end
-  
+
+  def add_wagon(wagon)
+    @wagons << wagon if @speed == 0
+  end
+
   def previous_station
-    previous_station =  (@current_station != @route.stations.first) ? @route.stations[@current_station_index - 1] : warning_route_border
+    previous_station = (@current_station != @route.stations.first) ? @route.stations[@current_station_index - 1] : warning_route_border
   end
 
   def next_station
-    next_station = (@current_station != @route.stations.last) ?  @route.stations[@current_station_index + 1] : warning_route_border
+    next_station = (@current_station != @route.stations.last) ? @route.stations[@current_station_index + 1] : warning_route_border
   end
-  
+
   def warning_route_border
-   puts "Граница маршрута"
+    puts "Граница маршрута"
   end
 
   def move_forward
@@ -55,7 +51,7 @@ class Train
   end
 
   def move_back
-    @current_station.train_out(self) 
+    @current_station.train_out(self)
     previous_station.train_in(self)
     @current_station_index -= 1
   end
