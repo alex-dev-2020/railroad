@@ -36,17 +36,17 @@ when 3
   puts '3.Создание маршрута и управление станциями в нем '
   my_railroad.create_route
 when 4
-  my_railroad.accept_route
   puts '4.Назначение маршрута поезду'
+  my_railroad.accept_route
 when 5
+  puts '5.Добавление вагона к поезду'
   my_railroad.add_wagon
-  puts '5.Добавление вагона к поезду станции '
 when 6
-  my_railroad.detach_wagon
   puts 'Отцепление  вагонов от поезда'
+  my_railroad.detach_wagon
 when 7
+  puts '7.Перемещение поезда по маршруту'
   my_railroad.move_train
-  puts '7.Перемещение поезда по маршруту '
 when 8
   puts '8. Вывод списка поездов на станции'
   my_railroad.show_train_list
