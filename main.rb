@@ -7,40 +7,52 @@ require_relative 'pass_train'
 require_relative 'cargo_train'
 require_relative 'pass_wagon'
 require_relative 'cargo_wagon'
-
-
-# Создать программу в файле main.rb, которая будет позволять пользователю через текстовый интерфейс делать следующее:
-
+#
+#
+# # Создать программу в файле main.rb, которая будет позволять пользователю через текстовый интерфейс делать следующее:
+#
 my_railroad = Railroad.new
 my_railroad.seed
-puts my_railroad.stations
-puts my_railroad.trains
-puts my_railroad.routes
+# puts my_railroad.stations
+# puts my_railroad.trains
+# puts my_railroad.routes
 
 def main_menu
   puts 'Главное меню :'
   puts "\n 1.Создать станцию \n 2.Создать поезд \n 3.Создать маршрут и управлять станциями в нем (добавить, удалить) \n 4.Назначить маршрут поезду \n 5.Добавить вагоны к поезду \n 6.Отцепить вагоны от поезда \n 7.Переместить поезд по маршруту вперед и назад \n 8.Просмотреть список станций и список поездов на станции\n"
 end
+
+
+main_menu
+user_choice = gets.chomp.to_i
 case user_choice
 when 1
-  create_station
+  puts '1.Создание станции '
+  my_railroad.create_station
 when 2
-  create_train
+  puts '2.Создание поезда '
+  my_railroad.create_train
 when 3
-  create_route
+  puts '3.Создание маршрута и управление станциями в нем '
+  my_railroad.create_route
 when 4
-  accept_route
+  my_railroad.accept_route
+  puts '4.Назначение маршрута поезду'
 when 5
-  add_wagon
+  my_railroad.add_wagon
+  puts '5.Добавление вагона к поезду станции '
 when 6
-  detach_wagon
+  my_railroad.detach_wagon
+  puts 'Отцепление  вагонов от поезда'
 when 7
-  move_train
+  my_railroad.move_train
+  puts '7.Перемещение поезда по маршруту '
 when 8
-  show_train_list
+  puts '8. Вывод списка поездов на станции'
+  my_railroad.show_train_list
 else
+  puts 'Возврат в главное меню '
   main_menu
 end
 
-user_choice = gets.chomp.to_s
 
