@@ -1,3 +1,2 @@
-class PassWagon < Wagon
-
+class PassWagon < Wagon;
 end

@@ -17,42 +17,53 @@ my_railroad.seed
 # puts my_railroad.trains
 # puts my_railroad.routes
 
-def main_menu
-  puts 'Главное меню :'
-  puts "\n 1.Создать станцию \n 2.Создать поезд \n 3.Создать маршрут и управлять станциями в нем (добавить, удалить) \n 4.Назначить маршрут поезду \n 5.Добавить вагоны к поезду \n 6.Отцепить вагоны от поезда \n 7.Переместить поезд по маршруту вперед и назад \n 8.Просмотреть список станций и список поездов на станции\n"
-end
+main_menu = {1 => 'Создать станцию',
+             2 => 'Создать поезд',
+             3 => 'Создать маршрут и управлять станциями в нем (добавить, удалить)',
+             4 => 'Назначить маршрут поезду',
+             5 => 'Добавить вагоны к поезду',
+             6 => 'Отцепить вагоны от поезда',
+             7 => 'Переместить поезд по маршруту вперед и назад',
+             8 => 'Просмотреть список станций и список поездов на станции',
+             0 => 'Завершение работы'
+}
+
+loop do
+  puts 'Главное  меню.'
+  puts 'Введите номер для выбора действия или 0 для выхода:'
 
 
-main_menu
-user_choice = gets.chomp.to_i
-case user_choice
-when 1
-  puts '1.Создание станции '
-  my_railroad.create_station
-when 2
-  puts '2.Создание поезда '
-  my_railroad.create_train
-when 3
-  puts '3.Создание маршрута и управление станциями в нем '
-  my_railroad.create_route
-when 4
-  puts '4.Назначение маршрута поезду'
-  my_railroad.accept_route
-when 5
-  puts '5.Добавление вагона к поезду'
-  my_railroad.add_wagon
-when 6
-  puts 'Отцепление  вагонов от поезда'
-  my_railroad.detach_wagon
-when 7
-  puts '7.Перемещение поезда по маршруту'
-  my_railroad.move_train
-when 8
-  puts '8. Вывод списка поездов на станции'
-  my_railroad.show_train_list
-else
-  puts 'Возврат в главное меню '
-  main_menu
+  user_choice = my_railroad.selection(main_menu)
+
+  case user_choice
+  when '1'
+    puts 'Создание станции '
+    my_railroad.create_station
+  when '2'
+    puts 'Создание поезда '
+    my_railroad.create_train
+  when '3'
+    puts 'Создание маршрута и управление станциями в нем '
+    my_railroad.create_route
+  when '4'
+    puts 'Назначение маршрута поезду'
+    my_railroad.accept_route
+  when '5'
+    puts 'Добавление вагона к поезду'
+    my_railroad.add_wagon
+  when '6'
+    puts 'Отцепление  вагонов от поезда'
+    my_railroad.detach_wagon
+  when '7'
+    puts 'Перемещение поезда по маршруту'
+    my_railroad.move_train
+  when '8'
+    puts 'Вывод списка поездов на станции'
+    my_railroad.show_train_list
+  when '0'
+    puts 'Завершение работы.'
+    break
+  end
 end
 
 

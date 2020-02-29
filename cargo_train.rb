@@ -1,5 +1,2 @@
-class CargoTrain < Train
-
-
-
+class CargoTrain < Train;
 end

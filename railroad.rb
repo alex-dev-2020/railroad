@@ -17,8 +17,14 @@ class Railroad
     @trains = []
   end
 
+  # работа с текстовыми меню ()
+  def selection(menu)
+    menu.each { |key, value| puts "#{key} - #{value}" }
+    puts 'Выбран пункт:'
+    gets.chomp
+  end
 
-# метод для генерации тестовых объектов
+  # метод для генерации тестовых объектов
   def seed
     cargo_test_train = CargoTrain.new('cargo_test')
     @trains << cargo_test_train
@@ -53,6 +59,16 @@ class Railroad
     @trains << new_train
   end
 
+  # список существующих поездов
+  def trains_list
+    self.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
+  end
+
+  # список существующих маршрутов
+  def route_list
+    self.routes.each.with_index(1) { |index, route| puts "#{route} #{index}" }
+  end
+
   def create_route
     puts 'Введите название первой станции маршрута'
     first_station = gets.chomp.to_s
@@ -60,28 +76,26 @@ class Railroad
     last_station = gets.chomp.to_s
     new_route = Route.new(first_station, last_station)
     self.routes << new_route
-    puts self.routes
+    puts 'Создан маршрут:'
+    print new_route.stations
   end
 
   def accept_route
-    puts 'Список существующих поездов:'
-    self.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
+    trains_list
     puts 'Введите номер нужного поезда'
     accepting_train_index = gets.chomp.to_i - 1
     accepting_train = self.trains.at(accepting_train_index)
     puts 'Список текущих маршрутов:'
-    self.routes.each.with_index(1) { |index, route| puts "#{route} #{index}" }
+    route_list
     puts 'Введите номер требуемого маршрута'
     accepted_route_index = gets.chomp.to_i - 1
     accepted_route = self.routes.at(accepted_route_index)
-    puts accepted_route
     accepting_train.accept_route(accepted_route)
-    puts accepting_train.current_station.name
   end
 
   def add_wagon
     puts 'Список существующих поездов:'
-    self.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
+    trains_list
     puts 'Введите номер нужного поезда'
     accepting_train_index = gets.chomp.to_i - 1
     accepting_train = self.trains.at(accepting_train_index)
@@ -98,8 +112,8 @@ class Railroad
 
   def detach_wagon
     puts 'Список существующих поездов:'
-    self.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
-    puts "\nВведите номер нужного поезда "
+    trains_list
+    puts 'Введите номер нужного поезда'
     donor_train_index = gets.chomp.to_i - 1
     donor_train = self.trains.at(donor_train_index)
     donor_train_class = self.trains.at(donor_train_index).class
@@ -114,14 +128,14 @@ class Railroad
 
   def move_train
     puts 'Список существующих поездов:'
-    self.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
+    trains_list
     puts 'Введите номер нужного поезда'
     selected_train_index = gets.chomp.to_i - 1
     selected_train = self.trains.at(selected_train_index)
     puts 'Выбран поезд:'
     puts selected_train
     puts 'Список текущих маршрутов:'
-    self.routes.each.with_index(1) { |index, route| puts "#{route} #{index}" }
+    route_list
     puts 'Введите номер требуемого маршрута'
     accepted_route_index = gets.chomp.to_i - 1
     accepted_route = self.routes.at(accepted_route_index)

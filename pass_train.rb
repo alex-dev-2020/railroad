@@ -1,4 +1,2 @@
-class PassTrain < Train
-
-
+class PassTrain < Train;
 end
