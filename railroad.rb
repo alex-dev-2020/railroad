@@ -24,20 +24,7 @@ class Railroad
     gets.chomp
   end
 
-  # метод для генерации тестовых объектов
-  def seed
-    cargo_test_train = CargoTrain.new('cargo_test')
-    @trains << cargo_test_train
-    pass_test_train = PassTrain.new('pass_test')
-    @trains << pass_test_train
-    test_station_1 = Station.new('test_st_1')
-    @stations << test_station_1
-    test_station_2 = Station.new('test_station_2')
-    @stations << test_station_2
-    test_station_3 = Station.new('test_station_3')
-    route_test = Route.new(test_station_1, test_station_2)
-    @routes << route_test
-  end
+
 
   def create_station
     puts 'Введите название станции'
