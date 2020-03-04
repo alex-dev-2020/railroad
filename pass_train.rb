@@ -1,2 +1,6 @@
-class PassTrain < Train;
+class PassTrain < Train
+
+  def type
+    :pass
+  end
 end
