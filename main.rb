@@ -7,6 +7,7 @@ require_relative 'pass_train'
 require_relative 'cargo_train'
 require_relative 'pass_wagon'
 require_relative 'cargo_wagon'
+require_relative 'seed'
 #
 #
 # # Создать программу в файле main.rb, которая будет позволять пользователю через текстовый интерфейс делать следующее:
