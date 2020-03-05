@@ -17,14 +17,12 @@ class Railroad
     @trains = []
   end
 
-  # работа с текстовыми меню ()
+  # работа с текстовыми меню (возможно тоже следует вынести в отдельный файл)
   def selection(menu)
     menu.each { |key, value| puts "#{key} - #{value}" }
     puts 'Выбран пункт:'
     gets.chomp
   end
-
-
 
   def create_station
     puts 'Введите название станции'
@@ -46,6 +44,7 @@ class Railroad
     @trains << new_train
   end
 
+  # повторяющиеся методы для работы с текстовыми меню
   # список существующих поездов
   def trains_list
     self.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
