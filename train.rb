@@ -1,8 +1,10 @@
 class Train
   attr_reader :name, :type, :wagons, :current_station
+  include MadeBy
 
-  def initialize (name)
+  def initialize (name, made_by)
     @name = name
+    @made_by = made_by
     @wagons = ['zero_wagon', 'test_wagon']
     @speed = 0
     # wagon_quantity.times { add_wagon }
