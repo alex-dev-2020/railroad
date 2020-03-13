@@ -1,13 +1,19 @@
 class Train
-  attr_reader :name, :type, :wagons, :current_station
+  attr_reader :name, :type, :wagons, :current_station, :number
   include MadeBy
+  @@list = {}
 
-  def initialize (name, made_by)
+  def initialize (name, number, made_by)
     @name = name
+    @number = number
     @made_by = made_by
-    @wagons = ['zero_wagon', 'test_wagon']
+    @wagons = []
     @speed = 0
-    # wagon_quantity.times { add_wagon }
+    @@list[number] = self
+  end
+
+  def self.find(number)
+    @@list[number]
   end
 
   def speed_up(delta)
