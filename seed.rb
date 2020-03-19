@@ -1,8 +1,8 @@
 # метод для генерации тестовых объектов
 def seed
-  cargo_test_train = CargoTrain.new('cargo_test')
+  cargo_test_train = CargoTrain.new('cargo_test', '12345', 'tesla')
   @trains << cargo_test_train
-  pass_test_train = PassTrain.new('pass_test')
+  pass_test_train = PassTrain.new('pass_test', '54321', 'bosh')
   @trains << pass_test_train
   test_station_1 = Station.new('test_st_1')
   @stations << test_station_1
