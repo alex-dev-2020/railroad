@@ -1,6 +1,7 @@
 class Train
   attr_reader :name, :type, :wagons, :current_station, :number
   include MadeBy
+  include InstanceCounter
   @@list = {}
 
   def initialize (name, number, made_by)
@@ -10,6 +11,7 @@ class Train
     @wagons = []
     @speed = 0
     @@list[number] = self
+    register_instance
   end
 
   def self.find(number)
