@@ -1,5 +1,8 @@
+require_relative 'made_by'
+require_relative 'instance_counter'
+
 class Train
-  attr_reader :name, :type, :wagons, :current_station, :number
+  attr_reader :name, :type, :wagons, :current_station, :number, :list
   include MadeBy
   include InstanceCounter
   @@list = {}
@@ -12,6 +15,10 @@ class Train
     @speed = 0
     @@list[number] = self
     register_instance
+  end
+
+  def self.list
+    @@list
   end
 
   def self.find(number)

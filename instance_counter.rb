@@ -7,14 +7,14 @@ module InstanceCounter
   end
 
   module ClassMethods
-    @@instances = 0
+
 
     def instances
-      @@instances
+      @instances
     end
 
     def instances=(value)
-      @@instances = value
+      @instances = value
     end
   end
 
@@ -22,7 +22,8 @@ module InstanceCounter
     protected
 
     def register_instance
-      self.class.instances += 1
+      instances = (self.class.instances.nil?) ? 0 : self.class.instances
+      self.class.send :instances=, instances + 1
     end
   end
 end
