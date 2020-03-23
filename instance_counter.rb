@@ -22,8 +22,8 @@ module InstanceCounter
     protected
 
     def register_instance
-      instances = (self.class.instances.nil?) ? 0 : self.class.instances
-      self.class.send :instances=, instances + 1
+      self.class.instances ||= 0
+      self.class.instances += 1
     end
   end
 end
