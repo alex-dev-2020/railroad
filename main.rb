@@ -9,14 +9,12 @@ require_relative 'pass_wagon'
 require_relative 'cargo_wagon'
 require_relative 'instance_counter'
 require_relative 'made_by'
-#
-# # Создать программу в файле main.rb, которая будет позволять пользователю через текстовый интерфейс делать следующее:
-#
+
+
 my_railroad = Railroad.new
+
 my_railroad.seed
-# puts my_railroad.stations
-# puts my_railroad.trains
-# puts my_railroad.routes
+
 
 main_menu = {1 => 'Создать станцию',
              2 => 'Создать поезд',
