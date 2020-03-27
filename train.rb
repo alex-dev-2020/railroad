@@ -1,11 +1,14 @@
 require_relative 'made_by'
 require_relative 'instance_counter'
+require_relative 'valid'
 
 class Train
   attr_reader :name, :type, :wagons, :current_station, :number, :list
   include MadeBy
   include InstanceCounter
+  include Valid
   @@list = {}
+  RGXP_TRAIN_NUMBER_FORMAT = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i
 
   def initialize (name, number, made_by)
     @name = name
@@ -14,7 +17,12 @@ class Train
     @wagons = []
     @speed = 0
     @@list[number] = self
+    validate!
     register_instance
+  end
+
+  def validate!
+    raise StandardError, "Неправильный формат номера (#{self.number})" if self.number !~ RGXP_TRAIN_NUMBER_FORMAT
   end
 
   def self.list
