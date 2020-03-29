@@ -9,6 +9,16 @@ class Train
   include Valid
   @@list = {}
   RGXP_TRAIN_NUMBER_FORMAT = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i
+  TYPES = [
+      {
+          type: 'CargoTrain',
+          name: 'Грузовой'
+      },
+      {
+          type: 'PassengerTrain',
+          name: 'Пассажирский'
+      }
+  ]
 
   def initialize (name, number, made_by)
     @name = name

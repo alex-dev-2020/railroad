@@ -39,16 +39,19 @@ class Railroad
   end
 
   def create_train
-    puts 'Введите тип поезда'
-    train_type = gets.chomp.to_s
-    puts 'Введите номер поезда'
-    train_name = gets.chomp.to_s
-    if train_type == 'cargo'
-      new_train = CargoTrain.new(train_name)
-    else
-      new_train = PassTrain.new(train_name)
+    Train::TYPES.each_with_index do |train_type, index|
+      puts "[#{index}] #{train_type[:name]}"
     end
-    @trains << new_train
+    # puts 'Введите тип поезда'
+    # train_type = gets.chomp.to_s
+    # puts 'Введите номер поезда'
+    # train_name = gets.chomp.to_s
+    # if train_type == 'cargo'
+    #   new_train = CargoTrain.new(train_name)
+    # else
+    #   new_train = PassTrain.new(train_name)
+    # end
+    # @trains << new_train
   end
 
   # повторяющиеся методы для работы с текстовыми меню
