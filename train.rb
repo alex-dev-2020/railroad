@@ -15,13 +15,27 @@ class Train
           name: 'Грузовой'
       },
       {
-          type: 'PassengerTrain',
+          type: 'PassTrain',
           name: 'Пассажирский'
       }
   ]
+  MANUFACTURERS = [
+      {
+          name: 'Siemens',
+          maker: 'Siemens'
+      },
+      {
+          name: 'Bosh',
+          maker: 'Bosh'
+      },
+      {
+          name: 'Tesla',
+          maker: 'Tesla'
+      }
+  ]
 
-  def initialize (name, number, made_by)
-    @name = name
+
+  def initialize (number, made_by)
     @number = number
     @made_by = made_by
     @wagons = []

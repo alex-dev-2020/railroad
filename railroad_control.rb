@@ -3,6 +3,7 @@
 class Railroad
   attr_reader :stations, :routes, :trains
 
+
   def initialize
     @stations = []
     @routes = []
@@ -10,19 +11,19 @@ class Railroad
     @trains = []
   end
 
-  def seed
-    cargo_test_train = CargoTrain.new('cargo_test', '12345', 'tesla')
-    @trains << cargo_test_train
-    pass_test_train = PassTrain.new('pass_test', '54321', 'bosh')
-    @trains << pass_test_train
-    test_station_1 = Station.new('test_st_1')
-    @stations << test_station_1
-    test_station_2 = Station.new('test_station_2')
-    @stations << test_station_2
-    test_station_3 = Station.new('test_station_3')
-    route_test = Route.new(test_station_1, test_station_2)
-    @routes << route_test
-  end
+  # def seed
+  #   cargo_test_train = CargoTrain.new('cargo_test', '12345', 'tesla')
+  #   @trains << cargo_test_train
+  #   pass_test_train = PassTrain.new('pass_test', '54321', 'bosh')
+  #   @trains << pass_test_train
+  #   test_station_1 = Station.new('test_st_1')
+  #   @stations << test_station_1
+  #   test_station_2 = Station.new('test_station_2')
+  #   @stations << test_station_2
+  #   test_station_3 = Station.new('test_station_3')
+  #   route_test = Route.new(test_station_1, test_station_2)
+  #   @routes << route_test
+  # end
 
   # работа с текстовыми меню (возможно тоже следует вынести в отдельный файл)
   def selection(menu)
@@ -36,26 +37,65 @@ class Railroad
     station_name = gets.chomp.to_s
     new_station = Station.new(station_name)
     @stations << new_station
+    puts "Cоздана станция'#{station_name}'"
   end
 
   def create_train
     Train::TYPES.each_with_index do |train_type, index|
       puts "[#{index}] #{train_type[:name]}"
     end
-    # puts 'Введите тип поезда'
-    # train_type = gets.chomp.to_s
-    # puts 'Введите номер поезда'
-    # train_name = gets.chomp.to_s
-    # if train_type == 'cargo'
-    #   new_train = CargoTrain.new(train_name)
+
+    begin
+      type_index = gets_train_type_index
+      validate!(type_index, Train::TYPES)
+    rescue RuntimeError => e
+      puts e
+      retry
+    end
+
+    Train::MANUFACTURERS.each_with_index do |maker, index|
+      puts "[#{index}] #{maker[:name]}"
+    end
+
+    begin
+      maker_index = gets_train_maker_index
+      validate!(maker_index, Train::MANUFACTURERS)
+    rescue RuntimeError => e
+      puts e
+      retry
+    end
+
+    case Train::MANUFACTURERS[maker_index][:name]
+    when 'Siemens'
+      made_by = 'Siemens'
+    when 'Bosh'
+      made_by = 'Bosh'
+    when 'Tesla'
+      made_by = 'Tesla'
+    end
+
+    begin
+      number = gets_train_number
+      case Train::TYPES[type_index][:type]
+      when 'CargoTrain'
+        train = CargoTrain.new(number, made_by)
+      when 'PassTrain'
+        train = PassTrain.new(number, made_by)
+      end
+    rescue StandardError => e
+      puts e
+      retry
+    end
+
+    # puts error
     # else
-    #   new_train = PassTrain.new(train_name)
-    # end
-    # @trains << new_train
+    # just fot test
+    @trains << train
+    puts "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}"
+    puts train.inspect
   end
 
-  # повторяющиеся методы для работы с текстовыми меню
-  # список существующих поездов
+
   def trains_list
     self.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
   end
@@ -162,4 +202,30 @@ class Railroad
     puts selected_station.trains
   end
 
+
+  def validate!(index, object)
+    raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
+  end
+
+  private
+
+  def gets_integer
+    input = gets.chomp.lstrip.rstrip
+    return (input.empty? || /\D/.match(input)) ? input : input.to_i
+  end
+
+  def gets_train_number
+    print "Задайте номер поезда:"
+    gets.chomp.lstrip.rstrip
+  end
+
+  def gets_train_type_index
+    print "Введите индекс типа поезда:"
+    gets_integer
+  end
+
+  def gets_train_maker_index
+    print "Введите индекс производителя поезда:"
+    gets_integer
+  end
 end

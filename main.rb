@@ -1,4 +1,4 @@
-require_relative 'railroad'
+require_relative 'railroad_control'
 require_relative 'train'
 require_relative 'station'
 require_relative 'wagon'
@@ -13,7 +13,7 @@ require_relative 'made_by'
 
 my_railroad = Railroad.new
 
-my_railroad.seed
+# my_railroad.seed
 
 
 main_menu = {1 => 'Создать станцию',
