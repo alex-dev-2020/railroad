@@ -86,10 +86,7 @@ class Railroad
       puts e
       retry
     end
-
-    # puts error
-    # else
-    # just fot test
+    #just fo tests
     @trains << train
     puts "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}"
     puts train.inspect
