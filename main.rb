@@ -9,6 +9,8 @@ require_relative 'pass_wagon'
 require_relative 'cargo_wagon'
 require_relative 'instance_counter'
 require_relative 'made_by'
+require_relative 'valid'
+
 
 
 my_railroad = Railroad.new
