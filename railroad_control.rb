@@ -11,6 +11,7 @@ class Railroad
     @trains = []
   end
 
+# generation test object pool 
   # def seed
   #   cargo_test_train = CargoTrain.new('cargo_test', '12345', 'tesla')
   #   @trains << cargo_test_train
@@ -25,7 +26,7 @@ class Railroad
   #   @routes << route_test
   # end
 
-  # работа с текстовыми меню (возможно тоже следует вынести в отдельный файл)
+  # txt menu 
   def selection(menu)
     menu.each { |key, value| puts "#{key} - #{value}" }
     puts 'Выбран пункт:'
@@ -33,10 +34,16 @@ class Railroad
   end
 
   def create_station
-    puts 'Введите название станции'
-    station_name = gets.chomp.to_s
-    new_station = Station.new(station_name)
-    @stations << new_station
+  begin
+    station_name = gets_station_name
+    station = Station.new(station_name)
+  rescue StandardError => e
+      puts e
+      retry
+  end
+    @stations << station
+    # puts just for test
+    puts station.inspect
     puts "Cоздана станция'#{station_name}'"
   end
 
@@ -205,6 +212,11 @@ class Railroad
   end
 
   private
+  
+  def gets_station_name
+    puts 'Введите название станции'
+    gets.chomp.lstrip.rstrip
+  end
 
   def gets_integer
     input = gets.chomp.lstrip.rstrip
@@ -225,4 +237,5 @@ class Railroad
     print "Введите индекс производителя поезда:"
     gets_integer
   end
+  
 end
