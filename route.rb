@@ -1,6 +1,7 @@
 class Route
   attr_reader :stations
   include InstanceCounter
+   include Valid
   @@list = []
 
   def initialize(first_station, last_station)
