@@ -6,8 +6,13 @@ class Route
 
   def initialize(first_station, last_station)
     @stations = [first_station, last_station]
+    validate!
     @@list << self
     register_instance
+  end
+
+  def validate!
+    raise StandardError, 'Начальная и конечная  станции маршрута должны различаться' if self.stations[0] == self.stations[1]
   end
 
   def self.list

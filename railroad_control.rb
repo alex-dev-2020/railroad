@@ -12,21 +12,21 @@ class Railroad
   end
 
 # generation test object pool 
-  # def seed
-  #   cargo_test_train = CargoTrain.new('cargo_test', '12345', 'tesla')
-  #   @trains << cargo_test_train
-  #   pass_test_train = PassTrain.new('pass_test', '54321', 'bosh')
-  #   @trains << pass_test_train
-  #   test_station_1 = Station.new('test_st_1')
-  #   @stations << test_station_1
-  #   test_station_2 = Station.new('test_station_2')
-  #   @stations << test_station_2
-  #   test_station_3 = Station.new('test_station_3')
-  #   route_test = Route.new(test_station_1, test_station_2)
-  #   @routes << route_test
-  # end
+# def seed
+#   cargo_test_train = CargoTrain.new('cargo_test', '12345', 'tesla')
+#   @trains << cargo_test_train
+#   pass_test_train = PassTrain.new('pass_test', '54321', 'bosh')
+#   @trains << pass_test_train
+#   test_station_1 = Station.new('test_st_1')
+#   @stations << test_station_1
+#   test_station_2 = Station.new('test_station_2')
+#   @stations << test_station_2
+#   test_station_3 = Station.new('test_station_3')
+#   route_test = Route.new(test_station_1, test_station_2)
+#   @routes << route_test
+# end
 
-  # txt menu 
+# txt menu
   def selection(menu)
     menu.each { |key, value| puts "#{key} - #{value}" }
     puts 'Выбран пункт:'
@@ -34,17 +34,15 @@ class Railroad
   end
 
   def create_station
-  begin
-    station_name = gets_station_name
-    station = Station.new(station_name)
-  rescue StandardError => e
+    begin
+      station_name = gets_station_name
+      station = Station.new(station_name)
+    rescue StandardError => e
       puts e
       retry
-  end
+    end
     @stations << station
-    # puts just for test
-    puts station.inspect
-    puts "Cоздана станция'#{station_name}'"
+    "Cоздана станция'#{station_name}'"
   end
 
   def create_train
@@ -93,10 +91,9 @@ class Railroad
       puts e
       retry
     end
-    #just fo tests
+
     @trains << train
-    puts "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}"
-    puts train.inspect
+    "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}"
   end
 
 
@@ -104,20 +101,40 @@ class Railroad
     self.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
   end
 
-  # список существующих маршрутов
+# список существующих маршрутов
   def route_list
     self.routes.each.with_index(1) { |index, route| puts "#{route} #{index}" }
   end
 
+
   def create_route
-    puts 'Введите название первой станции маршрута'
-    first_station = gets.chomp.to_s
-    puts 'Введите название последней станции маршрута'
-    last_station = gets.chomp.to_s
-    new_route = Route.new(first_station, last_station)
-    self.routes << new_route
-    puts 'Создан маршрут:'
-    print new_route.stations
+    return if self.stations.length < 2
+    self.print_stations
+
+    begin
+      first_station_index = gets_first_station_index
+      validate!(first_station_index, self.stations)
+    rescue RuntimeError => e
+      puts e
+      retry
+    end
+
+    begin
+      last_station_index = gets_last_station_index
+      validate!(last_station_index, self.stations)
+    rescue RuntimeError => e
+      puts e
+      retry
+    end
+
+    begin
+      route = Route.new(self.stations[first_station_index], self.stations[last_station_index])
+    rescue StandardError => e
+      puts e
+      return
+      self.routes << route
+    end
+    "Маршрут '#{ self.stations[first_station_index].name} -> #{self.stations[last_station_index].name}'создан "
   end
 
   def accept_route
@@ -211,8 +228,12 @@ class Railroad
     raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
   end
 
+  def print_stations
+    self.stations.each_with_index { |station, index| puts "[#{index}] #{station.name}" }
+  end
+
   private
-  
+
   def gets_station_name
     puts 'Введите название станции'
     gets.chomp.lstrip.rstrip
@@ -237,5 +258,15 @@ class Railroad
     print "Введите индекс производителя поезда:"
     gets_integer
   end
-  
+
+  def gets_first_station_index
+    puts 'Введите индекс первой станции маршрута'
+    gets_integer
+  end
+
+  def gets_last_station_index
+    puts 'Введите индекс последней станции маршрута'
+    gets_integer
+  end
+
 end
