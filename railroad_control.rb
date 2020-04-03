@@ -11,20 +11,6 @@ class Railroad
     @trains = []
   end
 
-# generation test object pool 
-# def seed
-#   cargo_test_train = CargoTrain.new('cargo_test', '12345', 'tesla')
-#   @trains << cargo_test_train
-#   pass_test_train = PassTrain.new('pass_test', '54321', 'bosh')
-#   @trains << pass_test_train
-#   test_station_1 = Station.new('test_st_1')
-#   @stations << test_station_1
-#   test_station_2 = Station.new('test_station_2')
-#   @stations << test_station_2
-#   test_station_3 = Station.new('test_station_3')
-#   route_test = Route.new(test_station_1, test_station_2)
-#   @routes << route_test
-# end
 
 # txt menu
   def selection(menu)
@@ -42,7 +28,8 @@ class Railroad
       retry
     end
     @stations << station
-    "Cоздана станция'#{station_name}'"
+    # just for test
+    puts "Cоздана станция'#{station_name}'"
   end
 
   def create_train
@@ -108,33 +95,83 @@ class Railroad
 
 
   def create_route
-    return if self.stations.length < 2
-    self.print_stations
-
-    begin
-      first_station_index = gets_first_station_index
-      validate!(first_station_index, self.stations)
-    rescue RuntimeError => e
-      puts e
-      retry
-    end
-
-    begin
-      last_station_index = gets_last_station_index
-      validate!(last_station_index, self.stations)
-    rescue RuntimeError => e
-      puts e
-      retry
-    end
-
-    begin
-      route = Route.new(self.stations[first_station_index], self.stations[last_station_index])
-    rescue StandardError => e
-      puts e
+    if self.stations.length < 2
+      puts 'Количество существующих станций меньше 2'
       return
+
+    else
+
+      self.print_stations
+
+      begin
+        first_station_index = gets_first_station_index
+        validate!(first_station_index, self.stations)
+      rescue RuntimeError => e
+        puts e
+        retry
+      end
+
+      begin
+        last_station_index = gets_last_station_index
+        validate!(last_station_index, self.stations)
+      rescue RuntimeError => e
+        puts e
+        retry
+      end
+
+      begin
+        route = Route.new(self.stations[first_station_index], self.stations[last_station_index])
+      rescue StandardError => e
+        puts e
+        return
+      end
+
       self.routes << route
+
+      "Маршрут '#{ self.stations[first_station_index].name} -> #{self.stations[last_station_index].name}'создан "
     end
-    "Маршрут '#{ self.stations[first_station_index].name} -> #{self.stations[last_station_index].name}'создан "
+  end
+
+  def add_station_to_route
+    if self.routes.empty?
+      puts 'Список маршрутов пуст'
+      return
+
+    else
+
+      self.print_routes
+
+      begin
+        route_index = gets_route_index
+        validate!(route_index, self.routes)
+      rescue StandardError => e
+        puts e
+        return
+      end
+
+      self.print_stations
+
+      begin
+        begin
+          station_index = gets_station_index
+          validate!(station_index, self.stations)
+        rescue StandardError => e
+          puts e
+          return
+        end
+        self.routes[route_index].add_station(stations[station_index])
+      rescue StandardError => e
+        puts e
+        return
+      end
+
+      "Станция '#{stations[station_index].name}' добавлена в маршрут"
+    end
+  end
+
+
+  def delete_station_from_route
+
   end
 
   def accept_route
@@ -229,8 +266,15 @@ class Railroad
   end
 
   def print_stations
+    puts 'Существующие станции:'
     self.stations.each_with_index { |station, index| puts "[#{index}] #{station.name}" }
   end
+
+  def print_routes
+    puts 'Существующие маршруты:'
+    self.routes.each_with_index { |route, index| puts "[#{index}] #{route}" }
+  end
+
 
   private
 
@@ -245,17 +289,22 @@ class Railroad
   end
 
   def gets_train_number
-    print "Задайте номер поезда:"
+    puts "Задайте номер поезда:"
     gets.chomp.lstrip.rstrip
   end
 
   def gets_train_type_index
-    print "Введите индекс типа поезда:"
+    puts "Введите индекс типа поезда:"
     gets_integer
   end
 
   def gets_train_maker_index
-    print "Введите индекс производителя поезда:"
+    puts "Введите индекс производителя поезда:"
+    gets_integer
+  end
+
+  def gets_station_index
+    puts 'Введите индекс станции'
     gets_integer
   end
 
@@ -269,4 +318,8 @@ class Railroad
     gets_integer
   end
 
+  def gets_route_index
+    puts 'Введите индекс маршрута'
+    gets_integer
+  end
 end

@@ -20,6 +20,7 @@ class Route
   end
 
   def add_station(station)
+    raise StandardError, "Маршрут уже содержит станцию'#{station}'" if stations.include? (station)
     @stations.insert(-2, station)
   end
 
