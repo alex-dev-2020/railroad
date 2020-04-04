@@ -128,7 +128,7 @@ class Railroad
 
       self.routes << route
 
-      "Маршрут '#{ self.stations[first_station_index].name} -> #{self.stations[last_station_index].name}'создан "
+      puts "Маршрут '#{ self.stations[first_station_index].name} -> #{self.stations[last_station_index].name}'создан "
     end
   end
 
@@ -160,31 +160,84 @@ class Railroad
           return
         end
         self.routes[route_index].add_station(stations[station_index])
-      rescue StandardError => e
-        puts e
+      rescue StandardError
+        puts "Маршрут уже содержит данную  станцию:'#{stations[station_index].name}'"
         return
       end
 
-      "Станция '#{stations[station_index].name}' добавлена в маршрут"
+      puts "Станция '#{stations[station_index].name}' добавлена в маршрут"
     end
   end
 
 
   def delete_station_from_route
+    if self.routes.empty?
+      puts 'Список маршрутов пуст'
+      return
 
+    else
+
+      self.print_routes
+
+      begin
+        route_index = gets_route_index
+        validate!(route_index, self.routes)
+      rescue StandardError => e
+        puts e
+        return
+      end
+
+      self.print_stations
+
+      begin
+        begin
+          station_index = gets_station_index
+          validate!(station_index, self.stations)
+        rescue StandardError => e
+          puts e
+          return
+        end
+        self.routes[route_index].delete_station(stations[station_index])
+      rescue StandardError => e
+        puts e
+        return
+      end
+
+      puts "Станция '#{stations[station_index].name}' удалена из маршрута"
+    end
   end
 
-  def accept_route
-    trains_list
-    puts 'Введите номер нужного поезда'
-    accepting_train_index = gets.chomp.to_i - 1
-    accepting_train = self.trains.at(accepting_train_index)
-    puts 'Список текущих маршрутов:'
-    route_list
-    puts 'Введите номер требуемого маршрута'
-    accepted_route_index = gets.chomp.to_i - 1
-    accepted_route = self.routes.at(accepted_route_index)
-    accepting_train.accept_route(accepted_route)
+
+  def add_route_to_train
+    if self.trains.empty?
+      puts 'Список поездов пуст'
+      return
+
+    elsif self.routes.empty?
+      puts 'Список маршрутов пуст'
+      return
+    else
+
+      self.print_routes
+
+      begin
+        route_index = gets_route_index
+        validate!(route_index, self.routes)
+      rescue StandardError => e
+        puts e
+        return
+      end
+
+      begin
+        train_index = gets_train_index
+        validate!(train_index, self.trains)
+      rescue StandardError => e
+        puts e
+        return
+      end
+
+
+    end
   end
 
   def add_wagon
@@ -275,6 +328,11 @@ class Railroad
     self.routes.each_with_index { |route, index| puts "[#{index}] #{route}" }
   end
 
+  def print_trains
+    puts 'Существующие поезда:'
+    self.trains.each_with_index { |train, index| puts "[#{index}] #{train}" }
+  end
+
 
   private
 
@@ -322,4 +380,10 @@ class Railroad
     puts 'Введите индекс маршрута'
     gets_integer
   end
+
+  def gets_train_index
+    puts 'Введите индекс нужного поезда'
+    gets_integer
+  end
+
 end
