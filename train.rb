@@ -1,9 +1,10 @@
 require_relative 'made_by'
 require_relative 'instance_counter'
 require_relative 'valid'
+require_relative 'route'
 
 class Train
-  attr_reader :name, :type, :wagons, :current_station, :number, :list
+  attr_reader :name, :type, :wagons, :current_station_index, :number, :list, :route
   include MadeBy
   include InstanceCounter
   include Valid
@@ -40,6 +41,8 @@ class Train
     @made_by = made_by
     @wagons = []
     @speed = 0
+    @current_station_index = nil
+    @route = nil
     @@list[number] = self
     validate!
     register_instance
@@ -71,27 +74,28 @@ class Train
   end
 
   def accept_route(route)
+    #
     @route = route
-    @current_station = @route.stations.first
-    @current_station_index = @route.stations.index(@current_station)
-    @current_station.train_in(self)
+    @current_station_index = 0
+    self.current_station.train_in(self)
   end
 
   def add_wagon(wagon)
     @wagons << wagon if @speed == 0
   end
 
+  def current_station
+    station(self.current_station_index)
+  end
+
   def previous_station
-    previous_station = (@current_station != @route.stations.first) ? @route.stations[@current_station_index - 1] : warning_route_border
+    station(self.current_station_index - 1)
   end
 
   def next_station
-    next_station = (@current_station != @route.stations.last) ? @route.stations[@current_station_index + 1] : warning_route_border
+    station(self.current_station_index + 1)
   end
 
-  def warning_route_border
-    puts "Граница маршрута"
-  end
 
   def move_forward
     @current_station.train_out(self)
@@ -104,4 +108,11 @@ class Train
     previous_station.train_in(self)
     @current_station_index -= 1
   end
+
+  private
+
+  def station(n)
+    (n >= 0 && n < self.route.stations.length) ? self.route.stations[n] : nil
+  end
+
 end

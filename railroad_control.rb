@@ -228,6 +228,8 @@ class Railroad
         return
       end
 
+      self.print_trains
+
       begin
         train_index = gets_train_index
         validate!(train_index, self.trains)
@@ -236,6 +238,8 @@ class Railroad
         return
       end
 
+      self.trains[train_index].accept_route(self.routes[route_index])
+      "Mаршрут '#{self.routes[route_index].stations.first}' -> '#{self.routes[route_index].stations.last}' добавлен поезду '#{self.trains[train_index].number}'"
 
     end
   end

@@ -55,7 +55,7 @@ loop do
     my_railroad.delete_station_from_route
   when '6'
     puts 'Назначение маршрута поезду'
-    my_railroad.accept_route
+    my_railroad.add_route_to_train
   when '7'
     puts 'Добавление вагона к поезду'
     my_railroad.add_wagon

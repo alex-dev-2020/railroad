@@ -20,15 +20,16 @@ class Route
   end
 
   def add_station(station)
-    raise StandardError, "Маршрут уже содержит станцию'#{station}'" if stations.include? (station)
-    @stations.insert(-2, station)
+
+    raise StandardError if self.stations.include? (station)
+    self.stations.insert(-2, station)
   end
 
   def delete_station(station)
     if (station != @stations.first) && (station != @stations.last)
       @stations.delete(station)
     else
-      puts 'Конечные точки маршрута удалить нельзя!'
+      raise StandardError, 'Конечные точки маршрута удалить нельзя'
     end
   end
 end
