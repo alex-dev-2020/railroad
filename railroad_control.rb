@@ -285,13 +285,8 @@ class Railroad
     selected_train = self.trains.at(selected_train_index)
     puts 'Выбран поезд:'
     puts selected_train
-    puts 'Список текущих маршрутов:'
-    route_list
-    puts 'Введите номер требуемого маршрута'
-    accepted_route_index = gets.chomp.to_i - 1
-    accepted_route = self.routes.at(accepted_route_index)
-    puts accepted_route
-    selected_train.accept_route(accepted_route)
+    puts 'Поезду назначен маршрут:'
+    puts "'#{selected_train.route.stations.first.name}'-> '#{selected_train.route.stations.last.name}'"
     puts 'Текущая станция:'
     puts selected_train.current_station.name
     puts 'Выберите направление движения:'
@@ -299,11 +294,13 @@ class Railroad
     selected_direction = gets.chomp.to_i
     if selected_direction == 1
       selected_train.move_forward
+      puts 'Следующая станция'
+      puts selected_train.next_station.name
     elsif selected_direction == 2
       selected_train.move_back
+      puts 'Следующая станция'
+      puts selected_train.previous_station.name
     end
-    puts 'Новая станация'
-    puts selected_train.current_station.name
   end
 
   def show_train_list

@@ -98,15 +98,13 @@ class Train
 
 
   def move_forward
-    @current_station.train_out(self)
+    self.current_station.train_out(self)
     next_station.train_in(self)
-    @current_station_index += 1
   end
 
   def move_back
-    @current_station.train_out(self)
-    previous_station.train_in(self)
-    @current_station_index -= 1
+    self.current_station.train_out(self)
+    self.previous_station.train_in(self)
   end
 
   private
