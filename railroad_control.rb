@@ -294,14 +294,14 @@ class Railroad
   end
 
   def show_train_list
-    self.stations.each.with_index(1) { |station, index| puts "#{index } #{station.name}" }
+    self.stations.each.with_index(1) { |station, index| puts "#{index} #{station.name}" }
     puts 'Введите номер станции'
     selected_station_index = gets.chomp.to_i - 1
     selected_station = self.stations.at(selected_station_index)
     puts 'Выбрана станция:'
     puts selected_station.name
     puts 'Список поездов на станции:'
-    puts selected_station.trains.each.with_index(1) { |train, index| puts "'#{index }' поезд номер ' #{train.number}'" }
+    selected_station.trains.each.with_index(1) { |train, index| puts "'#{index}'поезд номер' #{train.number}'" }
   end
 
 

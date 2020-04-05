@@ -20,7 +20,6 @@ class Route
   end
 
   def add_station(station)
-
     raise StandardError if self.stations.include? (station)
     self.stations.insert(-2, station)
   end
