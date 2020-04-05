@@ -84,16 +84,6 @@ class Railroad
   end
 
 
-  def trains_list
-    self.trains.each.with_index(1) { |index, train| puts "#{train} #{index}" }
-  end
-
-# список существующих маршрутов
-  def route_list
-    self.routes.each.with_index(1) { |index, route| puts "#{route} #{index}" }
-  end
-
-
   def create_route
     if self.stations.length < 2
       puts 'Количество существующих станций меньше 2'
@@ -246,7 +236,7 @@ class Railroad
 
   def add_wagon
     puts 'Список существующих поездов:'
-    trains_list
+    print_trains
     puts 'Введите номер нужного поезда'
     accepting_train_index = gets.chomp.to_i - 1
     accepting_train = self.trains.at(accepting_train_index)
@@ -263,7 +253,7 @@ class Railroad
 
   def detach_wagon
     puts 'Список существующих поездов:'
-    trains_list
+    print_trains
     puts 'Введите номер нужного поезда'
     donor_train_index = gets.chomp.to_i - 1
     donor_train = self.trains.at(donor_train_index)
@@ -279,12 +269,12 @@ class Railroad
 
   def move_train
     puts 'Список существующих поездов:'
-    trains_list
+    print_trains
     puts 'Введите номер нужного поезда'
     selected_train_index = gets.chomp.to_i - 1
     selected_train = self.trains.at(selected_train_index)
     puts 'Выбран поезд:'
-    puts selected_train
+    puts selected_train.number
     puts 'Поезду назначен маршрут:'
     puts "'#{selected_train.route.stations.first.name}'-> '#{selected_train.route.stations.last.name}'"
     puts 'Текущая станция:'
@@ -311,7 +301,7 @@ class Railroad
     puts 'Выбрана станция:'
     puts selected_station.name
     puts 'Список поездов на станции:'
-    puts selected_station.trains
+    puts selected_station.trains.each.with_index(1) { |train, index| puts "'#{index }' поезд номер ' #{train.number}'" }
   end
 
 
