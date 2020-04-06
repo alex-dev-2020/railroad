@@ -11,8 +11,8 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
-    @@list << self
     validate!
+    @@list << self
     register_instance
   end
 

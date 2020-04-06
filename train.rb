@@ -43,8 +43,8 @@ class Train
     @speed = 0
     @current_station_index = nil
     @route = nil
-    @@list[number] = self
     validate!
+    @@list[number] = self
     register_instance
   end
 
