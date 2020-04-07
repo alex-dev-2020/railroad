@@ -3,7 +3,6 @@ require_relative 'instance_counter'
 require_relative 'valid'
 require_relative 'route'
 
-
 class Train
   attr_reader :name, :type, :wagons, :current_station_index, :number, :list, :route
   include MadeBy
@@ -37,15 +36,15 @@ class Train
   ]
 
 
-  def initialize(number, made_by)
+  def initialize (number, made_by)
     @number = number
     @made_by = made_by
     @wagons = []
     @speed = 0
     @current_station_index = nil
     @route = nil
-    @@list[number] = self
     validate!
+    @@list[number] = self
     register_instance
   end
 
