@@ -377,4 +377,14 @@ class Railroad
     gets_integer
   end
 
+  def gets_number_of_seats
+    puts 'Введите кол-во мест в вагоне: '
+    gets_integer
+  end
+
+  def gets_volume
+    puts 'Введите объeм вагона: '
+    gets_integer
+  end
+
 end
