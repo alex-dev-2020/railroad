@@ -396,7 +396,7 @@ class Railroad
   end
 
   def gets_volume
-    puts 'Введите объeм вагона: '
+    puts 'Введите объeм:'
     gets_integer
   end
   
