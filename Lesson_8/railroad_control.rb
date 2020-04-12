@@ -323,6 +323,7 @@ class Railroad
     puts 'Существующие поезда:'
     self.trains.each_with_index { |train, index| puts "[#{index}] #{train}" }
   end
+  
 
 
   private
@@ -376,6 +377,18 @@ class Railroad
     puts 'Введите индекс нужного поезда'
     gets_integer
   end
+  
+  def gets_wagon(train)
+    print_wagons(train)
+    puts 'Введите индекс вагона'
+    wagon_index = gets_integer
+    validate!(wagon_index, train.wagons)
+    train.wagons[wagon_index]
+  end
+  
+  def print_wagons(train)
+    train.each_with_index { |wagon, index| puts "[#{index}] #{wagon}" }
+  end
 
   def gets_number_of_seats
     puts 'Введите кол-во мест в вагоне: '
@@ -385,6 +398,14 @@ class Railroad
   def gets_volume
     puts 'Введите объeм вагона: '
     gets_integer
+  end
+  
+  def create_cargo_wagon
+    CargoWagon.new(gets_volume)
+  end
+  
+  def create_pass_wagon
+    PassWagon.new(gets_number_of_seats)
   end
 
 end
