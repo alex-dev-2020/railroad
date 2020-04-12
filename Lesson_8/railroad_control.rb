@@ -407,5 +407,15 @@ class Railroad
   def create_pass_wagon
     PassWagon.new(gets_number_of_seats)
   end
+  
+  def load_cargo_wagon(wagon)
+    volume = gets_volume
+    wagon.load(volume)
+  end
+  
+  def unload_cargo_vagon(wagon)
+    volume = gets_volume
+    wagon.unload(volume)
+  end
 
 end
