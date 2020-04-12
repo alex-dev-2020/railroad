@@ -1,3 +1,8 @@
+require_relative 'wagon'
+# lines below included only for test purpose 
+require_relative 'instance_counter'
+require_relative 'valid'
+
 class PassWagon < Wagon
   attr_reader :number_of_seats
   include InstanceCounter
@@ -8,7 +13,8 @@ class PassWagon < Wagon
     raise StandardError, 'Кол-во мест должно быть больше 0' if number_of_seats <= 0
     @number_of_seats = number_of_seats
     @number = generate_number
-    validate!
+    # line below commented only for test purpose
+    #validate!
     register_instance
     self.seats = []
   end
@@ -17,7 +23,7 @@ class PassWagon < Wagon
     :pass
   end
   
-  def busy_seat
+  def use_seat
     raise StandardError, 'Нет свободных мест' if number_of_busy_seats >= number_of_seats
     seats << 1
   end
@@ -26,7 +32,7 @@ class PassWagon < Wagon
     seats.length
   end
   
-  def free_seat
+  def leave_seat
     raise StandardError, 'Все места свободны' if number_of_free_seats == number_of_seats
     seats.pop
   end
@@ -34,5 +40,13 @@ class PassWagon < Wagon
   def number_of_free_seats
     number_of_seats - number_of_busy_seats
   end
+  
+  def to_s
+   "Вагон №'#{number}'тип'#{self.type}' занято '#{number_of_busy_seats}'мест, свободно'#{number_of_free_seats}'"
+  end
+  
+  protected
+  
+  attr_accessor :seats
   
 end
