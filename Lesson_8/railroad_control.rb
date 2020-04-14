@@ -236,26 +236,46 @@ class Railroad
 
   def add_wagon
     puts 'Список существующих поездов:'
-    print_trains
-    puts 'Введите индекс нужного поезда'
-    accepting_train_index = gets.chomp.to_i #- 1
-    accepting_train = self.trains.at(accepting_train_index)
-    accepting_train_class = self.trains.at(accepting_train_index).class
+    self.print_trains
+    begin
+      train_index = gets_train_index
+      validate!(train_index, self.trains)
+    rescue StandardError => e
+      puts e
+      return
+    end
+    accepting_train = self.trains.at(train_index)
+    accepting_train_class = self.trains.at(train_index).class
     if accepting_train_class == CargoTrain
-      accepting_train.add_wagon(create_cargo_wagon)
+      begin
+        accepting_train.add_wagon(create_cargo_wagon)
+      rescue StandardError => e
+        puts e
+        return
+      end
     elsif accepting_train_class == PassTrain
-      accepting_train.add_wagon(create_pass_wagon)
+      begin
+        accepting_train.add_wagon(create_pass_wagon)
+      rescue StandardError => e
+        puts 'Ошибка создания вагона'
+        puts e
+        return
+      end
     end
     print "Вагон добавлен к поезду №'#{accepting_train.number}'"
   end
 
   def detach_wagon
     puts 'Список существующих поездов:'
-    print_trains
-    puts 'Введите индекс нужного поезда'
-    donor_train_index = gets.chomp.to_i # - 1
-    donor_train = self.trains.at(donor_train_index)
-    donor_train_class = self.trains.at(donor_train_index).class
+    self.print_trains
+    begin
+      train_index = gets_train_index
+      validate!(train_index, self.trains)
+    rescue StandardError => e
+      puts e
+      return
+    end
+    donor_train = self.trains.at(train_index)
     donor_train.wagons.pop
     print "Вагон отцеплен от поезда №'#{donor_train.number}'"
   end
@@ -328,7 +348,14 @@ class Railroad
 
   def gets_integer
     input = gets.chomp.lstrip.rstrip
-    return (input.empty? || /\D/.match(input)) ? input : input.to_i
+    return (input.empty? || /\D/.match(input)) ? "Повторите ввод" : input.to_i
+  end
+
+
+  def gets_wagon_attribute
+    input = gets.chomp.lstrip.rstrip
+    raise StandardError, "Повторите ввод" if input.empty? || /\D/.match(input)
+    input.to_i
   end
 
   def gets_train_number
@@ -385,12 +412,12 @@ class Railroad
 
   def gets_number_of_seats
     puts 'Введите кол-во мест в вагоне: '
-    gets_integer
+    gets_wagon_attribute
   end
 
   def gets_volume
     puts 'Введите объeм:'
-    gets_integer
+    gets_wagon_attribute
   end
 
   def create_cargo_wagon
