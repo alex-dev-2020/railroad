@@ -238,7 +238,7 @@ class Railroad
     puts 'Список существующих поездов:'
     print_trains
     puts 'Введите индекс нужного поезда'
-    accepting_train_index = gets.chomp.to_i - 1
+    accepting_train_index = gets.chomp.to_i #- 1
     accepting_train = self.trains.at(accepting_train_index)
     accepting_train_class = self.trains.at(accepting_train_index).class
     if accepting_train_class == CargoTrain
