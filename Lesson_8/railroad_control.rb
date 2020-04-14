@@ -242,33 +242,22 @@ class Railroad
     accepting_train = self.trains.at(accepting_train_index)
     accepting_train_class = self.trains.at(accepting_train_index).class
     if accepting_train_class == CargoTrain
-      # wagon = CargoWagon.new
       accepting_train.add_wagon(create_cargo_wagon)
     elsif accepting_train_class == PassTrain
-      # wagon = PassWagon.new
       accepting_train.add_wagon(create_pass_wagon)
     end
-    # lines below only for test purpose
     print "Вагон добавлен к поезду №'#{accepting_train.number}'"
-    puts "Вагоны поезда №#{accepting_train.number} #{accepting_train.wagons}'"
-    puts "Тип поезда '#{accepting_train.type}'"
-    # puts accepting_train.number 
-    # puts accepting_train.inspect
   end
 
   def detach_wagon
     puts 'Список существующих поездов:'
     print_trains
-    puts 'Введите номер нужного поезда'
-    donor_train_index = gets.chomp.to_i - 1
+    puts 'Введите индекс нужного поезда'
+    donor_train_index = gets.chomp.to_i # - 1
     donor_train = self.trains.at(donor_train_index)
     donor_train_class = self.trains.at(donor_train_index).class
-    puts donor_train_class
-    print donor_train.wagons
     donor_train.wagons.pop
-    puts
-    puts 'Вагон отцеплен'
-    print donor_train.wagons
+    print "Вагон отцеплен от поезда №'#{donor_train.number}'"
   end
 
 
