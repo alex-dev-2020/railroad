@@ -78,16 +78,15 @@ class Train
   end
 
   def accept_route(route)
-    #
     @route = route
     @current_station_index = 0
     self.current_station.train_in(self)
   end
-  
+
   def add_wagon(wagon)
     @wagons << wagon if @speed == 0
   end
-  
+
   def current_station
     station(self.current_station_index)
   end

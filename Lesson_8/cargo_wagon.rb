@@ -14,8 +14,6 @@ class CargoWagon < Wagon
     @total_volume = total_volume
     @number = generate_number
     @volume = 0
-    # line below commented only for test purpose
-    #validate!
     register_instance
   end
 

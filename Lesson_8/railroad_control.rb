@@ -156,6 +156,7 @@ class Railroad
       end
 
       puts "Станция '#{stations[station_index].name}' добавлена в маршрут"
+
     end
   end
 
@@ -194,6 +195,7 @@ class Railroad
       end
 
       puts "Станция '#{stations[station_index].name}' удалена из маршрута"
+
     end
   end
 
@@ -337,7 +339,6 @@ class Railroad
     puts 'Существующие поезда:'
     self.trains.each_with_index { |train, index| puts "[#{index}] #{train}" }
   end
-
 
   private
 

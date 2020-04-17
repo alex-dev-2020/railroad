@@ -13,8 +13,6 @@ class PassWagon < Wagon
     raise StandardError, 'Кол-во мест должно быть больше 0' if number_of_seats <= 0
     @number_of_seats = number_of_seats
     @number = generate_number
-    # line below commented only for test purpose
-    #validate!
     register_instance
     self.seats = []
   end
