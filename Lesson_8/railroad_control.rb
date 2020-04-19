@@ -320,6 +320,14 @@ class Railroad
     selected_station.trains.each.with_index(1) { |train, index| puts "'#{index}'поезд номер' #{train.number}'" }
   end
 
+  def print_trains_on_station(station)
+    puts "Станция: #{station.name} (поездов: #{station.trains.length})"
+    station.each_train do |train|
+      puts train.to_s
+      train.each_wagon { |wagon| puts wagon.to_s }
+      puts
+    end
+  end
 
   def validate!(index, object)
     raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
