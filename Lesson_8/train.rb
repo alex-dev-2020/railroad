@@ -77,6 +77,10 @@ class Train
     @speed = 0
   end
 
+  def to_s
+    "Поезд '№#{self.number}' тип '#{self.class}' вагонов '#{wagons_count}'"
+  end
+
   def accept_route(route)
     @route = route
     @current_station_index = 0

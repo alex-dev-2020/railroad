@@ -317,7 +317,8 @@ class Railroad
     puts 'Выбрана станция:'
     puts selected_station.name
     puts 'Список поездов на станции:'
-    selected_station.trains.each.with_index(1) { |train, index| puts "'#{index}'поезд номер' #{train.number}'" }
+    print_trains_on_station(selected_station)
+    # selected_station.trains.each.with_index(1) { |train, index| puts "'#{index}'поезд номер' #{train.number}'" }
   end
 
   def print_trains_on_station(station)
