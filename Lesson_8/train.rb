@@ -91,6 +91,10 @@ class Train
     @wagons << wagon if @speed == 0
   end
 
+  def wagons_count
+    self.wagons.length
+  end
+
   def current_station
     station(self.current_station_index)
   end
