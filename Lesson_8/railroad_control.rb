@@ -21,15 +21,15 @@ class Railroad
 
   # test object generation
   def seed
-    cargo_test_train = CargoTrain.new('cargo_test', '12345', 'tesla')
+    cargo_test_train = CargoTrain.new('123-45', 'tesla')
     @trains << cargo_test_train
-    pass_test_train = PassTrain.new('pass_test', '54321', 'bosh')
+    pass_test_train = PassTrain.new('543-21', 'bosh')
     @trains << pass_test_train
-    test_station_1 = Station.new('test_st_1')
+    test_station_1 = Station.new('test-st-1')
     @stations << test_station_1
-    test_station_2 = Station.new('test_station_2')
+    test_station_2 = Station.new('test-station-2')
     @stations << test_station_2
-    test_station_3 = Station.new('test_station_3')
+    test_station_3 = Station.new('test-station-3')
     route_test = Route.new(test_station_1, test_station_2)
     @routes << route_test
   end
