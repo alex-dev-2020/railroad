@@ -24,6 +24,7 @@ class Station
     @trains.each { |number, train| block.call(train) } if block_given?
   end
 
+
   def self.all
     @@list
   end

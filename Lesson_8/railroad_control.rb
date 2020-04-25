@@ -19,6 +19,21 @@ class Railroad
     gets.chomp
   end
 
+  # test object generation
+  def seed
+    cargo_test_train = CargoTrain.new('cargo_test', '12345', 'tesla')
+    @trains << cargo_test_train
+    pass_test_train = PassTrain.new('pass_test', '54321', 'bosh')
+    @trains << pass_test_train
+    test_station_1 = Station.new('test_st_1')
+    @stations << test_station_1
+    test_station_2 = Station.new('test_station_2')
+    @stations << test_station_2
+    test_station_3 = Station.new('test_station_3')
+    route_test = Route.new(test_station_1, test_station_2)
+    @routes << route_test
+  end
+
   def create_station
     begin
       station_name = gets_station_name
@@ -317,14 +332,15 @@ class Railroad
     puts 'Выбрана станция:'
     puts selected_station.name
     puts 'Список поездов на станции:'
-    selected_station.trains.each.with_index(1) { |train, index| puts "'#{index}'поезд номер' #{train.number}'" }
+    print_trains_on_station(selected_station)
+    # selected_station.trains.each.with_index(1) { |train, index| puts "'#{index}'поезд номер' #{train.number}'" }
   end
 
   def print_trains_on_station(station)
     puts "Станция: #{station.name} (поездов: #{station.trains.length})"
     station.each_train do |train|
       puts train.to_s
-      train.each_wagon { |wagon| puts wagon.to_s }
+      # train.each_wagon { |wagon| puts wagon.to_s }
       puts
     end
   end
