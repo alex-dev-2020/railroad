@@ -8,7 +8,8 @@ class Railroad
     @stations = []
     @routes = []
     @trains = []
-    @trains = []
+    @wagons = []
+    # @trains = []
   end
 
 
@@ -45,6 +46,11 @@ class Railroad
     puts self.stations
     puts self.routes
     
+    puts "Поезда & вагоны"
+    puts cargo_test_train
+    puts cargo_test_train.wagons
+    puts pass_test_train
+    puts pass_test_train.wagons
   end
 
   def create_station
@@ -108,7 +114,11 @@ class Railroad
     end
 
     @trains << train
-    "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}"
+    
+  
+     #puts methd below for test purpose only
+     puts  "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}, вагонов #{train.wagons}"
+     
   end
 
 
