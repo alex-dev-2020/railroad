@@ -8,7 +8,8 @@ class Railroad
     @stations = []
     @routes = []
     @trains = []
-    @trains = []
+    @wagons = []
+    # @trains = []
   end
 
 
@@ -22,8 +23,10 @@ class Railroad
 # test object generation
   def seed
     cargo_test_train = CargoTrain.new('123-45', 'tesla')
+    cargo_test_train.add_wagon(100)
     @trains << cargo_test_train
     pass_test_train = PassTrain.new('543-21', 'bosh')
+    pass_test_train.add_wagon(45)
     @trains << pass_test_train
     test_station_1 = Station.new('test-st-1')
     @stations << test_station_1
@@ -32,6 +35,22 @@ class Railroad
     test_station_3 = Station.new('test-station-3')
     route_test = Route.new(test_station_1, test_station_2)
     @routes << route_test
+
+    #lines below for test purpose only !
+    self.print_trains
+    self.print_stations
+    self.print_routes
+
+    puts "Объекты в столбик"
+    puts self.trains
+    puts self.stations
+    puts self.routes
+
+    puts "Поезда & вагоны"
+    puts cargo_test_train
+    puts cargo_test_train.wagons
+    puts pass_test_train
+    puts pass_test_train.wagons
   end
 
   def create_station
@@ -95,7 +114,11 @@ class Railroad
     end
 
     @trains << train
-    puts "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}"
+
+
+    #puts methd below for test purpose only
+    puts "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}, вагонов #{train.wagons}"
+
   end
 
 
