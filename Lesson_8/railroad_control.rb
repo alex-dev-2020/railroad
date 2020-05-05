@@ -340,7 +340,7 @@ class Railroad
     puts "Станция: #{station.name} (поездов: #{station.trains.length})"
     station.each_train do |train|
       puts train.to_s
-      # train.each_wagon { |wagon| puts wagon.to_s }
+      train.each_wagon { |wagon| puts wagon.to_s }
       puts
     end
   end
