@@ -19,7 +19,7 @@ class Railroad
     gets.chomp
   end
 
-  # test object generation
+# test object generation
   def seed
     cargo_test_train = CargoTrain.new('123-45', 'tesla')
     @trains << cargo_test_train
@@ -95,7 +95,7 @@ class Railroad
     end
 
     @trains << train
-    "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}"
+    puts "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}"
   end
 
 
@@ -246,7 +246,7 @@ class Railroad
       end
 
       self.trains[train_index].accept_route(self.routes[route_index])
-      "Mаршрут '#{self.routes[route_index].stations.first}' -> '#{self.routes[route_index].stations.last}' добавлен поезду '#{self.trains[train_index].number}'"
+      puts "Mаршрут '#{self.routes[route_index].stations.first}' -> '#{self.routes[route_index].stations.last}' добавлен поезду '#{self.trains[train_index].number}'"
 
     end
   end
@@ -340,10 +340,11 @@ class Railroad
     puts "Станция: #{station.name} (поездов: #{station.trains.length})"
     station.each_train do |train|
       puts train.to_s
-      # train.each_wagon { |wagon| puts wagon.to_s }
+      train.each_wagon { |wagon| puts wagon.to_s }
       puts
     end
   end
+
 
   def validate!(index, object)
     raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
@@ -361,7 +362,7 @@ class Railroad
 
   def print_trains
     puts 'Существующие поезда:'
-    self.trains.each_with_index { |train, index| puts "[#{index}] #{train}" }
+    self.trains.each_with_index { |train, index| puts "#{index} #{train.to_s} " }
   end
 
   private
