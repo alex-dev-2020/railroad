@@ -32,6 +32,9 @@ class Railroad
     test_station_3 = Station.new('test-station-3')
     route_test = Route.new(test_station_1, test_station_2)
     @routes << route_test
+    self.print_trains
+    self.print_stations
+    self.print_routes
   end
 
   def create_station
