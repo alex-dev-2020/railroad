@@ -70,7 +70,7 @@ loop do
     puts 'Вывод списка поездов на станции'
     my_railroad.show_train_list
   when '11'
-    puts 'генерация тестовых объектов'
+    puts 'Генерация тестовых объектов'
     my_railroad.seed
   when '0'
     puts 'Завершение работы.'
