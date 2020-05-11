@@ -52,9 +52,13 @@ class Train
     raise StandardError, "Неправильный формат номера (#{self.number})" if self.number !~ RGXP_TRAIN_NUMBER_FORMAT
   end
 
-  def each_wagon(&block)
-    self.wagons.each { |wagon| block.call(wagon) } if block_given?
+  def each_wagon
+    wagons.each { |wagon| yield(wagon) } if block_given?
   end
+  
+  # def each_wagon(&block)
+  #   self.wagons.each { |wagon| block.call(wagon) } if block_given?
+  # end
 
   def self.list
     @@list
