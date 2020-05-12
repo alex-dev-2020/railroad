@@ -9,7 +9,6 @@ class Railroad
     @routes = []
     @trains = []
     @wagons = []
-    # @trains = []
   end
 
 
@@ -20,37 +19,52 @@ class Railroad
     gets.chomp
   end
 
-  # test object generation
+# test object generation
   def seed
     cargo_test_train = CargoTrain.new('123-45', 'tesla')
-    cargo_test_train.add_wagon(100)
+    cargo_test_wagon = CargoWagon.new(100)
+    cargo_test_train.add_wagon(cargo_test_wagon)
     @trains << cargo_test_train
     pass_test_train = PassTrain.new('543-21', 'bosh')
-    pass_test_train.add_wagon(45)
+    pass_test_wagon = PassWagon.new(45)
+    pass_test_train.add_wagon(pass_test_wagon)
     @trains << pass_test_train
-    test_station_1 = Station.new('test-st-1')
+    test_station_1 = Station.new('test-station-1')
     @stations << test_station_1
     test_station_2 = Station.new('test-station-2')
     @stations << test_station_2
     test_station_3 = Station.new('test-station-3')
     route_test = Route.new(test_station_1, test_station_2)
     @routes << route_test
-    
+
     #lines below for test purpose only !
-    self.print_trains
-    self.print_stations
-    self.print_routes
-    
-    puts "Объекты в столбик"
-    puts self.trains
-    puts self.stations
-    puts self.routes
-    
+    # self.print_trains
+    # self.print_stations
+    # self.print_routes
+    #
+    # puts "Объекты в столбик"
+    # puts self.trains
+    # puts self.stations
+    # puts self.routes
+    #
     puts "Поезда & вагоны"
-    puts cargo_test_train
-    puts cargo_test_train.wagons
-    puts pass_test_train
-    puts pass_test_train.wagons
+    # puts self.trains
+    print cargo_test_train
+    puts
+    print cargo_test_train.to_s
+    puts
+    print cargo_test_train.wagons
+    puts
+    print cargo_test_wagon.to_s
+    puts
+    print pass_test_train
+    puts
+    print pass_test_train.to_s
+    puts
+    print pass_test_train.wagons
+    puts
+    print pass_test_wagon.to_s
+    puts
   end
 
   def create_station
@@ -114,11 +128,11 @@ class Railroad
     end
 
     @trains << train
-    
-  
-     #puts methd below for test purpose only
-     puts  "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}, вагонов #{train.wagons}"
-     
+
+
+    #puts methd below for test purpose only
+    puts "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}, вагонов #{train.wagons}"
+
   end
 
 
@@ -269,7 +283,7 @@ class Railroad
       end
 
       self.trains[train_index].accept_route(self.routes[route_index])
-      "Mаршрут '#{self.routes[route_index].stations.first}' -> '#{self.routes[route_index].stations.last}' добавлен поезду '#{self.trains[train_index].number}'"
+      puts "Mаршрут '#{self.routes[route_index].stations.first}' -> '#{self.routes[route_index].stations.last}' добавлен поезду '#{self.trains[train_index].number}'"
 
     end
   end
@@ -288,21 +302,24 @@ class Railroad
     accepting_train_class = self.trains.at(train_index).class
     if accepting_train_class == CargoTrain
       begin
-        accepting_train.add_wagon(create_cargo_wagon)
+        wagon = create_cargo_wagon
       rescue StandardError => e
         puts e
         return
       end
     elsif accepting_train_class == PassTrain
       begin
-        accepting_train.add_wagon(create_pass_wagon)
+        wagon = create_pass_wagon
       rescue StandardError => e
         puts 'Ошибка создания вагона'
         puts e
         return
       end
     end
-    print "Вагон добавлен к поезду №'#{accepting_train.number}'"
+    accepting_train.add_wagon(wagon)
+    # puts  below for test purpose only
+    # puts "Вагоны '#{accepting_train.wagons}'поезда №'#{accepting_train.number}'"
+    puts "Вагон № #{wagon.number} тип #{wagon.class} добавлен к поезду №'#{accepting_train.number}'"
   end
 
   def detach_wagon
@@ -361,12 +378,25 @@ class Railroad
 
   def print_trains_on_station(station)
     puts "Станция: #{station.name} (поездов: #{station.trains.length})"
+    # puts "Станция: #{station.name} (поездов: #{station.trains})"
     station.each_train do |train|
       puts train.to_s
-      train.each_wagon { |wagon| puts wagon.to_s }
-      puts
+      train.each_wagon do |wagon|
+        puts wagon.to_s
+        puts
+      end
     end
   end
+
+# def print_trains_on_station(station)
+#   puts "Станция: #{station.name} (поездов: #{station.trains.length})"
+#   station.each_train do |train|
+#     puts train.to_s
+#     train.each_wagon { |wagon| puts wagon.to_s }
+#     puts
+#   end
+# end
+
 
   def validate!(index, object)
     raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
@@ -384,7 +414,7 @@ class Railroad
 
   def print_trains
     puts 'Существующие поезда:'
-    self.trains.each_with_index { |train, index| puts "[#{index}] #{train}" }
+    self.trains.each_with_index { |train, index| puts "#{index} #{train.to_s} " }
   end
 
   private
