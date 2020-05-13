@@ -49,20 +49,20 @@ class Railroad
     #
     puts "Поезда & вагоны"
     # puts self.trains
-    print cargo_test_train
-    puts
+    # print cargo_test_train
+    # puts
     print cargo_test_train.to_s
     puts
-    print cargo_test_train.wagons
-    puts
+    # print cargo_test_train.wagons
+    # puts
     print cargo_test_wagon.to_s
     puts
-    print pass_test_train
-    puts
+    # print pass_test_train
+    # puts
     print pass_test_train.to_s
     puts
-    print pass_test_train.wagons
-    puts
+    # print pass_test_train.wagons
+    # puts
     print pass_test_wagon.to_s
     puts
   end
@@ -283,7 +283,7 @@ class Railroad
       end
 
       self.trains[train_index].accept_route(self.routes[route_index])
-      puts "Mаршрут '#{self.routes[route_index].stations.first}' -> '#{self.routes[route_index].stations.last}' добавлен поезду '#{self.trains[train_index].number}'"
+      puts "Mаршрут '#{self.routes[route_index].stations.first}' -> '#{self.routes[route_index].stations.last}' назначен поезду '#{self.trains[train_index].number}'"
 
     end
   end
@@ -379,11 +379,11 @@ class Railroad
   def print_trains_on_station(station)
     puts "Станция: #{station.name} (поездов: #{station.trains.length})"
     # puts "Станция: #{station.name} (поездов: #{station.trains})"
-    station.each_train do |train|
+    station.each_train do |number, train|
       puts train.to_s
+      puts "Вагоны:"
       train.each_wagon do |wagon|
         puts wagon.to_s
-        puts
       end
     end
   end
