@@ -36,33 +36,22 @@ class Railroad
     test_station_3 = Station.new('test-station-3')
     route_test = Route.new(test_station_1, test_station_2)
     @routes << route_test
-
-    #lines below for test purpose only !
-    # self.print_trains
-    # self.print_stations
-    # self.print_routes
-    #
-    # puts "Объекты в столбик"
-    # puts self.trains
-    # puts self.stations
-    # puts self.routes
-    #
+    puts "Станции"
+    puts test_station_1.name
+    puts test_station_2.name
+    puts test_station_3.name
+    puts
+    puts "Маршруты"
+    puts
+    puts route_test.to_s
+    puts
     puts "Поезда & вагоны"
-    # puts self.trains
-    # print cargo_test_train
-    # puts
     print cargo_test_train.to_s
     puts
-    # print cargo_test_train.wagons
-    # puts
     print cargo_test_wagon.to_s
     puts
-    # print pass_test_train
-    # puts
     print pass_test_train.to_s
     puts
-    # print pass_test_train.wagons
-    # puts
     print pass_test_wagon.to_s
     puts
   end
