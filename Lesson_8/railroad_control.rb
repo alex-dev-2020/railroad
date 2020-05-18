@@ -36,33 +36,22 @@ class Railroad
     test_station_3 = Station.new('test-station-3')
     route_test = Route.new(test_station_1, test_station_2)
     @routes << route_test
-
-    #lines below for test purpose only !
-    # self.print_trains
-    # self.print_stations
-    # self.print_routes
-    #
-    # puts "Объекты в столбик"
-    # puts self.trains
-    # puts self.stations
-    # puts self.routes
-    #
+    puts "Станции"
+    puts test_station_1.name
+    puts test_station_2.name
+    puts test_station_3.name
+    puts
+    puts "Маршруты"
+    puts
+    puts route_test.to_s
+    puts
     puts "Поезда & вагоны"
-    # puts self.trains
-    # print cargo_test_train
-    # puts
     print cargo_test_train.to_s
     puts
-    # print cargo_test_train.wagons
-    # puts
     print cargo_test_wagon.to_s
     puts
-    # print pass_test_train
-    # puts
     print pass_test_train.to_s
     puts
-    # print pass_test_train.wagons
-    # puts
     print pass_test_wagon.to_s
     puts
   end
@@ -289,8 +278,8 @@ class Railroad
   end
 
   def add_wagon
-    puts 'Список существующих поездов:'
-    self.print_trains
+    puts 'Список существующих поездов c вагонами:'
+    self.print_trains_wth_wagons
     begin
       train_index = gets_train_index
       validate!(train_index, self.trains)
@@ -323,8 +312,8 @@ class Railroad
   end
 
   def detach_wagon
-    puts 'Список существующих поездов:'
-    self.print_trains
+    puts 'Список существующих поездов с вагонами:'
+    self.print_trains_wth_wagons
     begin
       train_index = gets_train_index
       validate!(train_index, self.trains)
@@ -388,15 +377,6 @@ class Railroad
     end
   end
 
-# def print_trains_on_station(station)
-#   puts "Станция: #{station.name} (поездов: #{station.trains.length})"
-#   station.each_train do |train|
-#     puts train.to_s
-#     train.each_wagon { |wagon| puts wagon.to_s }
-#     puts
-#   end
-# end
-
 
   def validate!(index, object)
     raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
@@ -415,6 +395,17 @@ class Railroad
   def print_trains
     puts 'Существующие поезда:'
     self.trains.each_with_index { |train, index| puts "#{index} #{train.to_s} " }
+  end
+
+  def print_trains_wth_wagons
+    puts 'Существующие поезда и вагоны :'
+    self.trains.each_with_index do |train, index|
+      puts "#{index} #{train.to_s} "
+      puts "Вагоны:"
+      train.each_wagon do |wagon|
+        puts wagon.to_s
+      end
+    end
   end
 
   private

@@ -14,7 +14,11 @@ class Route
   def validate!
     raise StandardError, 'Начальная и конечная  станции маршрута должны различаться' if self.stations[0] == self.stations[1]
   end
-
+  
+  def to_s
+    "Маршрут '#{ self.stations.first.name} -> #{self.stations.last.name}'"
+  end
+  
   def self.list
     @@list
   end
