@@ -278,8 +278,8 @@ class Railroad
   end
 
   def add_wagon
-    puts 'Список существующих поездов:'
-    self.print_trains
+    puts 'Список существующих поездов c с вагонами:'
+    self.print_trains_wth_wagons
     begin
       train_index = gets_train_index
       validate!(train_index, self.trains)
@@ -312,8 +312,8 @@ class Railroad
   end
 
   def detach_wagon
-    puts 'Список существующих поездов:'
-    self.print_trains
+    puts 'Список существующих поездов с вагонами:'
+    self.print_trains_wth_wagons
     begin
       train_index = gets_train_index
       validate!(train_index, self.trains)
