@@ -278,7 +278,7 @@ class Railroad
   end
 
   def add_wagon
-    puts 'Список существующих поездов c с вагонами:'
+    puts 'Список существующих поездов c вагонами:'
     self.print_trains_wth_wagons
     begin
       train_index = gets_train_index
