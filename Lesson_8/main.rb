@@ -69,7 +69,7 @@ loop do
     # my_railroad.move_train_back
   when '9'
     puts 'Получить список вагонов у поезда'
-    # my_railroad.show_wagons_list
+    my_railroad.print_trains_wth_wagons
   when '10'
     puts 'Добавление вагона к поезду'
     my_railroad.add_wagon
