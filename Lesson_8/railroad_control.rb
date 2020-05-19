@@ -330,13 +330,13 @@ class Railroad
   def move_train
     puts 'Список существующих поездов:'
     print_trains
-    puts 'Введите номер нужного поезда'
-    selected_train_index = gets.chomp.to_i - 1
+    puts 'Введите индекс нужного поезда'
+    selected_train_index = gets.chomp.to_i
     selected_train = self.trains.at(selected_train_index)
     puts 'Выбран поезд:'
     puts selected_train.number
     puts 'Поезду назначен маршрут:'
-    puts "'#{selected_train.route.stations.first.name}'-> '#{selected_train.route.stations.last.name}'"
+    puts selected_train.route.to_s
     puts 'Текущая станция:'
     puts selected_train.current_station.name
     puts 'Выберите направление движения:'
