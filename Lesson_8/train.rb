@@ -55,7 +55,7 @@ class Train
   def each_wagon
     wagons.each { |wagon| yield(wagon) } if block_given?
   end
-  
+
   # def each_wagon(&block)
   #   self.wagons.each { |wagon| block.call(wagon) } if block_given?
   # end
@@ -100,15 +100,15 @@ class Train
   end
 
   def current_station
-    station(self.current_station_index)
+    station(current_station_index)
   end
 
   def previous_station
-    station(self.current_station_index - 1)
+    station(current_station_index - 1)
   end
 
   def next_station
-    station(self.current_station_index + 1)
+    station(current_station_index + 1)
   end
 
 

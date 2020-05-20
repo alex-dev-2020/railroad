@@ -278,8 +278,8 @@ class Railroad
   end
 
   def add_wagon
-    puts 'Список существующих поездов:'
-    self.print_trains
+    puts 'Список существующих поездов c вагонами:'
+    self.print_trains_wth_wagons
     begin
       train_index = gets_train_index
       validate!(train_index, self.trains)
@@ -310,8 +310,8 @@ class Railroad
   end
 
   def detach_wagon
-    puts 'Список существующих поездов:'
-    self.print_trains
+    puts 'Список существующих поездов с вагонами:'
+    self.print_trains_wth_wagons
     begin
       train_index = gets_train_index
       validate!(train_index, self.trains)
@@ -328,8 +328,8 @@ class Railroad
   def move_train
     puts 'Список существующих поездов:'
     print_trains
-    puts 'Введите номер нужного поезда'
-    selected_train_index = gets.chomp.to_i - 1
+    puts 'Введите индекс нужного поезда'
+    selected_train_index = gets.chomp.to_i
     selected_train = self.trains.at(selected_train_index)
     puts 'Выбран поезд:'
     puts selected_train.number
@@ -380,15 +380,6 @@ class Railroad
     end
   end
 
-# def print_trains_on_station(station)
-#   puts "Станция: #{station.name} (поездов: #{station.trains.length})"
-#   station.each_train do |train|
-#     puts train.to_s
-#     train.each_wagon { |wagon| puts wagon.to_s }
-#     puts
-#   end
-# end
-
 
   def validate!(index, object)
     raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
@@ -407,6 +398,17 @@ class Railroad
   def print_trains
     puts 'Существующие поезда:'
     self.trains.each_with_index { |train, index| puts "#{index} #{train.to_s} " }
+  end
+
+  def print_trains_wth_wagons
+    puts 'Существующие поезда и вагоны :'
+    self.trains.each_with_index do |train, index|
+      puts "#{index} #{train.to_s} "
+      puts "Вагоны:"
+      train.each_wagon do |wagon|
+        puts wagon.to_s
+      end
+    end
   end
 
   private
