@@ -306,8 +306,6 @@ class Railroad
       end
     end
     accepting_train.add_wagon(wagon)
-    # puts  below for test purpose only
-    # puts "Вагоны '#{accepting_train.wagons}'поезда №'#{accepting_train.number}'"
     puts "Вагон № #{wagon.number} тип #{wagon.class} добавлен к поезду №'#{accepting_train.number}'"
   end
 
@@ -335,21 +333,26 @@ class Railroad
     selected_train = self.trains.at(selected_train_index)
     puts 'Выбран поезд:'
     puts selected_train.number
-    puts 'Поезду назначен маршрут:'
-    puts "'#{selected_train.route.stations.first.name}'-> '#{selected_train.route.stations.last.name}'"
-    puts 'Текущая станция:'
-    puts selected_train.current_station.name
-    puts 'Выберите направление движения:'
-    puts '1-вперед, 2 - назад'
-    selected_direction = gets.chomp.to_i
-    if selected_direction == 1
-      selected_train.move_forward
-      puts 'Следующая станция'
-      puts selected_train.next_station.name
-    elsif selected_direction == 2
-      selected_train.move_back
-      puts 'Следующая станция'
-      puts selected_train.previous_station.name
+    if selected_train.routes.empty?
+      puts 'Поезду не назначено ни одного маршрута'
+      return
+    else
+      puts 'Поезду назначен маршрут:'
+      puts "'#{selected_train.route.stations.first.name}'-> '#{selected_train.route.stations.last.name}'"
+      puts 'Текущая станция:'
+      puts selected_train.current_station.name
+      puts 'Выберите направление движения:'
+      puts '1-вперед, 2 - назад'
+      selected_direction = gets.chomp.to_i
+      if selected_direction == 1
+        selected_train.move_forward
+        puts 'Следующая станция'
+        puts selected_train.next_station.name
+      elsif selected_direction == 2
+        selected_train.move_back
+        puts 'Следующая станция'
+        puts selected_train.previous_station.name
+      end
     end
   end
 
