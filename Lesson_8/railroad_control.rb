@@ -333,7 +333,7 @@ class Railroad
     selected_train = self.trains.at(selected_train_index)
     puts 'Выбран поезд:'
     puts selected_train.number
-    if selected_train.routes.empty?
+    if selected_train.route.nil?
       puts 'Поезду не назначено ни одного маршрута'
       return
     else
