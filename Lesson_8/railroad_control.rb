@@ -351,7 +351,9 @@ class Railroad
       elsif selected_direction == 2
         selected_train.move_back
         puts 'Следующая станция'
-        puts selected_train.previous_station.name
+        # puts selected_train.previous_station.name
+        #корректность вообще определения предыдущей станции
+        puts selected_train.previous_station
       end
     end
   end

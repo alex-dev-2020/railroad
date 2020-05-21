@@ -36,7 +36,7 @@ class Train
   ]
 
 
-  def initialize (number, made_by)
+  def initialize(number, made_by)
     @number = number
     @made_by = made_by
     @wagons = []
@@ -88,6 +88,7 @@ class Train
   def accept_route(route)
     @route = route
     @current_station_index = 0
+    # current_station = 
     self.current_station.train_in(self)
   end
 
@@ -100,15 +101,15 @@ class Train
   end
 
   def current_station
-    station(current_station_index)
+    @route.stations[current_station_index]
   end
 
   def previous_station
-    station(current_station_index - 1)
+    @route.stations[current_station_index - 1]
   end
 
   def next_station
-    station(current_station_index + 1)
+    @route.stations[current_station_index + 1]
   end
 
 
