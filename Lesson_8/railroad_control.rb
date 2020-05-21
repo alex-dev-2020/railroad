@@ -337,8 +337,7 @@ class Railroad
     puts selected_train.number
     puts 'Поезду назначен маршрут:'
     puts selected_train.route.to_s
-    puts 'Текущая станция:'
-    puts selected_train.current_station.name
+    puts 'Текущая станция:'    puts selected_train.current_station.name
     puts 'Выберите направление движения:'
     puts '1-вперед, 2 - назад'
     selected_direction = gets.chomp.to_i
