@@ -89,7 +89,7 @@ class Train
     @route = route
     @current_station_index = 0
     # current_station = 
-    self.current_station.train_in(self)
+    route.stations[current_station_index].train_in(self)
   end
 
   def add_wagon(wagon)
@@ -101,7 +101,7 @@ class Train
   end
 
   def current_station
-    @route.stations[current_station_index]
+     @route.stations[current_station_index]
   end
 
   def previous_station
@@ -109,7 +109,7 @@ class Train
   end
 
   def next_station
-    @route.stations[current_station_index + 1]
+     @route.stations[current_station_index + 1]
   end
 
 

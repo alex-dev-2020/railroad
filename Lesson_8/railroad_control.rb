@@ -34,6 +34,7 @@ class Railroad
     test_station_2 = Station.new('test-station-2')
     @stations << test_station_2
     test_station_3 = Station.new('test-station-3')
+    @stations << test_station_3
     route_test = Route.new(test_station_1, test_station_2)
     @routes << route_test
     puts "Станции"
@@ -272,8 +273,10 @@ class Railroad
       end
 
       self.trains[train_index].accept_route(self.routes[route_index])
-      puts "Mаршрут '#{self.routes[route_index].stations.first}' -> '#{self.routes[route_index].stations.last}' назначен поезду '#{self.trains[train_index].number}'"
-
+      puts "Mаршрут '#{self.routes[route_index].stations.first.name}}' -> '#{self.routes[route_index].stations.last.name}}' назначен поезду '#{self.trains[train_index].number}'"
+      # lines below for test purpose only
+      puts "Текущая станция #{self.routes[route_index].stations.first.name}"
+      puts "Текущая станция #{self.trains[train_index].current_station.name}"
     end
   end
 
@@ -351,9 +354,7 @@ class Railroad
       elsif selected_direction == 2
         selected_train.move_back
         puts 'Следующая станция'
-        # puts selected_train.previous_station.name
-        #корректность вообще определения предыдущей станции
-        puts selected_train.previous_station
+        puts selected_train.previous_station.name
       end
     end
   end
