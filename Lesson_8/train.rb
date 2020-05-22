@@ -89,7 +89,8 @@ class Train
     @route = route
     @current_station_index = 0
     # current_station = 
-    route.stations[current_station_index].train_in(self)
+    route.stations[@current_station_index].train_in(self)
+    # puts "Поезд на станции  #{route.stations.first.name}"
   end
 
   def add_wagon(wagon)
@@ -101,29 +102,42 @@ class Train
   end
 
   def current_station
-     @route.stations[current_station_index]
+    self.station(@current_station_index)
   end
 
   def previous_station
-    @route.stations[current_station_index - 1]
+    self.station(@current_station_index - 1)
   end
 
   def next_station
-     @route.stations[current_station_index + 1]
+    self.station(@current_station_index + 1)
   end
-
-
+  
   def move_forward
-    self.current_station.train_out(self)
-    next_station.train_in(self)
+    if self.next_station.nil?
+      raise StandardError, "Это последняя станция маршрута  #{self.route}"
+      return
+    else
+      self.current_station.train_out(self)
+      self.next_station.train_in(self)
+      # @current_station_index += 1
+    end
   end
 
   def move_back
-    self.current_station.train_out(self)
-    self.previous_station.train_in(self)
+    if self.previous_station.nil?
+      raise StandardError, "Это первая станция маршрута  #{self.route}"
+      return
+    else
+      self.current_station.train_out(self)
+      self.previous_station.train_in(self)
+      # @current_station_index -= 1
+    end
   end
 
-  private
+  # private
+
+  protected
 
   def station(n)
     (n >= 0 && n < self.route.stations.length) ? self.route.stations[n] : nil

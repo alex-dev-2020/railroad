@@ -251,7 +251,6 @@ class Railroad
       puts 'Список маршрутов пуст'
       return
     else
-
       self.print_routes
 
       begin
@@ -271,12 +270,8 @@ class Railroad
         puts e
         return
       end
-
       self.trains[train_index].accept_route(self.routes[route_index])
       puts "Mаршрут '#{self.routes[route_index].stations.first.name}}' -> '#{self.routes[route_index].stations.last.name}}' назначен поезду '#{self.trains[train_index].number}'"
-      # lines below for test purpose only
-      puts "Текущая станция #{self.routes[route_index].stations.first.name}"
-      puts "Текущая станция #{self.trains[train_index].current_station.name}"
     end
   end
 
@@ -348,16 +343,27 @@ class Railroad
       puts '1-вперед, 2 - назад'
       selected_direction = gets.chomp.to_i
       if selected_direction == 1
-        selected_train.move_forward
+        begin
+          selected_train.move_forward
+        rescue StandardError => e
+          puts e
+          return
+        end
         puts 'Следующая станция'
         puts selected_train.next_station.name
       elsif selected_direction == 2
-        selected_train.move_back
+        begin
+          selected_train.move_back
+        rescue StandardError => e
+          puts e
+          return
+        end
         puts 'Следующая станция'
         puts selected_train.previous_station.name
       end
     end
   end
+
 
   def show_train_list
     self.stations.each.with_index(1) { |station, index| puts "#{index} #{station.name}" }
@@ -512,5 +518,5 @@ class Railroad
     volume = gets_volume
     wagon.unload(volume)
   end
-
 end
+
