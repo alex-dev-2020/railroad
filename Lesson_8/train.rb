@@ -89,8 +89,8 @@ class Train
     @route = route
     @current_station_index = 0
     # current_station = 
-    route.stations.first.train_in(self)
-    puts route.stations.first.name
+    route.stations[@current_station_index].train_in(self)
+    # puts "Поезд на станции  #{route.stations.first.name}"
   end
 
   def add_wagon(wagon)
@@ -102,38 +102,42 @@ class Train
   end
 
   def current_station
-    self.route.stations[current_station_index]
+    self.station(@current_station_index)
   end
 
-  # def previous_station
-  #   self.route.stations[current_station_index - 1]
-  # end
-  #
-  # def next_station
-  #   self.route.stations[current_station_index + 1]
-  # end
+  def previous_station
+    self.station(@current_station_index - 1)
+  end
+
+  def next_station
+    self.station(@current_station_index + 1)
+  end
 
   def move_forward
-    # 2 lines below only for test
-    puts self.current_station.name
-    # puts self.next_station.name
-    self.current_station.train_out(self)
-    @current_station_index += 1
-    self.current_station.train_in(self)
-    puts "Следующая станция #{self.current_station.name}"
+    if self.next_station.nil?
+      raise StandardError, "Это последняя станция маршрута  #{self.route}"
+      return
+    else
+      self.current_station.train_out(self)
+      self.next_station.train_in(self)
+      # @current_station_index += 1
+    end
   end
 
   def move_back
-    # 2 lines below only for test
-    # puts self.current_station.name
-    # puts self.previous_station.name
-    self.current_station.train_out(self)
-    @current_station_index -= 1
-    self.current_station.train_in(self)
-    puts "Следующая станция #{self.current_station.name}"
+    if self.previous_station.nil?
+      raise StandardError, "Это первая станция маршрута  #{self.route}"
+      return
+    else
+      self.current_station.train_out(self)
+      self.previous_station.train_in(self)
+      # @current_station_index -= 1
+    end
   end
 
-  private
+  # private
+
+  protected
 
   def station(n)
     (n >= 0 && n < self.route.stations.length) ? self.route.stations[n] : nil

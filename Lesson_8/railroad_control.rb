@@ -251,7 +251,6 @@ class Railroad
       puts 'Список маршрутов пуст'
       return
     else
-
       self.print_routes
 
       begin
@@ -344,18 +343,27 @@ class Railroad
       puts '1-вперед, 2 - назад'
       selected_direction = gets.chomp.to_i
       if selected_direction == 1
-        selected_train.move_forward
+        begin
+          selected_train.move_forward
+        rescue StandardError => e
+          puts e
+          return
+        end
         puts 'Следующая станция'
-        puts selected_train.current_station.name
+        puts selected_train.next_station.name
       elsif selected_direction == 2
-        selected_train.move_back
+        begin
+          selected_train.move_back
+        rescue StandardError => e
+          puts e
+          return
+        end
         puts 'Следующая станция'
-        puts selected_train.current_station.name
-        #корректность вообще определения предыдущей станции
-        # puts selected_train.previous_station.name
+        puts selected_train.previous_station.name
       end
     end
   end
+
 
   def show_train_list
     self.stations.each.with_index(1) { |station, index| puts "#{index} #{station.name}" }
@@ -510,5 +518,5 @@ class Railroad
     volume = gets_volume
     wagon.unload(volume)
   end
-
 end
+
