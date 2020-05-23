@@ -56,7 +56,7 @@ class Railroad
     end
     @stations << station
     # just for test
-    puts "Cоздана станция'#{station_name}'"
+    puts "Создана станция'#{station_name}'"
   end
 
   def create_train
@@ -105,13 +105,7 @@ class Railroad
       puts e
       retry
     end
-
     @trains << train
-
-
-    #puts methd below for test purpose only
-    puts "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}, вагонов #{train.wagons}"
-
   end
 
 
@@ -119,9 +113,7 @@ class Railroad
     if self.stations.length < 2
       puts 'Количество существующих станций меньше 2'
       return
-
     else
-
       self.print_stations
 
       begin
@@ -372,7 +364,13 @@ class Railroad
       return
     end
     donor_train = self.trains.at(train_index)
-    donor_train.wagons.pop
+    if donor_train.wagons.empty?
+      puts "У данного поезда нет вагонов"
+      return
+    else
+      donor_train.wagons.pop
+    end
+
     print "Вагон отцеплен от поезда №'#{donor_train.number}'"
   end
 
@@ -427,7 +425,6 @@ class Railroad
     puts selected_station.name
     puts 'Список поездов на станции:'
     print_trains_on_station(selected_station)
-    # selected_station.trains.each.with_index(1) { |train, index| puts "'#{index}'поезд номер' #{train.number}'" }
   end
 
   def print_trains_on_station(station)
