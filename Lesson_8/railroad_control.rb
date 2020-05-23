@@ -34,25 +34,15 @@ class Railroad
     test_station_2 = Station.new('test-station-2')
     @stations << test_station_2
     test_station_3 = Station.new('test-station-3')
+    @stations << test_station_3
     route_test = Route.new(test_station_1, test_station_2)
     @routes << route_test
-    puts "Станции"
-    puts test_station_1.name
-    puts test_station_2.name
-    puts test_station_3.name
     puts
-    puts "Маршруты"
+    self.print_stations
     puts
-    puts route_test.to_s
+    self.print_routes
     puts
-    puts "Поезда & вагоны"
-    print cargo_test_train.to_s
-    puts
-    print cargo_test_wagon.to_s
-    puts
-    print pass_test_train.to_s
-    puts
-    print pass_test_wagon.to_s
+    self.print_trains
     puts
   end
 
@@ -250,7 +240,6 @@ class Railroad
       puts 'Список маршрутов пуст'
       return
     else
-
       self.print_routes
 
       begin
@@ -270,10 +259,8 @@ class Railroad
         puts e
         return
       end
-
       self.trains[train_index].accept_route(self.routes[route_index])
-      puts "Mаршрут '#{self.routes[route_index].stations.first}' -> '#{self.routes[route_index].stations.last}' назначен поезду '#{self.trains[train_index].number}'"
-
+      puts "Mаршрут '#{self.routes[route_index].stations.first.name}' -> '#{self.routes[route_index].stations.last.name}' назначен поезду '#{self.trains[train_index].number}'"
     end
   end
 
@@ -306,8 +293,6 @@ class Railroad
       end
     end
     accepting_train.add_wagon(wagon)
-    # puts  below for test purpose only
-    # puts "Вагоны '#{accepting_train.wagons}'поезда №'#{accepting_train.number}'"
     puts "Вагон № #{wagon.number} тип #{wagon.class} добавлен к поезду №'#{accepting_train.number}'"
   end
 
@@ -330,28 +315,44 @@ class Railroad
   def move_train
     puts 'Список существующих поездов:'
     print_trains
-    puts 'Введите номер нужного поезда'
-    selected_train_index = gets.chomp.to_i - 1
+    puts 'Введите индекс нужного поезда'
+    selected_train_index = gets.chomp.to_i
     selected_train = self.trains.at(selected_train_index)
     puts 'Выбран поезд:'
     puts selected_train.number
-    puts 'Поезду назначен маршрут:'
-    puts "'#{selected_train.route.stations.first.name}'-> '#{selected_train.route.stations.last.name}'"
-    puts 'Текущая станция:'
-    puts selected_train.current_station.name
-    puts 'Выберите направление движения:'
-    puts '1-вперед, 2 - назад'
-    selected_direction = gets.chomp.to_i
-    if selected_direction == 1
-      selected_train.move_forward
-      puts 'Следующая станция'
-      puts selected_train.next_station.name
-    elsif selected_direction == 2
-      selected_train.move_back
-      puts 'Следующая станция'
-      puts selected_train.previous_station.name
+    if selected_train.route.nil?
+      puts 'Поезду не назначено ни одного маршрута'
+      return
+    else
+      puts 'Поезду назначен маршрут:'
+      puts "'#{selected_train.route.stations.first.name}'-> '#{selected_train.route.stations.last.name}'"
+      puts 'Текущая станция:'
+      puts selected_train.current_station.name
+      puts 'Выберите направление движения:'
+      puts '1-вперед, 2 - назад'
+      selected_direction = gets.chomp.to_i
+      if selected_direction == 1
+        begin
+          selected_train.move_forward
+        rescue StandardError => e
+          puts e
+          return
+        end
+        puts 'Следующая станция'
+        puts selected_train.current_station.name
+      elsif selected_direction == 2
+        begin
+          selected_train.move_back
+        rescue StandardError => e
+          puts e
+          return
+        end
+        puts 'Следующая станция'
+        puts selected_train.current_station.name
+      end
     end
   end
+
 
   def show_train_list
     self.stations.each.with_index(1) { |station, index| puts "#{index} #{station.name}" }
@@ -506,5 +507,5 @@ class Railroad
     volume = gets_volume
     wagon.unload(volume)
   end
-
 end
+

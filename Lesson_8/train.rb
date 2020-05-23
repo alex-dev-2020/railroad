@@ -36,7 +36,7 @@ class Train
   ]
 
 
-  def initialize (number, made_by)
+  def initialize(number, made_by)
     @number = number
     @made_by = made_by
     @wagons = []
@@ -55,7 +55,7 @@ class Train
   def each_wagon
     wagons.each { |wagon| yield(wagon) } if block_given?
   end
-  
+
   # def each_wagon(&block)
   #   self.wagons.each { |wagon| block.call(wagon) } if block_given?
   # end
@@ -88,7 +88,7 @@ class Train
   def accept_route(route)
     @route = route
     @current_station_index = 0
-    self.current_station.train_in(self)
+    current_station.train_in(self)
   end
 
   def add_wagon(wagon)
@@ -100,29 +100,42 @@ class Train
   end
 
   def current_station
-    station(self.current_station_index)
+    self.station(@current_station_index)
   end
 
   def previous_station
-    station(self.current_station_index - 1)
+    self.station(@current_station_index - 1)
   end
 
   def next_station
-    station(self.current_station_index + 1)
+    self.station(@current_station_index + 1)
   end
-
-
+  
   def move_forward
-    self.current_station.train_out(self)
-    next_station.train_in(self)
+    if self.next_station.nil?
+      raise StandardError, "Это последняя станция маршрута  #{self.route}"
+      return
+    else
+      self.current_station.train_out(number)
+      @current_station_index += 1
+      self.current_station.train_in(self)
+    end
   end
 
   def move_back
-    self.current_station.train_out(self)
-    self.previous_station.train_in(self)
+    if self.previous_station.nil?
+      raise StandardError, "Это первая станция маршрута  #{self.route}"
+      return
+    else
+      self.current_station.train_out(number)
+      @current_station_index -= 1
+      self.current_station.train_in(self)
+    end
   end
 
-  private
+  # private
+
+  protected
 
   def station(n)
     (n >= 0 && n < self.route.stations.length) ? self.route.stations[n] : nil

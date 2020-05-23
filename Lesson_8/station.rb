@@ -48,6 +48,6 @@ class Station
   end
 
   def train_out(train)
-    @trains.delete(train)
+    trains.delete(train)
   end
 end
