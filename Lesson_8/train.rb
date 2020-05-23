@@ -56,10 +56,6 @@ class Train
     wagons.each { |wagon| yield(wagon) } if block_given?
   end
 
-  # def each_wagon(&block)
-  #   self.wagons.each { |wagon| block.call(wagon) } if block_given?
-  # end
-
   def self.list
     @@list
   end
