@@ -37,23 +37,12 @@ class Railroad
     @stations << test_station_3
     route_test = Route.new(test_station_1, test_station_2)
     @routes << route_test
-    puts "Станции"
-    puts test_station_1.name
-    puts test_station_2.name
-    puts test_station_3.name
     puts
-    puts "Маршруты"
+    self.print_stations
     puts
-    puts route_test.to_s
+    self.print_routes
     puts
-    puts "Поезда & вагоны"
-    print cargo_test_train.to_s
-    puts
-    print cargo_test_wagon.to_s
-    puts
-    print pass_test_train.to_s
-    puts
-    print pass_test_wagon.to_s
+    self.print_trains
     puts
   end
 
@@ -271,7 +260,7 @@ class Railroad
         return
       end
       self.trains[train_index].accept_route(self.routes[route_index])
-      puts "Mаршрут '#{self.routes[route_index].stations.first.name}}' -> '#{self.routes[route_index].stations.last.name}}' назначен поезду '#{self.trains[train_index].number}'"
+      puts "Mаршрут '#{self.routes[route_index].stations.first.name}' -> '#{self.routes[route_index].stations.last.name}' назначен поезду '#{self.trains[train_index].number}'"
     end
   end
 
@@ -350,7 +339,7 @@ class Railroad
           return
         end
         puts 'Следующая станция'
-        puts selected_train.next_station.name
+        puts selected_train.current_station.name
       elsif selected_direction == 2
         begin
           selected_train.move_back
@@ -359,7 +348,7 @@ class Railroad
           return
         end
         puts 'Следующая станция'
-        puts selected_train.previous_station.name
+        puts selected_train.current_station.name
       end
     end
   end

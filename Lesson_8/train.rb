@@ -88,9 +88,7 @@ class Train
   def accept_route(route)
     @route = route
     @current_station_index = 0
-    # current_station = 
-    route.stations[@current_station_index].train_in(self)
-    # puts "Поезд на станции  #{route.stations.first.name}"
+    current_station.train_in(self)
   end
 
   def add_wagon(wagon)
@@ -118,9 +116,9 @@ class Train
       raise StandardError, "Это последняя станция маршрута  #{self.route}"
       return
     else
-      self.current_station.train_out(self)
-      self.next_station.train_in(self)
-      # @current_station_index += 1
+      self.current_station.train_out(number)
+      @current_station_index += 1
+      self.current_station.train_in(self)
     end
   end
 
@@ -129,9 +127,9 @@ class Train
       raise StandardError, "Это первая станция маршрута  #{self.route}"
       return
     else
-      self.current_station.train_out(self)
-      self.previous_station.train_in(self)
-      # @current_station_index -= 1
+      self.current_station.train_out(number)
+      @current_station_index -= 1
+      self.current_station.train_in(self)
     end
   end
 
