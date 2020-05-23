@@ -71,10 +71,10 @@ loop do
     my_railroad.add_wagon
   when '10'
     puts 'Загрузить вагон'
-    # my_railroad.load_wagon
+    my_railroad.load_wagon
   when '11'
     puts 'Разгрузить вагон'
-    # my_railroad.unload_wagon
+    my_railroad.unload_wagon
   when '12'
     puts 'Отцепление  вагонов от поезда'
     my_railroad.detach_wagon

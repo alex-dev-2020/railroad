@@ -56,7 +56,7 @@ class Railroad
     end
     @stations << station
     # just for test
-    puts "Cоздана станция'#{station_name}'"
+    puts "Создана станция'#{station_name}'"
   end
 
   def create_train
@@ -105,13 +105,7 @@ class Railroad
       puts e
       retry
     end
-
     @trains << train
-
-
-    #puts methd below for test purpose only
-    puts "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}, вагонов #{train.wagons}"
-
   end
 
 
@@ -119,9 +113,7 @@ class Railroad
     if self.stations.length < 2
       puts 'Количество существующих станций меньше 2'
       return
-
     else
-
       self.print_stations
 
       begin
@@ -296,6 +288,71 @@ class Railroad
     puts "Вагон № #{wagon.number} тип #{wagon.class} добавлен к поезду №'#{accepting_train.number}'"
   end
 
+  def load_wagon
+    puts 'Список существующих поездов с вагонами:'
+    self.print_trains_wth_wagons
+    begin
+      train_index = gets_train_index
+      validate!(train_index, self.trains)
+    rescue StandardError => e
+      puts e
+      return
+    end
+
+    operational_train = self.trains.at(train_index)
+    operational_wagon = gets_wagon(operational_train)
+
+    if operational_wagon.class == CargoWagon
+      begin
+        load_cargo_wagon(operational_wagon)
+      rescue StandardError => e
+        puts e
+        return
+      end
+    else
+      begin
+        occupy_seats(operational_wagon)
+      rescue StandardError => e
+        puts e
+        return
+      end
+    end
+    puts "#{operational_wagon.to_s}"
+  end
+
+  def unload_wagon
+    puts 'Список существующих поездов с вагонами:'
+    self.print_trains_wth_wagons
+    begin
+      train_index = gets_train_index
+      validate!(train_index, self.trains)
+    rescue StandardError => e
+      puts e
+      return
+    end
+    operational_train = self.trains.at(train_index)
+    operational_wagon = gets_wagon(operational_train)
+
+    if operational_wagon.class == CargoWagon
+      begin
+        unload_cargo_vagon(operational_wagon)
+      rescue StandardError => e
+        puts e
+        return
+      end
+    elsif operational_wagon.class == PassWagon
+      begin
+        leave_seat(operational_wagon)
+      rescue StandardError => e
+        puts e
+        return
+      end
+    else
+      puts "Вагон неизвестного типа"
+    end
+    puts "#{operational_wagon.to_s}"
+  end
+
   def detach_wagon
     puts 'Список существующих поездов с вагонами:'
     self.print_trains_wth_wagons
@@ -307,10 +364,15 @@ class Railroad
       return
     end
     donor_train = self.trains.at(train_index)
-    donor_train.wagons.pop
+    if donor_train.wagons.empty?
+      puts "У данного поезда нет вагонов"
+      return
+    else
+      donor_train.wagons.pop
+    end
+
     print "Вагон отцеплен от поезда №'#{donor_train.number}'"
   end
-
 
   def move_train
     puts 'Список существующих поездов:'
@@ -363,7 +425,6 @@ class Railroad
     puts selected_station.name
     puts 'Список поездов на станции:'
     print_trains_on_station(selected_station)
-    # selected_station.trains.each.with_index(1) { |train, index| puts "'#{index}'поезд номер' #{train.number}'" }
   end
 
   def print_trains_on_station(station)
@@ -477,7 +538,7 @@ class Railroad
   end
 
   def print_wagons(train)
-    train.each_with_index { |wagon, index| puts "[#{index}] #{wagon}" }
+    train.wagons.each_with_index { |wagon, index| puts "[#{index}] #{wagon.to_s}" }
   end
 
   def gets_number_of_seats
@@ -507,5 +568,14 @@ class Railroad
     volume = gets_volume
     wagon.unload(volume)
   end
+
+  def occupy_seats(wagon)
+    wagon.use_seat
+  end
+
+  def leave_seat(wagon)
+    wagon.leave_seat
+  end
+
 end
 
