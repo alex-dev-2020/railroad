@@ -110,7 +110,7 @@ class Train
   def next_station
     self.station(@current_station_index + 1)
   end
-  
+
   def move_forward
     if self.next_station.nil?
       raise StandardError, "Это последняя станция маршрута  #{self.route}"
