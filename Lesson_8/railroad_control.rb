@@ -3,14 +3,12 @@
 class Railroad
   attr_reader :stations, :routes, :trains
 
-
   def initialize
     @stations = []
     @routes = []
     @trains = []
     @wagons = []
   end
-
 
 # txt menu
   def selection(menu)
@@ -108,7 +106,6 @@ class Railroad
     @trains << train
   end
 
-
   def create_route
     if self.stations.length < 2
       puts 'Количество существующих станций меньше 2'
@@ -183,7 +180,6 @@ class Railroad
     end
   end
 
-
   def delete_station_from_route
     if self.routes.empty?
       puts 'Список маршрутов пуст'
@@ -221,7 +217,6 @@ class Railroad
 
     end
   end
-
 
   def add_route_to_train
     if self.trains.empty?
@@ -415,7 +410,6 @@ class Railroad
     end
   end
 
-
   def show_train_list
     self.stations.each.with_index(1) { |station, index| puts "#{index} #{station.name}" }
     puts 'Введите номер станции'
@@ -438,7 +432,6 @@ class Railroad
       end
     end
   end
-
 
   def validate!(index, object)
     raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
@@ -481,7 +474,6 @@ class Railroad
     input = gets.chomp.lstrip.rstrip
     return (input.empty? || /\D/.match(input)) ? "Повторите ввод" : input.to_i
   end
-
 
   def gets_wagon_attribute
     input = gets.chomp.lstrip.rstrip

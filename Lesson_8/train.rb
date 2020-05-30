@@ -35,7 +35,6 @@ class Train
       }
   ]
 
-
   def initialize(number, made_by)
     @number = number
     @made_by = made_by

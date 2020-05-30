@@ -8,7 +8,6 @@ class CargoWagon < Wagon
   include InstanceCounter
   include Valid
 
-
   def initialize(total_volume)
     raise StandardError, 'Объем при создании должен быть больше 0' if total_volume <= 0
     @total_volume = total_volume
