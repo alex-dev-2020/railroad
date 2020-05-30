@@ -569,4 +569,3 @@ class Railroad
     wagon.leave_seat
   end
 end
-

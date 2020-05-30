@@ -46,9 +46,3 @@ class CargoWagon < Wagon
 
   attr_accessor :volume
 end
-
-
-
-
-
-
