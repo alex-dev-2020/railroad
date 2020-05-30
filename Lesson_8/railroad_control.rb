@@ -576,7 +576,7 @@ class Railroad
      wagon.use_seat
   end
   
-  def leave_seat(wagon)
+  def leave_seat(wagon)o
     wagon.leave_seat
   end
   

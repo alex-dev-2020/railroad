@@ -21,17 +21,9 @@ class Station
   end
 
 
-  # def each_train(&block)
-  #   @trains.each { |train| block.call(train) } if block_given?
-  # end
-
   def each_train
     trains.each { |train| yield(train) } if block_given?
   end
-
-  # def each_train(&block)
-  #   @trains.each { |number, train| block.call(train) } if block_given?
-  # end
 
 
   def self.all
@@ -40,7 +32,6 @@ class Station
 
   def train_in(train)
     @trains[train.number] = train
-    # @trains << train
   end
 
   def trains_by_type(train_type)
