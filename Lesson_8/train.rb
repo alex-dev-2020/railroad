@@ -35,7 +35,6 @@ class Train
       }
   ]
 
-
   def initialize(number, made_by)
     @number = number
     @made_by = made_by
@@ -136,5 +135,4 @@ class Train
   def station(n)
     (n >= 0 && n < self.route.stations.length) ? self.route.stations[n] : nil
   end
-
 end
