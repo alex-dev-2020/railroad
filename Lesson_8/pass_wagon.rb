@@ -46,5 +46,4 @@ class PassWagon < Wagon
   protected
 
   attr_accessor :seats
-
 end

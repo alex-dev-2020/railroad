@@ -7,5 +7,4 @@ class Wagon
   def generate_number
     srand.to_s.slice(0...10)
   end
-
 end

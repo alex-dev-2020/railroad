@@ -135,5 +135,4 @@ class Train
   def station(n)
     (n >= 0 && n < self.route.stations.length) ? self.route.stations[n] : nil
   end
-
 end

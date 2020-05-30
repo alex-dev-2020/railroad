@@ -568,6 +568,5 @@ class Railroad
   def leave_seat(wagon)
     wagon.leave_seat
   end
-
 end
 

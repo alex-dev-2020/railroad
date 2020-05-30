@@ -1,5 +1,4 @@
 class PassTrain < Train
-
   def type
     :pass
   end
@@ -7,5 +6,4 @@ class PassTrain < Train
   def add_wagon(wagon)
     super(wagon) if wagon.is_a?(PassWagon)
   end
-
 end

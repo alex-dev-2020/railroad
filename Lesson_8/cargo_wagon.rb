@@ -45,7 +45,6 @@ class CargoWagon < Wagon
   protected
 
   attr_accessor :volume
-
 end
 
 
