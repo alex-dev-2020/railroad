@@ -35,7 +35,6 @@ class Train
       }
   ]
 
-
   def initialize(number, made_by)
     @number = number
     @made_by = made_by
@@ -55,10 +54,6 @@ class Train
   def each_wagon
     wagons.each { |wagon| yield(wagon) } if block_given?
   end
-
-  # def each_wagon(&block)
-  #   self.wagons.each { |wagon| block.call(wagon) } if block_given?
-  # end
 
   def self.list
     @@list
@@ -110,7 +105,7 @@ class Train
   def next_station
     self.station(@current_station_index + 1)
   end
-  
+
   def move_forward
     if self.next_station.nil?
       raise StandardError, "Это последняя станция маршрута  #{self.route}"
@@ -140,5 +135,4 @@ class Train
   def station(n)
     (n >= 0 && n < self.route.stations.length) ? self.route.stations[n] : nil
   end
-
 end

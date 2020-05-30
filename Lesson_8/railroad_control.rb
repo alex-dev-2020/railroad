@@ -3,14 +3,12 @@
 class Railroad
   attr_reader :stations, :routes, :trains
 
-
   def initialize
     @stations = []
     @routes = []
     @trains = []
     @wagons = []
   end
-
 
 # txt menu
   def selection(menu)
@@ -56,7 +54,7 @@ class Railroad
     end
     @stations << station
     # just for test
-    puts "Cоздана станция'#{station_name}'"
+    puts "Создана станция'#{station_name}'"
   end
 
   def create_train
@@ -105,23 +103,14 @@ class Railroad
       puts e
       retry
     end
-
     @trains << train
-
-
-    #puts methd below for test purpose only
-    puts "Создан поезд № #{number}, тип #{Train::TYPES[type_index][:name]}, производитель #{Train::MANUFACTURERS[maker_index][:name]}, вагонов #{train.wagons}"
-
   end
-
 
   def create_route
     if self.stations.length < 2
       puts 'Количество существующих станций меньше 2'
       return
-
     else
-
       self.print_stations
 
       begin
@@ -191,7 +180,6 @@ class Railroad
     end
   end
 
-
   def delete_station_from_route
     if self.routes.empty?
       puts 'Список маршрутов пуст'
@@ -229,7 +217,6 @@ class Railroad
 
     end
   end
-
 
   def add_route_to_train
     if self.trains.empty?
@@ -297,7 +284,7 @@ class Railroad
   end
 
   def load_wagon
-      puts 'Список существующих поездов с вагонами:'
+    puts 'Список существующих поездов с вагонами:'
     self.print_trains_wth_wagons
     begin
       train_index = gets_train_index
@@ -306,28 +293,28 @@ class Railroad
       puts e
       return
     end
-    
+
     operational_train = self.trains.at(train_index)
     operational_wagon = gets_wagon(operational_train)
-   
+
     if operational_wagon.class == CargoWagon
       begin
-      load_cargo_wagon(operational_wagon)
+        load_cargo_wagon(operational_wagon)
       rescue StandardError => e
-      puts e
-      return
+        puts e
+        return
       end
     else
       begin
-      occupy_seats(operational_wagon)
+        occupy_seats(operational_wagon)
       rescue StandardError => e
-      puts e
-      return
+        puts e
+        return
       end
     end
     puts "#{operational_wagon.to_s}"
   end
-  
+
   def unload_wagon
     puts 'Список существующих поездов с вагонами:'
     self.print_trains_wth_wagons
@@ -340,27 +327,27 @@ class Railroad
     end
     operational_train = self.trains.at(train_index)
     operational_wagon = gets_wagon(operational_train)
-    
+
     if operational_wagon.class == CargoWagon
       begin
-      unload_cargo_vagon(operational_wagon)
+        unload_cargo_vagon(operational_wagon)
       rescue StandardError => e
-      puts e
-      return
+        puts e
+        return
       end
     elsif operational_wagon.class == PassWagon
       begin
         leave_seat(operational_wagon)
-        rescue StandardError => e
+      rescue StandardError => e
         puts e
         return
       end
     else
       puts "Вагон неизвестного типа"
     end
-      puts "#{operational_wagon.to_s}"
+    puts "#{operational_wagon.to_s}"
   end
-  
+
   def detach_wagon
     puts 'Список существующих поездов с вагонами:'
     self.print_trains_wth_wagons
@@ -372,7 +359,13 @@ class Railroad
       return
     end
     donor_train = self.trains.at(train_index)
-    donor_train.wagons.pop
+    if donor_train.wagons.empty?
+      puts "У данного поезда нет вагонов"
+      return
+    else
+      donor_train.wagons.pop
+    end
+
     print "Вагон отцеплен от поезда №'#{donor_train.number}'"
   end
 
@@ -417,7 +410,6 @@ class Railroad
     end
   end
 
-
   def show_train_list
     self.stations.each.with_index(1) { |station, index| puts "#{index} #{station.name}" }
     puts 'Введите номер станции'
@@ -427,7 +419,6 @@ class Railroad
     puts selected_station.name
     puts 'Список поездов на станции:'
     print_trains_on_station(selected_station)
-    # selected_station.trains.each.with_index(1) { |train, index| puts "'#{index}'поезд номер' #{train.number}'" }
   end
 
   def print_trains_on_station(station)
@@ -441,7 +432,6 @@ class Railroad
       end
     end
   end
-
 
   def validate!(index, object)
     raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
@@ -484,7 +474,6 @@ class Railroad
     input = gets.chomp.lstrip.rstrip
     return (input.empty? || /\D/.match(input)) ? "Повторите ввод" : input.to_i
   end
-
 
   def gets_wagon_attribute
     input = gets.chomp.lstrip.rstrip
@@ -571,14 +560,12 @@ class Railroad
     volume = gets_volume
     wagon.unload(volume)
   end
-  
+
   def occupy_seats(wagon)
-     wagon.use_seat
+    wagon.use_seat
   end
-  
-  def leave_seat(wagon)o
+
+  def leave_seat(wagon)
     wagon.leave_seat
   end
-  
 end
-

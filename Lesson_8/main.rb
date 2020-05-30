@@ -11,11 +11,9 @@ require_relative 'instance_counter'
 require_relative 'made_by'
 require_relative 'valid'
 
-
 my_railroad = Railroad.new
 
 # my_railroad.seed
-
 
 main_menu = {1 => 'Создать станцию',
              2 => 'Создать поезд',
@@ -37,7 +35,6 @@ main_menu = {1 => 'Создать станцию',
 loop do
   puts 'Главное  меню.'
   puts 'Введите номер для выбора действия или 0 для выхода:'
-
 
   user_choice = my_railroad.selection(main_menu)
 
@@ -89,5 +86,3 @@ loop do
     break
   end
 end
-
-

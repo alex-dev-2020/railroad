@@ -20,11 +20,9 @@ class Station
     raise StandardError, "Неправильный формат названия станции (#{self.name})" if self.name !~ RGXP_STATION_NAME_FORMAT
   end
 
-
   def each_train
     trains.each { |train| yield(train) } if block_given?
   end
-
 
   def self.all
     @@list
