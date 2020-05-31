@@ -71,7 +71,7 @@ class Train
 
   def speed_down(delta)
     @speed -= delta
-    @speed = @speed > 0 ? @speed : stop
+    @speed =  @speed.positive? ? @speed : stop
   end
 
   def stop
@@ -89,7 +89,7 @@ class Train
   end
 
   def add_wagon(wagon)
-    @wagons << wagon if @speed == 0
+    @wagons << wagon if @speed.zero?
   end
 
   def wagons_count
