@@ -44,7 +44,7 @@ class CargoWagon < Wagon
   end
 
   def to_s
-    "Вагон №'#{number}'тип'#{self.type}'загружен'#{occupied_volume}'свободно'#{free_volume}'"
+    "Вагон №'#{number}'тип'#{type}'загружен'#{occupied_volume}'свободно'#{free_volume}'"
   end
 
   protected

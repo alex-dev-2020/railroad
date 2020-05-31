@@ -14,11 +14,11 @@ class Route
   end
 
   def validate!
-    raise StandardError, 'Начальная и конечная  станции маршрута должны различаться' if self.stations[0] == self.stations[1]
+    raise StandardError, 'Начальная и конечная  станции маршрута должны различаться' if stations[0] == stations[1]
   end
 
   def to_s
-    "Маршрут '#{ self.stations.first.name} -> #{self.stations.last.name}'"
+    "Маршрут '#{ stations.first.name} -> #{stations.last.name}'"
   end
 
   def self.list
@@ -26,9 +26,9 @@ class Route
   end
 
   def add_station(station)
-    raise StandardError if self.stations.include? (station)
+    raise StandardError if stations.include? (station)
 
-    self.stations.insert(-2, station)
+    stations.insert(-2, station)
   end
 
   def delete_station(station)

@@ -2,7 +2,7 @@
 
 module  Valid
   def valid?
-    self.validate!
+    validate!
     true
   rescue
     false

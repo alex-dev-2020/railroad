@@ -19,7 +19,7 @@ class Station
   end
 
   def validate!
-    raise StandardError, "Неправильный формат названия станции (#{self.name})" if self.name !~ RGXP_STATION_NAME_FORMAT
+    raise StandardError, "Неправильный формат названия станции (#{name})" if name !~ RGXP_STATION_NAME_FORMAT
   end
 
   def each_train

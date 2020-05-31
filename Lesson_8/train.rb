@@ -50,7 +50,7 @@ class Train
   end
 
   def validate!
-    raise StandardError, "Неправильный формат номера (#{self.number})" if self.number !~ RGXP_TRAIN_NUMBER_FORMAT
+    raise StandardError, "Неправильный формат номера (#{number})" if number !~ RGXP_TRAIN_NUMBER_FORMAT
   end
 
   def each_wagon
@@ -79,7 +79,7 @@ class Train
   end
 
   def to_s
-    "Поезд '№#{self.number}' тип '#{self.class}' вагонов '#{wagons_count}'"
+    "Поезд '№#{number}' тип '#{self.class}' вагонов '#{wagons_count}'"
   end
 
   def accept_route(route)
@@ -93,40 +93,40 @@ class Train
   end
 
   def wagons_count
-    self.wagons.length
+    wagons.length
   end
 
   def current_station
-    self.station(@current_station_index)
+    station(@current_station_index)
   end
 
   def previous_station
-    self.station(@current_station_index - 1)
+    station(@current_station_index - 1)
   end
 
   def next_station
-    self.station(@current_station_index + 1)
+    station(@current_station_index + 1)
   end
 
   def move_forward
-    if self.next_station.nil?
-      raise StandardError, "Это последняя станция маршрута  #{self.route}"
+    if next_station.nil?
+      raise StandardError, "Это последняя станция маршрута  #{route}"
       return
     else
-      self.current_station.train_out(number)
+      current_station.train_out(number)
       @current_station_index += 1
-      self.current_station.train_in(self)
+      current_station.train_in(self)
     end
   end
 
   def move_back
-    if self.previous_station.nil?
-      raise StandardError, "Это первая станция маршрута  #{self.route}"
+    if previous_station.nil?
+      raise StandardError, "Это первая станция маршрута  #{route}"
       return
     else
-      self.current_station.train_out(number)
+      current_station.train_out(number)
       @current_station_index -= 1
-      self.current_station.train_in(self)
+      current_station.train_in(self)
     end
   end
 
@@ -135,6 +135,6 @@ class Train
   protected
 
   def station(n)
-    (n >= 0 && n < self.route.stations.length) ? self.route.stations[n] : nil
+    (n >= 0 && n < route.stations.length) ? route.stations[n] : nil
   end
 end
