@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'wagon'
 # lines below included only for test purpose
 require_relative 'instance_counter'
@@ -10,6 +12,7 @@ class CargoWagon < Wagon
 
   def initialize(total_volume)
     raise StandardError, 'Объем при создании должен быть больше 0' if total_volume <= 0
+
     @total_volume = total_volume
     @number = generate_number
     @volume = 0
@@ -18,6 +21,7 @@ class CargoWagon < Wagon
 
   def load(volume)
     raise StandardError, 'Вагон уже имеет максимальную загрузку' if self.volume + volume > total_volume
+
     self.volume += volume
   end
 
@@ -27,6 +31,7 @@ class CargoWagon < Wagon
 
   def unload(volume)
     raise StandardError, 'Нельзя выгрузить больше, чем имеется в вагоне' if self.volume - volume < 0
+
     self.volume -= volume
   end
 

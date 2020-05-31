@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Route
   attr_reader :stations
   include InstanceCounter
@@ -25,6 +27,7 @@ class Route
 
   def add_station(station)
     raise StandardError if self.stations.include? (station)
+
     self.stations.insert(-2, station)
   end
 

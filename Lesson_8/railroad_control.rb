@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # class Railroad
 
 class Railroad
@@ -478,6 +480,7 @@ class Railroad
   def gets_wagon_attribute
     input = gets.chomp.lstrip.rstrip
     raise StandardError, "Повторите ввод" if input.empty? || /\D/.match(input)
+
     input.to_i
   end
 
