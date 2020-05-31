@@ -32,10 +32,8 @@ class Route
   end
 
   def delete_station(station)
-    if (station != @stations.first) && (station != @stations.last)
-      @stations.delete(station)
-    else
-      raise StandardError, 'Конечные точки маршрута удалить нельзя'
+    unless (station != @stations.first) && (station != @stations.last) 
+    @stations.delete(station);raise StandardError, 'Конечные точки маршрута удалить нельзя'
     end
   end
 end
