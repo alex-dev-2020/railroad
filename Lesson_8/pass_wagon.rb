@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative 'wagon'
 # lines below included only for test purpose
 require_relative 'instance_counter'
