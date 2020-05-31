@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Route
   attr_reader :stations
   include InstanceCounter

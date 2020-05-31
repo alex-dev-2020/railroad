@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 def seed
   cargo_test_train = CargoTrain.new('cargo_test', '12345', 'tesla')
   @trains << cargo_test_train

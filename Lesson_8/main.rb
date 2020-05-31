@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative 'railroad_control'
 require_relative 'train'
 require_relative 'station'
