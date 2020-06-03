@@ -135,6 +135,6 @@ class Train
   protected
 
   def station(index)
-    (index  >= 0 && index < route.stations.length) ? route.stations[index] : nil
+    (index >= 0 && index < route.stations.length) ? route.stations[index] : nil
   end
 end
