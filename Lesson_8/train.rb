@@ -17,24 +17,24 @@ class Train
       type: 'CargoTrain',
       name: 'Грузовой'
     },
-      {
-        type: 'PassTrain',
-        name: 'Пассажирский'
-      }
+    {
+      type: 'PassTrain',
+      name: 'Пассажирский'
+    }
   ]
   MANUFACTURERS = [
     {
       name: 'Siemens',
       maker: 'Siemens'
     },
-      {
-        name: 'Bosh',
-        maker: 'Bosh'
-      },
-      {
-        name: 'Tesla',
-        maker: 'Tesla'
-      }
+    {
+      name: 'Bosh',
+      maker: 'Bosh'
+    },
+    {
+      name: 'Tesla',
+      maker: 'Tesla'
+    }
   ]
 
   def initialize(number, made_by)
