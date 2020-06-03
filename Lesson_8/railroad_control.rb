@@ -12,14 +12,14 @@ class Railroad
     @wagons = []
   end
 
-# txt menu
+  # txt menu
   def selection(menu)
     menu.each { |key, value| puts "#{key} - #{value}" }
     puts 'Выбран пункт:'
     gets.chomp
   end
 
-# test object generation
+  # test object generation
   def seed
     cargo_test_train = CargoTrain.new('123-45', 'tesla')
     cargo_test_wagon = CargoWagon.new(100)
