@@ -111,7 +111,6 @@ class Train
   def move_forward
     if next_station.nil?
       raise StandardError, "Это последняя станция маршрута  #{route}"
-      return
     else
       current_station.train_out(number)
       @current_station_index += 1
@@ -122,7 +121,6 @@ class Train
   def move_back
     if previous_station.nil?
       raise StandardError, "Это первая станция маршрута  #{route}"
-      return
     else
       current_station.train_out(number)
       @current_station_index -= 1
