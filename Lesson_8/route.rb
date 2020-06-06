@@ -18,7 +18,7 @@ class Route
   end
 
   def to_s
-    "Маршрут '#{ stations.first.name} -> #{stations.last.name}'"
+    "Маршрут '#{stations.first.name} -> #{stations.last.name}'"
   end
 
   def self.list
@@ -26,14 +26,14 @@ class Route
   end
 
   def add_station(station)
-    raise StandardError if stations.include? (station)
-
+    raise StandardError, "Маршрут уже содержит станцию:'#{station.name}'" if stations.include? (station)
     stations.insert(-2, station)
   end
 
   def delete_station(station)
-    unless (station != @stations.first) && (station != @stations.last) 
-    @stations.delete(station);raise StandardError, 'Конечные точки маршрута удалить нельзя'
-    end
+    raise StandardError,'Конечные точки маршрута удалить нельзя' if station == stations.first || station == stations.last
+    raise StandardError, "Маршрут не содержит станцию'#{station.name}'" if ! stations.include?(station)
+    stations.delete(station)
   end
+
 end

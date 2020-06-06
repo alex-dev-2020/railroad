@@ -41,6 +41,7 @@ class Railroad
     print_stations
     puts
     print_routes
+    print_route_stations(routes[0])
     puts
     print_trains
     puts
@@ -55,7 +56,6 @@ class Railroad
       retry
     end
     @stations << station
-    # just for test
     puts "Создана станция'#{station_name}'"
   end
 
@@ -161,6 +161,8 @@ class Railroad
         return
       end
 
+      print_route_stations(routes[route_index])
+
       print_stations
 
       begin
@@ -172,8 +174,8 @@ class Railroad
           return
         end
         routes[route_index].add_station(stations[station_index])
-      rescue StandardError
-        puts "Маршрут уже содержит данную  станцию:'#{stations[station_index].name}'"
+      rescue StandardError => e
+        puts e
         return
       end
 
@@ -198,6 +200,8 @@ class Railroad
         puts e
         return
       end
+
+      print_route_stations(routes[route_index])
 
       print_stations
 
@@ -447,6 +451,14 @@ class Railroad
   def print_routes
     puts 'Существующие маршруты:'
     routes.each_with_index { |route, index| puts "[#{index}] #{route}" }
+  end
+
+  def print_route_stations(route)
+    puts "Маршрут #{route.to_s}  уже содержит следующие станции:"
+    # puts "Станция: #{station.name} (поездов: #{station.trains})"
+    route.stations.each_with_index do |station, index|
+      puts  "[#{index }] #{station.name}"
+    end
   end
 
   def print_trains
