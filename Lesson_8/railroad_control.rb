@@ -349,7 +349,7 @@ class Railroad
         return
       end
     else
-      puts "Вагон неизвестного типа"
+      puts 'Вагон неизвестного типа'
     end
     puts "#{operational_wagon.to_s}"
   end
@@ -366,7 +366,7 @@ class Railroad
     end
     donor_train = trains.at(train_index)
     if donor_train.wagons.empty?
-      puts "У данного поезда нет вагонов"
+      puts 'У данного поезда нет вагонов'
       return
     else
       donor_train.wagons.pop
@@ -432,7 +432,7 @@ class Railroad
     # puts "Станция: #{station.name} (поездов: #{station.trains})"
     station.each_train do |number, train|
       puts train.to_s
-      puts "Вагоны:"
+      puts 'Вагоны:'
       train.each_wagon do |wagon|
         puts wagon.to_s
       end
@@ -470,7 +470,7 @@ class Railroad
     puts 'Существующие поезда и вагоны :'
     trains.each_with_index do |train, index|
       puts "#{index} #{train.to_s} "
-      puts "Вагоны:"
+      puts 'Вагоны:'
       train.each_wagon do |wagon|
         puts wagon.to_s
       end
@@ -486,28 +486,28 @@ class Railroad
 
   def gets_integer
     input = gets.chomp.lstrip.rstrip
-    return (input.empty? || /\D/.match(input)) ? "Повторите ввод" : input.to_i
+    return (input.empty? || /\D/.match(input)) ? 'Повторите ввод' : input.to_i
   end
 
   def gets_wagon_attribute
     input = gets.chomp.lstrip.rstrip
-    raise StandardError, "Повторите ввод" if input.empty? || /\D/.match(input)
+    raise StandardError, 'Повторите ввод' if input.empty? || /\D/.match(input)
 
     input.to_i
   end
 
   def gets_train_number
-    puts "Задайте номер поезда:"
+    puts 'Задайте номер поезда:'
     gets.chomp.lstrip.rstrip
   end
 
   def gets_train_type_index
-    puts "Введите индекс типа поезда:"
+    puts 'Введите индекс типа поезда:'
     gets_integer
   end
 
   def gets_train_maker_index
-    puts "Введите индекс производителя поезда:"
+    puts 'Введите индекс производителя поезда:'
     gets_integer
   end
 
