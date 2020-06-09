@@ -14,25 +14,25 @@ class Train
   RGXP_TRAIN_NUMBER_FORMAT = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i
   TYPES = [
       {
-          type: 'CargoTrain',
+        type: 'CargoTrain',
           name: 'Грузовой'
       },
       {
-          type: 'PassTrain',
+        type: 'PassTrain',
           name: 'Пассажирский'
       }
   ]
   MANUFACTURERS = [
       {
-          name: 'Siemens',
+        name: 'Siemens',
           maker: 'Siemens'
       },
       {
-          name: 'Bosh',
+        name: 'Bosh',
           maker: 'Bosh'
       },
       {
-          name: 'Tesla',
+        name: 'Tesla',
           maker: 'Tesla'
       }
   ]
