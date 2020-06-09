@@ -17,24 +17,24 @@ class Train
       type: 'CargoTrain',
       name: 'Грузовой'
     },
-      {
-        type: 'PassTrain',
-        name: 'Пассажирский'
-      }
+    {
+      type: 'PassTrain',
+      name: 'Пассажирский'
+    }
   ]
   MANUFACTURERS = [
     {
       name: 'Siemens',
       maker: 'Siemens'
     },
-      {
-        name: 'Bosh',
-        maker: 'Bosh'
-      },
-      {
-        name: 'Tesla',
-        maker: 'Tesla'
-      }
+    {
+      name: 'Bosh',
+      maker: 'Bosh'
+    },
+    {
+      name: 'Tesla',
+      maker: 'Tesla'
+    }
   ]
 
   def initialize(number, made_by)
@@ -118,7 +118,6 @@ class Train
 
   def move_back
     raise StandardError, "Это первая станция маршрута  #{route}" if previous_station.nil?
-
     current_station.train_out(number)
     @current_station_index -= 1
     current_station.train_in(self)
