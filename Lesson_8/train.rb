@@ -13,28 +13,28 @@ class Train
   @@list = {}
   RGXP_TRAIN_NUMBER_FORMAT = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i
   TYPES = [
-    {
-      type: 'CargoTrain',
-      name: 'Грузовой'
-    },
-    {
-      type: 'PassTrain',
-      name: 'Пассажирский'
-    }
+      {
+          type: 'CargoTrain',
+          name: 'Грузовой'
+      },
+      {
+          type: 'PassTrain',
+          name: 'Пассажирский'
+      }
   ]
   MANUFACTURERS = [
-    {
-      name: 'Siemens',
-      maker: 'Siemens'
-    },
-    {
-      name: 'Bosh',
-      maker: 'Bosh'
-    },
-    {
-      name: 'Tesla',
-      maker: 'Tesla'
-    }
+      {
+          name: 'Siemens',
+          maker: 'Siemens'
+      },
+      {
+          name: 'Bosh',
+          maker: 'Bosh'
+      },
+      {
+          name: 'Tesla',
+          maker: 'Tesla'
+      }
   ]
 
   def initialize(number, made_by)
@@ -71,7 +71,7 @@ class Train
 
   def speed_down(delta)
     @speed -= delta
-    @speed =  @speed.positive? ? @speed : stop
+    @speed = @speed.positive? ? @speed : stop
   end
 
   def stop
@@ -109,19 +109,19 @@ class Train
   end
 
   def move_forward
-      raise StandardError, "Это последняя станция маршрута  #{route}" if next_station.nil?
+    raise StandardError, "Это последняя станция маршрута  #{route}" if next_station.nil?
 
-      current_station.train_out(number)
-      @current_station_index += 1
-      current_station.train_in(self)
+    current_station.train_out(number)
+    @current_station_index += 1
+    current_station.train_in(self)
   end
 
   def move_back
-      raise StandardError, "Это первая станция маршрута  #{route}" if previous_station.nil?
+    raise StandardError, "Это первая станция маршрута  #{route}" if previous_station.nil?
 
-      current_station.train_out(number)
-      @current_station_index -= 1
-      current_station.train_in(self)
+    current_station.train_out(number)
+    @current_station_index -= 1
+    current_station.train_in(self)
   end
 
   # private
@@ -129,6 +129,6 @@ class Train
   protected
 
   def station(index)
-    (index >= 0 && index < route.stations.length) ? route.stations[index] : nil
+    index >= 0 && index < route.stations.length ? route.stations[index] : nil
   end
 end

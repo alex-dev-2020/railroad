@@ -457,7 +457,7 @@ class Railroad
     puts "Маршрут #{route.to_s}  уже содержит следующие станции:"
     # puts "Станция: #{station.name} (поездов: #{station.trains})"
     route.stations.each_with_index do |station, index|
-      puts  "[#{index }] #{station.name}"
+      puts "[#{index }] #{station.name}"
     end
   end
 
@@ -486,13 +486,12 @@ class Railroad
 
   def gets_integer
     input = gets.chomp.lstrip.rstrip
-    return (input.empty? || /\D/.match(input)) ? 'Повторите ввод' : input.to_i
+    return input.empty? || /\D/.match(input) ? 'Повторите ввод' : input.to_i
   end
 
   def gets_wagon_attribute
     input = gets.chomp.lstrip.rstrip
     raise StandardError, 'Повторите ввод' if input.empty? || /\D/.match(input)
-
     input.to_i
   end
 
