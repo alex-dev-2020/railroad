@@ -15,25 +15,25 @@ class Train
   TYPES = [
       {
         type: 'CargoTrain',
-          name: 'Грузовой'
+        name: 'Грузовой'
       },
       {
         type: 'PassTrain',
-          name: 'Пассажирский'
+        name: 'Пассажирский'
       }
   ]
   MANUFACTURERS = [
       {
         name: 'Siemens',
-          maker: 'Siemens'
+        maker: 'Siemens'
       },
       {
         name: 'Bosh',
-          maker: 'Bosh'
+        maker: 'Bosh'
       },
       {
         name: 'Tesla',
-          maker: 'Tesla'
+        maker: 'Tesla'
       }
   ]
 
