@@ -30,7 +30,7 @@ class CargoWagon < Wagon
   end
 
   def unload(volume)
-    raise StandardError, 'Нельзя выгрузить больше, чем имеется в вагоне' if self.volume - volume < 0
+    raise StandardError, 'Нельзя выгрузить больше, чем имеется в вагоне' if (self.volume - volume).negative?
 
     self.volume -= volume
   end
@@ -44,7 +44,7 @@ class CargoWagon < Wagon
   end
 
   def to_s
-    "Вагон №'#{number}'тип'#{self.type}'загружен'#{occupied_volume}'свободно'#{free_volume}'"
+    "Вагон №'#{number}'тип'#{type}'загружен'#{occupied_volume}'свободно'#{free_volume}'"
   end
 
   protected

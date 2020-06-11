@@ -12,14 +12,14 @@ class Railroad
     @wagons = []
   end
 
-# txt menu
+  # txt menu
   def selection(menu)
     menu.each { |key, value| puts "#{key} - #{value}" }
     puts 'Выбран пункт:'
     gets.chomp
   end
 
-# test object generation
+  # test object generation
   def seed
     cargo_test_train = CargoTrain.new('123-45', 'tesla')
     cargo_test_wagon = CargoWagon.new(100)
@@ -38,11 +38,12 @@ class Railroad
     route_test = Route.new(test_station_1, test_station_2)
     @routes << route_test
     puts
-    self.print_stations
+    print_stations
     puts
-    self.print_routes
+    print_routes
+    print_route_stations(routes[0])
     puts
-    self.print_trains
+    print_trains
     puts
   end
 
@@ -55,7 +56,6 @@ class Railroad
       retry
     end
     @stations << station
-    # just for test
     puts "Создана станция'#{station_name}'"
   end
 
@@ -109,15 +109,15 @@ class Railroad
   end
 
   def create_route
-    if self.stations.length < 2
+    if stations.length < 2
       puts 'Количество существующих станций меньше 2'
       return
     else
-      self.print_stations
+      print_stations
 
       begin
         first_station_index = gets_first_station_index
-        validate!(first_station_index, self.stations)
+        validate!(first_station_index, stations)
       rescue RuntimeError => e
         puts e
         retry
@@ -125,55 +125,57 @@ class Railroad
 
       begin
         last_station_index = gets_last_station_index
-        validate!(last_station_index, self.stations)
+        validate!(last_station_index, stations)
       rescue RuntimeError => e
         puts e
         retry
       end
 
       begin
-        route = Route.new(self.stations[first_station_index], self.stations[last_station_index])
+        route = Route.new(stations[first_station_index], stations[last_station_index])
       rescue StandardError => e
         puts e
         return
       end
 
-      self.routes << route
+      routes << route
 
-      puts "Маршрут '#{ self.stations[first_station_index].name} -> #{self.stations[last_station_index].name}'создан "
+      puts "Маршрут '#{ stations[first_station_index].name} -> #{stations[last_station_index].name}'создан "
     end
   end
 
   def add_station_to_route
-    if self.routes.empty?
+    if routes.empty?
       puts 'Список маршрутов пуст'
       return
 
     else
 
-      self.print_routes
+      print_routes
 
       begin
         route_index = gets_route_index
-        validate!(route_index, self.routes)
+        validate!(route_index, routes)
       rescue StandardError => e
         puts e
         return
       end
 
-      self.print_stations
+      print_route_stations(routes[route_index])
+
+      print_stations
 
       begin
         begin
           station_index = gets_station_index
-          validate!(station_index, self.stations)
+          validate!(station_index, stations)
         rescue StandardError => e
           puts e
           return
         end
-        self.routes[route_index].add_station(stations[station_index])
-      rescue StandardError
-        puts "Маршрут уже содержит данную  станцию:'#{stations[station_index].name}'"
+        routes[route_index].add_station(stations[station_index])
+      rescue StandardError => e
+        puts e
         return
       end
 
@@ -183,33 +185,35 @@ class Railroad
   end
 
   def delete_station_from_route
-    if self.routes.empty?
+    if routes.empty?
       puts 'Список маршрутов пуст'
       return
 
     else
 
-      self.print_routes
+      print_routes
 
       begin
         route_index = gets_route_index
-        validate!(route_index, self.routes)
+        validate!(route_index, routes)
       rescue StandardError => e
         puts e
         return
       end
 
-      self.print_stations
+      print_route_stations(routes[route_index])
+
+      print_stations
 
       begin
         begin
           station_index = gets_station_index
-          validate!(station_index, self.stations)
+          validate!(station_index, stations)
         rescue StandardError => e
           puts e
           return
         end
-        self.routes[route_index].delete_station(stations[station_index])
+        routes[route_index].delete_station(stations[station_index])
       rescue StandardError => e
         puts e
         return
@@ -221,50 +225,50 @@ class Railroad
   end
 
   def add_route_to_train
-    if self.trains.empty?
+    if trains.empty?
       puts 'Список поездов пуст'
       return
 
-    elsif self.routes.empty?
+    elsif routes.empty?
       puts 'Список маршрутов пуст'
       return
     else
-      self.print_routes
+      print_routes
 
       begin
         route_index = gets_route_index
-        validate!(route_index, self.routes)
+        validate!(route_index, routes)
       rescue StandardError => e
         puts e
         return
       end
 
-      self.print_trains
+      print_trains
 
       begin
         train_index = gets_train_index
-        validate!(train_index, self.trains)
+        validate!(train_index, trains)
       rescue StandardError => e
         puts e
         return
       end
-      self.trains[train_index].accept_route(self.routes[route_index])
-      puts "Mаршрут '#{self.routes[route_index].stations.first.name}' -> '#{self.routes[route_index].stations.last.name}' назначен поезду '#{self.trains[train_index].number}'"
+      trains[train_index].accept_route(routes[route_index])
+      puts "Mаршрут '#{routes[route_index].stations.first.name}' -> '#{routes[route_index].stations.last.name}' назначен поезду '#{trains[train_index].number}'"
     end
   end
 
   def add_wagon
     puts 'Список существующих поездов c вагонами:'
-    self.print_trains_wth_wagons
+    print_trains_wth_wagons
     begin
       train_index = gets_train_index
-      validate!(train_index, self.trains)
+      validate!(train_index, trains)
     rescue StandardError => e
       puts e
       return
     end
-    accepting_train = self.trains.at(train_index)
-    accepting_train_class = self.trains.at(train_index).class
+    accepting_train = trains.at(train_index)
+    accepting_train_class = trains.at(train_index).class
     if accepting_train_class == CargoTrain
       begin
         wagon = create_cargo_wagon
@@ -287,16 +291,16 @@ class Railroad
 
   def load_wagon
     puts 'Список существующих поездов с вагонами:'
-    self.print_trains_wth_wagons
+    print_trains_wth_wagons
     begin
       train_index = gets_train_index
-      validate!(train_index, self.trains)
+      validate!(train_index, trains)
     rescue StandardError => e
       puts e
       return
     end
 
-    operational_train = self.trains.at(train_index)
+    operational_train = trains.at(train_index)
     operational_wagon = gets_wagon(operational_train)
 
     if operational_wagon.class == CargoWagon
@@ -319,15 +323,15 @@ class Railroad
 
   def unload_wagon
     puts 'Список существующих поездов с вагонами:'
-    self.print_trains_wth_wagons
+    print_trains_wth_wagons
     begin
       train_index = gets_train_index
-      validate!(train_index, self.trains)
+      validate!(train_index, trains)
     rescue StandardError => e
       puts e
       return
     end
-    operational_train = self.trains.at(train_index)
+    operational_train = trains.at(train_index)
     operational_wagon = gets_wagon(operational_train)
 
     if operational_wagon.class == CargoWagon
@@ -345,24 +349,24 @@ class Railroad
         return
       end
     else
-      puts "Вагон неизвестного типа"
+      puts 'Вагон неизвестного типа'
     end
     puts "#{operational_wagon.to_s}"
   end
 
   def detach_wagon
     puts 'Список существующих поездов с вагонами:'
-    self.print_trains_wth_wagons
+    print_trains_wth_wagons
     begin
       train_index = gets_train_index
-      validate!(train_index, self.trains)
+      validate!(train_index, trains)
     rescue StandardError => e
       puts e
       return
     end
-    donor_train = self.trains.at(train_index)
+    donor_train = trains.at(train_index)
     if donor_train.wagons.empty?
-      puts "У данного поезда нет вагонов"
+      puts 'У данного поезда нет вагонов'
       return
     else
       donor_train.wagons.pop
@@ -376,7 +380,7 @@ class Railroad
     print_trains
     puts 'Введите индекс нужного поезда'
     selected_train_index = gets.chomp.to_i
-    selected_train = self.trains.at(selected_train_index)
+    selected_train = trains.at(selected_train_index)
     puts 'Выбран поезд:'
     puts selected_train.number
     if selected_train.route.nil?
@@ -413,10 +417,10 @@ class Railroad
   end
 
   def show_train_list
-    self.stations.each.with_index(1) { |station, index| puts "#{index} #{station.name}" }
+    stations.each.with_index(1) { |station, index| puts "#{index} #{station.name}" }
     puts 'Введите номер станции'
     selected_station_index = gets.chomp.to_i - 1
-    selected_station = self.stations.at(selected_station_index)
+    selected_station = stations.at(selected_station_index)
     puts 'Выбрана станция:'
     puts selected_station.name
     puts 'Список поездов на станции:'
@@ -428,7 +432,7 @@ class Railroad
     # puts "Станция: #{station.name} (поездов: #{station.trains})"
     station.each_train do |number, train|
       puts train.to_s
-      puts "Вагоны:"
+      puts 'Вагоны:'
       train.each_wagon do |wagon|
         puts wagon.to_s
       end
@@ -441,24 +445,32 @@ class Railroad
 
   def print_stations
     puts 'Существующие станции:'
-    self.stations.each_with_index { |station, index| puts "[#{index}] #{station.name}" }
+    stations.each_with_index { |station, index| puts "[#{index}] #{station.name}" }
   end
 
   def print_routes
     puts 'Существующие маршруты:'
-    self.routes.each_with_index { |route, index| puts "[#{index}] #{route}" }
+    routes.each_with_index { |route, index| puts "[#{index}] #{route}" }
+  end
+
+  def print_route_stations(route)
+    puts "Маршрут #{route.to_s}  уже содержит следующие станции:"
+    # puts "Станция: #{station.name} (поездов: #{station.trains})"
+    route.stations.each_with_index do |station, index|
+      puts "[#{index }] #{station.name}"
+    end
   end
 
   def print_trains
     puts 'Существующие поезда:'
-    self.trains.each_with_index { |train, index| puts "#{index} #{train.to_s} " }
+    trains.each_with_index { |train, index| puts "#{index} #{train.to_s} " }
   end
 
   def print_trains_wth_wagons
     puts 'Существующие поезда и вагоны :'
-    self.trains.each_with_index do |train, index|
+    trains.each_with_index do |train, index|
       puts "#{index} #{train.to_s} "
-      puts "Вагоны:"
+      puts 'Вагоны:'
       train.each_wagon do |wagon|
         puts wagon.to_s
       end
@@ -474,28 +486,27 @@ class Railroad
 
   def gets_integer
     input = gets.chomp.lstrip.rstrip
-    return (input.empty? || /\D/.match(input)) ? "Повторите ввод" : input.to_i
+    return input.empty? || /\D/.match(input) ? 'Повторите ввод' : input.to_i
   end
 
   def gets_wagon_attribute
     input = gets.chomp.lstrip.rstrip
-    raise StandardError, "Повторите ввод" if input.empty? || /\D/.match(input)
-
+    raise StandardError, 'Повторите ввод' if input.empty? || /\D/.match(input)
     input.to_i
   end
 
   def gets_train_number
-    puts "Задайте номер поезда:"
+    puts 'Задайте номер поезда:'
     gets.chomp.lstrip.rstrip
   end
 
   def gets_train_type_index
-    puts "Введите индекс типа поезда:"
+    puts 'Введите индекс типа поезда:'
     gets_integer
   end
 
   def gets_train_maker_index
-    puts "Введите индекс производителя поезда:"
+    puts 'Введите индекс производителя поезда:'
     gets_integer
   end
 

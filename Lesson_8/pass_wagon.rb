@@ -45,7 +45,7 @@ class PassWagon < Wagon
   end
 
   def to_s
-    "Вагон №'#{number}'тип'#{self.type}' занято '#{number_of_busy_seats}'мест, свободно'#{number_of_free_seats}'"
+    "Вагон №'#{number}'тип'#{type}' занято '#{number_of_busy_seats}'мест, свободно'#{number_of_free_seats}'"
   end
 
   protected
