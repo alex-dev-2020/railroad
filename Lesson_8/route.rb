@@ -33,7 +33,7 @@ class Route
 
   def delete_station(station)
     raise StandardError,'Конечные точки маршрута удалить нельзя' if station == stations.first || station == stations.last
-    raise StandardError, "Маршрут не содержит станцию'#{station.name}'" if ! stations.include?(station)
+    raise StandardError, "Маршрут не содержит станцию'#{station.name}'" if !stations.include?(station)
 
     stations.delete(station)
   end
