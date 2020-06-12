@@ -15,8 +15,13 @@ class Railroad
   # txt menu
   def selection(menu)
     menu.each { |key, value| puts "#{key} - #{value}" }
-    puts 'Выбран пункт:'
+    puts 'Выберите действие :'
     gets.chomp
+    #check if input is correct
+    # menu_item = gets.chomp.lstrip.rstrip
+    # raise StandardError, 'Повторите ввод' if menu_item.empty? || /\D/.match(menu_item)
+    # puts "Выбран пункт #{menu_item}"
+    # menu_item.to_i
   end
 
   # test object generation
@@ -111,10 +116,8 @@ class Railroad
   def create_route
     if stations.length < 2
       puts 'Количество существующих станций меньше 2'
-      return
     else
       print_stations
-
       begin
         first_station_index = gets_first_station_index
         validate!(first_station_index, stations)
@@ -147,12 +150,8 @@ class Railroad
   def add_station_to_route
     if routes.empty?
       puts 'Список маршрутов пуст'
-      return
-
     else
-
       print_routes
-
       begin
         route_index = gets_route_index
         validate!(route_index, routes)
@@ -187,8 +186,6 @@ class Railroad
   def delete_station_from_route
     if routes.empty?
       puts 'Список маршрутов пуст'
-      return
-
     else
 
       print_routes
@@ -227,11 +224,8 @@ class Railroad
   def add_route_to_train
     if trains.empty?
       puts 'Список поездов пуст'
-      return
-
     elsif routes.empty?
       puts 'Список маршрутов пуст'
-      return
     else
       print_routes
 
@@ -385,7 +379,6 @@ class Railroad
     puts selected_train.number
     if selected_train.route.nil?
       puts 'Поезду не назначено ни одного маршрута'
-      return
     else
       puts 'Поезду назначен маршрут:'
       puts "'#{selected_train.route.stations.first.name}'-> '#{selected_train.route.stations.last.name}'"
@@ -440,7 +433,7 @@ class Railroad
   end
 
   def validate!(index, object)
-    raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
+    raise "Индекс не существует.#{index}" if !index.is_a?(Integer) || object[index].nil?
   end
 
   def print_stations
@@ -486,7 +479,8 @@ class Railroad
 
   def gets_integer
     input = gets.chomp.lstrip.rstrip
-    return input.empty? || /\D/.match(input) ? 'Повторите ввод' : input.to_i
+    raise StandardError, 'Повторите ввод' if input.empty? || /\D/.match(input)
+    input.to_i
   end
 
   def gets_wagon_attribute

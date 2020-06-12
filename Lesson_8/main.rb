@@ -15,8 +15,6 @@ require_relative 'valid'
 
 my_railroad = Railroad.new
 
-# my_railroad.seed
-
 main_menu = { 1 => 'Создать станцию',
               2 => 'Создать поезд',
               3 => 'Создать маршрут',
