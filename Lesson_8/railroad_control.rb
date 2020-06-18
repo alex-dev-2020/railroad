@@ -60,9 +60,8 @@ class Railroad
   end
 
   def create_train
-    Train::TYPES.each_with_index do |train_type, index|
-      puts "[#{index}] #{train_type[:name]}"
-    end
+
+    print_train_types
 
     begin
       type_index = gets_train_type_index
@@ -467,6 +466,12 @@ class Railroad
       train.each_wagon do |wagon|
         puts wagon.to_s
       end
+    end
+  end
+
+  def print_train_types
+    Train::TYPES.each_with_index do |train_type, index|
+      puts "[#{index}] #{train_type[:name]}"
     end
   end
 
