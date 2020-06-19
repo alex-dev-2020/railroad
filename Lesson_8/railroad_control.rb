@@ -71,9 +71,7 @@ class Railroad
       retry
     end
 
-    Train::MANUFACTURERS.each_with_index do |maker, index|
-      puts "[#{index}] #{maker[:name]}"
-    end
+    print_train_manufacturers
 
     begin
       maker_index = gets_train_maker_index
@@ -481,7 +479,13 @@ class Railroad
       puts "[#{index}] #{train_type[:name]}"
     end
   end
-
+  
+  def print_train_manufacturers
+      Train::MANUFACTURERS.each_with_index do |maker, index|
+      puts "[#{index}] #{maker[:name]}"
+    end
+  end
+  
   private
 
   def gets_station_name
