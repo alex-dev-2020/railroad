@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'made_by'
 
 class Wagon
@@ -7,5 +9,4 @@ class Wagon
   def generate_number
     srand.to_s.slice(0...10)
   end
-
 end
