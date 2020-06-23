@@ -10,7 +10,6 @@ loop do
   menu.print_menu
   print 'Введите индекс действия: '
   action_index = gets.chomp.strip
-#   railway_controller.clear_screen
 
   next if action_index.empty?
 
@@ -22,10 +21,8 @@ loop do
   begin
     result = railway_controller.public_send menu.message(action_index)
   rescue StandardError => error
-    railway_controller.clear_screen
     puts "Ошибка: #{error.backtrace.inspect}"
   else
-    railway_controller.clear_screen
     puts result
   end
 end
