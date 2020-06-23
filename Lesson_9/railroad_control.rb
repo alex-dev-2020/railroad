@@ -1,6 +1,6 @@
 # class Railroad
 
-class Railroad
+class RailroadControl
   attr_reader :stations, :routes, :trains
 
   def initialize
@@ -57,4 +57,32 @@ class Railroad
     puts "Создана станция'#{station_name}'"
   end
   
+    def create_train
+  
+  gets_train_type
+  gets_train_manufacturer
+  
+  begin
+      number = gets_train_number
+      case Train::TYPES[type_index][:type]
+      when 'CargoTrain'
+        train = CargoTrain.new(number, maker)
+      when 'PassTrain'
+        train = PassTrain.new(number, maker)
+      end
+    rescue StandardError => e
+      puts e
+      retry
+    end
+    @trains << train
+  end
+  
+  
+  private
+  
+  def gets_station_name
+    puts 'Введите название станции'
+    gets.chomp.lstrip.rstrip
+  end
+
 end

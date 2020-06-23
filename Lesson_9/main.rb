@@ -2,6 +2,7 @@ require_relative 'railroad_control'
 require_relative 'railroad_menu'
 
 menu = RailroadMenu.new
+controller = RailroadControl.new
 
 
 loop do
@@ -20,12 +21,12 @@ loop do
   next if menu.action_menu[action_index].nil? || menu.message(action_index).nil?
 
   begin
-    result = railway_controller.public_send menu.message(action_index)
+    result = controller.public_send menu.message(action_index)
   rescue StandardError => error
-    railway_controller.clear_screen
+    # railway_controller.clear_screen
     puts "Ошибка: #{error.backtrace.inspect}"
   else
-    railway_controller.clear_screen
+    # railway_controller.clear_screen
     puts result
   end
 end
