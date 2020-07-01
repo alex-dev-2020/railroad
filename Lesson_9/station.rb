@@ -2,16 +2,16 @@
 
 class Station
   attr_reader :name, :trains
+<<<<<<< HEAD
   # include InstanceCounter
   # include Valid
-  @@list = []
+  @@stations = []
   RGXP_STATION_NAME_FORMAT = /^[a-zа-я][a-zа-я]{1,30}([ \-][a-zа-я]{1,30})?([ \-][a-zа-я]{1,30})?([ \-][\d]{1,4})?$/i
 
   def initialize(name)
     @name = name
     @trains = {}
     validate!
-    @@list << self
     # register_instance
   end
 
@@ -38,4 +38,8 @@ class Station
   def train_out(train)
     trains.delete(train)
   end
+  
+  # def to_s
+  #   self.name
+  # end
 end

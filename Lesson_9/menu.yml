@@ -48,7 +48,7 @@
   :title: Создать поезд
   :type: :message
 
-- :message: :print_all_trains_only
+- :message: :print_trains
   :title: Вывести список поездов
   :type: :message
 
@@ -96,13 +96,13 @@
   :title: Вывести статистику
   :type: :message
 
-# #Stuff only 
-# - :type: :separator
-#   :title: Генерация тестовых объектов
-# - :type: :separator
-#   :title: Генерация тестовых объектов
-#   :message: :seed
-#   :type: :message
+#Stuff only 
+- :type: :separator
+  :title: Генерация тестовых объектов
+- :type: :separator
+  :title: Генерация тестовых объектов
+  :message: :seed
+  :type: :message
   
 #Выход
 - :type: :separator
