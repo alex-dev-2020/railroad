@@ -2,7 +2,6 @@
 
 class Station
   attr_reader :name, :trains
-<<<<<<< HEAD
   # include InstanceCounter
   # include Valid
   @@stations = []
@@ -38,7 +37,7 @@ class Station
   def train_out(train)
     trains.delete(train)
   end
-  
+
   # def to_s
   #   self.name
   # end
