@@ -7,6 +7,7 @@ require_relative 'station'
 require_relative 'wagon'
 require_relative 'cargo_wagon'
 require_relative 'pass_wagon'
+require_relative 'route'
 
 class RailroadControl
   attr_reader :stations, :routes, :trains
@@ -41,13 +42,13 @@ class RailroadControl
     @stations << test_station_2
     test_station_3 = Station.new('test-station-3')
     @stations << test_station_3
-    # route_test = Route.new(test_station_1, test_station_2)
-    # @routes << route_test
-    # puts
+    route_test = Route.new(test_station_1, test_station_2)
+    @routes << route_test
+    puts
     print_stations_only
     # puts
-    # print_routes
-    # print_route_stations(routes[0])
+    print_routes
+    print_route_stations(routes[0])
     # puts
     print_trains
     # puts
@@ -101,9 +102,30 @@ class RailroadControl
     puts 'Существующие поезда:'
     trains.each_with_index { |train, index| puts "#{index} #{train.to_s} " }
   end
-  # def clear_screen
-  #   print "\e[2J\e[f"
-  # end
+
+  def print_routes
+    puts 'Существующие маршруты:'
+    routes.each_with_index { |route, index| puts "[#{index}] #{route}" }
+  end
+
+  def print_route_stations(route)
+    puts "Маршрут #{route.to_s} содержит следующие станции:"
+    # puts "Станция: #{station.name} (поездов: #{station.trains})"
+    route.stations.each_with_index do |station, index|
+      puts "[#{index }] #{station.name}"
+    end
+  end
+  
+  def print_trains_wth_wagons
+    puts 'Существующие поезда и вагоны :'
+    trains.each_with_index do |train, index|
+      puts "#{index} #{train.to_s} "
+      puts 'Вагоны:'
+      train.each_wagon do |wagon|
+        puts wagon.to_s
+      end
+    end
+  end
   
   private
   

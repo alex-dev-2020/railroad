@@ -64,7 +64,7 @@
   :title: Переместить поезд по маршруту назад
   :type: :message
 
-- :message: :wagons_by_train
+- :message: :print_trains_wth_wagons
   :title: Вывести список вагонов у поезда
   :type: :message
 
