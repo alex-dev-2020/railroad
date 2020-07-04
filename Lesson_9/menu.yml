@@ -28,9 +28,13 @@
   :title: Создать маршрут
   :type: :message
 
-- :message: :print_routes_only
+- :message: :print_routes
   :title: Вывести список маршрутов
   :type: :message
+  
+# - :message: :print_routes_only
+#   :title: Вывести список станций в маршруте
+#   :type: :message
 
 - :message: :add_station_to_route
   :title: Добавить станцию в маршрут

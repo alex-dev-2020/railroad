@@ -18,7 +18,11 @@ class RailroadControl
     @trains = []
     @wagons = []
   end
-
+  
+  def validate!(index, object)
+    raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
+  end
+  
   # txt menu
   def selection(menu)
     menu.each { |key, value| puts "#{key} - #{value}" }
@@ -67,13 +71,26 @@ class RailroadControl
   end
   
   def print_stations_only
-    # clear_screen
-    print_stations
-    # push_enter_for_continue
+      print_stations
   end
   
   def print_stations
     stations.each_with_index { |station, index| puts "[#{index}] #{station.name}" } 
+  end
+  
+  def print_trains_on_one_station
+    station_index = gets_station_index
+    station = stations[station_index]
+    puts "Станция: #{station.name} (поездов: #{station.trains.length})"
+      station.each_train do |train|
+      puts train.to_s
+      # train.each_wagon { |wagon| puts wagon.to_s }
+      # puts
+    end
+  end
+  
+  def print_trains_on_each_station
+    stations.each_with_index { |station, index| puts "[#{index}] #{station.trains}" } 
   end
   
   def create_train
@@ -116,7 +133,72 @@ class RailroadControl
     end
   end
   
-  def print_trains_wth_wagons
+  def add_route_to_train
+    if trains.empty?
+      puts 'Список поездов пуст'
+      return
+
+    elsif routes.empty?
+      puts 'Список маршрутов пуст'
+      return
+    else
+      print_routes
+
+      begin
+        route_index = gets_route_index
+        validate!(route_index, routes)
+      rescue StandardError => e
+        puts e
+        return
+      end
+
+      print_trains
+
+      begin
+        train_index = gets_train_index
+        validate!(train_index, trains)
+      rescue StandardError => e
+        puts e
+        return
+      end
+      trains[train_index].accept_route(routes[route_index])
+      puts "Mаршрут '#{routes[route_index].stations.first.name}' -> '#{routes[route_index].stations.last.name}' назначен поезду '#{trains[train_index].number}'"
+    end
+  end
+
+  def add_wagon
+    puts 'Список существующих поездов c вагонами:'
+    print_trains_wth_wagons
+    begin
+      train_index = gets_train_index
+      validate!(train_index, trains)
+    rescue StandardError => e
+      puts e
+      return
+    end
+    accepting_train = trains.at(train_index)
+    accepting_train_class = trains.at(train_index).class
+    if accepting_train_class == CargoTrain
+      begin
+        wagon = create_cargo_wagon
+      rescue StandardError => e
+        puts e
+        return
+      end
+    elsif accepting_train_class == PassTrain
+      begin
+        wagon = create_pass_wagon
+      rescue StandardError => e
+        puts 'Ошибка создания вагона'
+        puts e
+        return
+      end
+    end
+    accepting_train.add_wagon(wagon)
+    puts "Вагон № #{wagon.number} тип #{wagon.class} добавлен к поезду №'#{accepting_train.number}'"
+  end
+ 
+ def print_trains_wth_wagons
     puts 'Существующие поезда и вагоны :'
     trains.each_with_index do |train, index|
       puts "#{index} #{train.to_s} "
@@ -167,4 +249,21 @@ class RailroadControl
     puts 'Задайте номер поезда:'
     gets.chomp.lstrip.rstrip
   end
+  
+  def gets_station_index
+    print_stations
+    puts "Введите индекс станции"
+    gets_integer
+  end
+  
+  def gets_route_index
+    puts 'Введите индекс маршрута'
+    gets_integer
+  end
+  
+  def gets_train_index
+    puts 'Введите индекс нужного поезда'
+    gets_integer
+  end
+  
 end
