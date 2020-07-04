@@ -2,13 +2,13 @@
 
 require_relative 'wagon'
 # lines below included only for test purpose
-require_relative 'instance_counter'
-require_relative 'valid'
+# require_relative 'instance_counter'
+# require_relative 'valid'
 
 class CargoWagon < Wagon
   attr_reader :total_volume
-  include InstanceCounter
-  include Valid
+  # include InstanceCounter
+  # include Valid
 
   def initialize(total_volume)
     raise StandardError, 'Объем при создании должен быть больше 0' if total_volume <= 0
@@ -16,7 +16,7 @@ class CargoWagon < Wagon
     @total_volume = total_volume
     @number = generate_number
     @volume = 0
-    register_instance
+    # register_instance
   end
 
   def load(volume)
