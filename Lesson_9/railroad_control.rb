@@ -79,18 +79,19 @@ class RailroadControl
   end
   
   def print_trains_on_one_station
-    station_index = gets_station_index
-    station = stations[station_index]
+    raise StandardError, 'Нет станций' if stations.empty?
+    station = gets_station
     puts "Станция: #{station.name} (поездов: #{station.trains.length})"
-      station.each_train do |train|
-      puts train.to_s
-      # train.each_wagon { |wagon| puts wagon.to_s }
-      # puts
-    end
+    print_trains_on_station(station)
   end
   
   def print_trains_on_each_station
-    stations.each_with_index { |station, index| puts "[#{index}] #{station.trains}" } 
+    raise StandardError, 'Нет станций' if stations.empty?
+    stations.each do |station|
+      puts "#{station.name}"
+      print_trains_on_station(station)
+      puts
+    end
   end
   
   def create_train
@@ -207,13 +208,18 @@ class RailroadControl
         puts wagon.to_s
       end
     end
-  end
+ end
   
   private
   
   def gets_station_name
     puts 'Введите название станции'
     gets.chomp.lstrip.rstrip
+  end
+  
+  def gets_station
+    station_index = gets_station_index
+    stations[station_index]
   end
   
   def gets_train_type_index
@@ -264,6 +270,14 @@ class RailroadControl
   def gets_train_index
     puts 'Введите индекс нужного поезда'
     gets_integer
+  end
+  
+  def print_trains_on_station(station)
+    station.each_train do |number, train|
+      puts "#{train.to_s}"
+      train.each_wagon { |wagon| puts "#{wagon.to_s}" }
+      puts
+      end
   end
   
 end
