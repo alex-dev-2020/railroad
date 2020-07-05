@@ -120,7 +120,19 @@ class RailroadControl
     puts 'Существующие поезда:'
     trains.each_with_index { |train, index| puts "#{index} #{train.to_s} " }
   end
+  
+  def create_route
+    raise StandardError, 'Нужны минимум 2 созданные станции' if stations.length < 2
+    
+    first_station = gets_station { puts 'Начальная станция:' }
+    last_station = gets_station { puts 'Конечная станция:' }
+    
+    @routes << Route.new(first_station, last_station)
 
+    puts "Маршрут '#{first_station.name} -> #{last_station.name}' создан"
+    
+  end
+  
   def print_routes
     puts 'Существующие маршруты:'
     routes.each_with_index { |route, index| puts "[#{index}] #{route}" }
@@ -218,6 +230,7 @@ class RailroadControl
   end
   
   def gets_station
+    yield if block_given?
     station_index = gets_station_index
     stations[station_index]
   end

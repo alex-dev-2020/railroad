@@ -24,8 +24,7 @@ loop do
   begin
     result = controller.public_send menu.message(action_index)
   rescue StandardError => error
-    # controller.clear_screen
-    puts "Ошибка: #{error.backtrace.inspect}"
+      puts "Ошибка: #{error}"
   else
     # controller.clear_screen
     result
