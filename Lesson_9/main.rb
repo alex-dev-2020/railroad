@@ -1,11 +1,9 @@
-<<<<<<< HEAD
 require_relative "railroad_control"
 require_relative "railroad_menu"
 require_relative "pass_train"
 require_relative "cargo_train"
 require_relative "train"
 require_relative "station"
-
 
 menu = RailroadMenu.new
 controller = RailroadControl.new

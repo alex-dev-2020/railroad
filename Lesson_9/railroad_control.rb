@@ -1,15 +1,13 @@
 # class Railroad
 
-
-require_relative 'pass_train'
-require_relative 'cargo_train'
-require_relative 'train'
-require_relative 'station'
-require_relative 'wagon'
-require_relative 'cargo_wagon'
-require_relative 'pass_wagon'
-require_relative 'route'
-
+require_relative "pass_train"
+require_relative "cargo_train"
+require_relative "train"
+require_relative "station"
+require_relative "wagon"
+require_relative "cargo_wagon"
+require_relative "pass_wagon"
+require_relative "route"
 
 class RailroadControl
   attr_reader :stations, :routes, :trains
@@ -20,11 +18,11 @@ class RailroadControl
     @trains = []
     @wagons = []
   end
-  
+
   def validate!(index, object)
     raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
   end
-  
+
   # txt menu
   def selection(menu)
     menu.each { |key, value| puts "#{key} - #{value}" }
@@ -34,11 +32,11 @@ class RailroadControl
 
   # test object generation
   def seed
-    cargo_test_train = CargoTrain.new('123-45', 'tesla')
+    cargo_test_train = CargoTrain.new("123-45", "tesla")
     cargo_test_wagon = CargoWagon.new(100)
     cargo_test_train.add_wagon(cargo_test_wagon)
     @trains << cargo_test_train
-    pass_test_train = PassTrain.new('543-21', 'bosh')
+    pass_test_train = PassTrain.new("543-21", "bosh")
     pass_test_wagon = PassWagon.new(45)
     pass_test_train.add_wagon(pass_test_wagon)
     @trains << pass_test_train
@@ -80,22 +78,24 @@ class RailroadControl
     stations.each_with_index { |station, index| puts "[#{index}] #{station.name}" }
   end
 
-  
   def print_trains_on_one_station
+    raise StandardError, "Нет станций" if stations.empty?
+
     station_index = gets_station_index
+
     station = stations[station_index]
-    puts "Станция: #{station.name} (поездов: #{station.trains.length})"
-      station.each_train do |train|
-      puts train.to_s
-      # train.each_wagon { |wagon| puts wagon.to_s }
-      # puts
+
+    print_trains_on_station(station)
+  end
+
+  def print_trains_on_each_station
+    raise StandardError, "Нет станций" if stations.empty?
+
+    stations.each do |station|
+      print_trains_on_station(station)
+      puts
     end
   end
-  
-  def print_trains_on_each_station
-    stations.each_with_index { |station, index| puts "[#{index}] #{station.trains}" } 
-  end
-  
 
   def create_train
     type_index = gets_train_type_index
@@ -123,9 +123,8 @@ class RailroadControl
     trains.each_with_index { |train, index| puts "[#{index}] #{train}" }
   end
 
-
   def print_routes
-    puts 'Существующие маршруты:'
+    puts "Существующие маршруты:"
     routes.each_with_index { |route, index| puts "[#{index}] #{route}" }
   end
 
@@ -133,17 +132,16 @@ class RailroadControl
     puts "Маршрут #{route.to_s} содержит следующие станции:"
     # puts "Станция: #{station.name} (поездов: #{station.trains})"
     route.stations.each_with_index do |station, index|
-      puts "[#{index }] #{station.name}"
+      puts "[#{index}] #{station.name}"
     end
   end
-  
+
   def add_route_to_train
     if trains.empty?
-      puts 'Список поездов пуст'
+      puts "Список поездов пуст"
       return
-
     elsif routes.empty?
-      puts 'Список маршрутов пуст'
+      puts "Список маршрутов пуст"
       return
     else
       print_routes
@@ -171,7 +169,7 @@ class RailroadControl
   end
 
   def add_wagon
-    puts 'Список существующих поездов c вагонами:'
+    puts "Список существующих поездов c вагонами:"
     print_trains_wth_wagons
     begin
       train_index = gets_train_index
@@ -193,7 +191,7 @@ class RailroadControl
       begin
         wagon = create_pass_wagon
       rescue StandardError => e
-        puts 'Ошибка создания вагона'
+        puts "Ошибка создания вагона"
         puts e
         return
       end
@@ -201,18 +199,17 @@ class RailroadControl
     accepting_train.add_wagon(wagon)
     puts "Вагон № #{wagon.number} тип #{wagon.class} добавлен к поезду №'#{accepting_train.number}'"
   end
- 
- def print_trains_wth_wagons
-    puts 'Существующие поезда и вагоны :'
+
+  def print_trains_wth_wagons
+    puts "Существующие поезда и вагоны :"
     trains.each_with_index do |train, index|
       puts "#{index} #{train.to_s} "
-      puts 'Вагоны:'
+      puts "Вагоны:"
       train.each_wagon do |wagon|
         puts wagon.to_s
       end
     end
   end
-  
 
   private
 
@@ -254,21 +251,29 @@ class RailroadControl
     puts "Задайте номер поезда:"
     gets.chomp.lstrip.rstrip
   end
-  
+
   def gets_station_index
     print_stations
     puts "Введите индекс станции"
     gets_integer
   end
-  
+
   def gets_route_index
-    puts 'Введите индекс маршрута'
+    puts "Введите индекс маршрута"
     gets_integer
   end
-  
+
   def gets_train_index
-    puts 'Введите индекс нужного поезда'
+    puts "Введите индекс нужного поезда"
     gets_integer
   end
-  
+
+  def print_trains_on_station(station)
+    puts "Станция: #{station.name} (поездов: #{station.trains.length})"
+    station.each_train do |train|
+      print train.to_s
+      # train.each_wagon { |wagon| puts wagon.to_s }
+      # puts
+    end
+  end
 end
