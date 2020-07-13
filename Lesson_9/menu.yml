@@ -31,6 +31,10 @@
 - :message: :print_routes
   :title: Вывести список маршрутов
   :type: :message
+
+- :message: :print_routes_stations
+  :title: Вывести список станций в маршруте
+  :type: :message
   
 # - :message: :print_routes_only
 #   :title: Вывести список станций в маршруте

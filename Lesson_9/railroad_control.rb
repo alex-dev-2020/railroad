@@ -81,10 +81,8 @@ class RailroadControl
   def print_trains_on_one_station
     raise StandardError, "Нет станций" if stations.empty?
 
-    station_index = gets_station_index
-
-    station = stations[station_index]
-
+    station = gets_station
+    puts "Станция: #{station.name} (поездов: #{station.trains.length})"
     print_trains_on_station(station)
   end
 
@@ -92,6 +90,7 @@ class RailroadControl
     raise StandardError, "Нет станций" if stations.empty?
 
     stations.each do |station|
+      puts "#{station.name}"
       print_trains_on_station(station)
       puts
     end
@@ -123,9 +122,25 @@ class RailroadControl
     trains.each_with_index { |train, index| puts "[#{index}] #{train}" }
   end
 
+  def create_route
+    raise StandardError, "Нужны минимум 2 созданные станции" if stations.length < 2
+
+    first_station = gets_station { puts "Начальная станция:" }
+    last_station = gets_station { puts "Конечная станция:" }
+
+    @routes << Route.new(first_station, last_station)
+
+    puts "Маршрут '#{first_station.name} -> #{last_station.name}' создан"
+  end
+
   def print_routes
     puts "Существующие маршруты:"
     routes.each_with_index { |route, index| puts "[#{index}] #{route}" }
+  end
+
+  def print_routes_stations
+    route = gets_route
+    print_route_stations(route)
   end
 
   def print_route_stations(route)
@@ -218,6 +233,21 @@ class RailroadControl
     gets.chomp.lstrip.rstrip
   end
 
+  def gets_station
+    yield if block_given?
+    station_index = gets_station_index
+    stations[station_index]
+  end
+
+  def gets_route
+    # проверка
+    raise StandardError, "Список маршрутов пуст!" if routes.empty?
+
+    print_routes
+    route_index = gets_route_index
+    routes[route_index]
+  end
+
   def gets_train_type_index
     train_types
     puts "Введите индекс типа поезда:"
@@ -269,11 +299,10 @@ class RailroadControl
   end
 
   def print_trains_on_station(station)
-    puts "Станция: #{station.name} (поездов: #{station.trains.length})"
-    station.each_train do |train|
-      print train.to_s
-      # train.each_wagon { |wagon| puts wagon.to_s }
-      # puts
+    station.each_train do |number, train|
+      puts "#{train.to_s}"
+      train.each_wagon { |wagon| puts "#{wagon.to_s}" }
+      puts
     end
   end
 end
