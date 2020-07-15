@@ -50,12 +50,9 @@ class RailroadControl
     @routes << route_test
     puts
     print_stations_only
-    # puts
     print_routes
     print_route_stations(routes[0])
-    # puts
     print_trains
-    # puts
   end
 
   def create_station
@@ -145,7 +142,6 @@ class RailroadControl
 
   def print_route_stations(route)
     puts "Маршрут #{route.to_s} содержит следующие станции:"
-    # puts "Станция: #{station.name} (поездов: #{station.trains})"
     route.stations.each_with_index do |station, index|
       puts "[#{index}] #{station.name}"
     end
@@ -205,21 +201,58 @@ class RailroadControl
     puts "Вагон отцеплен от поезда №#{train.number}"
   end
 
-  def print_trains
-    puts "Существующие поезда:"
-    trains.each_with_index do |train, index|
-      puts "[#{index}] #{train.to_s} "
-    end
+  def print_trains_wth_wagons
+    train = gets_train
+    puts "Вагоны поезда #{train.to_s}:"
+    print_wagons(train)
   end
 
-  def print_trains_wth_wagons
-    puts "Существующие поезда c вагонами :"
-    trains.each_with_index do |train, index|
-      puts "[#{index}] #{train.to_s} "
-      puts "Вагоны:"
-      train.each_wagon do |wagon|
-        puts wagon.to_s
+  def print_wagons(train)
+    raise StandardError, "У данного поезда нет вагонов" if train.wagons.empty?
+    train.wagons.each_with_index { |wagon, index| puts "[#{index}] #{wagon.to_s}" }
+  end
+
+  def load_wagon
+    wagon = gets_wagon
+    if wagon.class == CargoWagon
+      begin
+        load_cargo_wagon(wagon)
+      rescue StandardError => e
+        puts e
+        return
       end
+    else
+      begin
+        occupy_seats(wagon)
+      rescue StandardError => e
+        puts e
+        return
+      end
+    end
+    puts "#{wagon.to_s}"
+  end
+
+  def unload_wagon
+    wagon = gets_wagon
+
+    if wagon.class == CargoWagon
+      begin
+        unload_cargo_vagon(wagon)
+      rescue StandardError => e
+        puts e
+        return
+      end
+    elsif wagon.class == PassWagon
+      begin
+        leave_seat(wagon)
+      rescue StandardError => e
+        puts e
+        return
+      end
+    else
+      puts "Вагон неизвестного типа"
+
+      puts "#{wagon.to_s}"
     end
   end
 
@@ -250,6 +283,15 @@ class RailroadControl
     train_index = gets_train_index
     validate!(train_index, trains)
     trains[train_index]
+  end
+
+  def gets_wagon
+    train = gets_train
+    print_wagons(train)
+    puts "Введите индекс вагона"
+    wagon_index = gets_integer
+    validate!(wagon_index, train.wagons)
+    train.wagons[wagon_index]
   end
 
   def gets_train_type_index
@@ -333,5 +375,23 @@ class RailroadControl
     input = gets.chomp.lstrip.rstrip
     raise StandardError, "Повторите ввод" if input.empty? || /\D/.match(input)
     input.to_i
+  end
+
+  def load_cargo_wagon(wagon)
+    volume = gets_volume
+    wagon.load(volume)
+  end
+
+  def unload_cargo_vagon(wagon)
+    volume = gets_volume
+    wagon.unload(volume)
+  end
+
+  def occupy_seats(wagon)
+    wagon.use_seat
+  end
+
+  def leave_seat(wagon)
+    wagon.leave_seat
   end
 end

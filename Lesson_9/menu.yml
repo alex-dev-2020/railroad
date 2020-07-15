@@ -88,11 +88,11 @@
   :title: Отцепить вагон от поезда
   :type: :message
 
-- :message: :use_wagon
+- :message: :load_wagon
   :title: Использовать место в вагоне
   :type: :message
 
-- :message: :free_wagon
+- :message: :unload_wagon
   :title: Освободить место в вагоне
   :type: :message
 
