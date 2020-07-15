@@ -159,50 +159,28 @@ class RailroadControl
       puts "Список маршрутов пуст"
       return
     else
-      print_routes
+      route = gets_route
 
-      begin
-        route_index = gets_route_index
-        validate!(route_index, routes)
-      rescue StandardError => e
-        puts e
-        return
-      end
+      train = gets_train
 
-      print_trains
+      train.accept_route(route)
 
-      begin
-        train_index = gets_train_index
-        validate!(train_index, trains)
-      rescue StandardError => e
-        puts e
-        return
-      end
-      trains[train_index].accept_route(routes[route_index])
-      puts "Mаршрут '#{routes[route_index].stations.first.name}' -> '#{routes[route_index].stations.last.name}' назначен поезду '#{trains[train_index].number}'"
+      puts "Mаршрут '#{route.stations.first.name}' -> '#{route.stations.last.name}' назначен поезду '#{train.number}'"
     end
   end
 
   def add_wagon
-    puts "Список существующих поездов c вагонами:"
-    print_trains_wth_wagons
-    begin
-      train_index = gets_train_index
-      validate!(train_index, trains)
-    rescue StandardError => e
-      puts e
-      return
-    end
-    accepting_train = trains.at(train_index)
-    accepting_train_class = trains.at(train_index).class
-    if accepting_train_class == CargoTrain
+    train = gets_train
+
+    train_class = train.class
+    if train_class == CargoTrain
       begin
         wagon = create_cargo_wagon
       rescue StandardError => e
         puts e
         return
       end
-    elsif accepting_train_class == PassTrain
+    elsif train_class == PassTrain
       begin
         wagon = create_pass_wagon
       rescue StandardError => e
@@ -211,14 +189,33 @@ class RailroadControl
         return
       end
     end
-    accepting_train.add_wagon(wagon)
-    puts "Вагон № #{wagon.number} тип #{wagon.class} добавлен к поезду №'#{accepting_train.number}'"
+    train.add_wagon(wagon)
+    puts "Вагон № #{wagon.number} тип #{wagon.class} добавлен к поезду №#{train.number}"
+  end
+
+  def detach_wagon
+    train = gets_train
+    if train.wagons.empty?
+      puts "У данного поезда нет вагонов"
+      return
+    else
+      train.wagons.pop
+    end
+
+    puts "Вагон отцеплен от поезда №#{train.number}"
+  end
+
+  def print_trains
+    puts "Существующие поезда:"
+    trains.each_with_index do |train, index|
+      puts "[#{index}] #{train.to_s} "
+    end
   end
 
   def print_trains_wth_wagons
-    puts "Существующие поезда и вагоны :"
+    puts "Существующие поезда c вагонами :"
     trains.each_with_index do |train, index|
-      puts "#{index} #{train.to_s} "
+      puts "[#{index}] #{train.to_s} "
       puts "Вагоны:"
       train.each_wagon do |wagon|
         puts wagon.to_s
@@ -236,16 +233,23 @@ class RailroadControl
   def gets_station
     yield if block_given?
     station_index = gets_station_index
+    validate!(station_index, stations)
     stations[station_index]
   end
 
   def gets_route
-    # проверка
     raise StandardError, "Список маршрутов пуст!" if routes.empty?
-
     print_routes
     route_index = gets_route_index
+    validate!(route_index, routes)
     routes[route_index]
+  end
+
+  def gets_train
+    raise StandardError, "Список поездов пуст!" if trains.empty?
+    train_index = gets_train_index
+    validate!(train_index, trains)
+    trains[train_index]
   end
 
   def gets_train_type_index
@@ -294,6 +298,7 @@ class RailroadControl
   end
 
   def gets_train_index
+    print_trains
     puts "Введите индекс нужного поезда"
     gets_integer
   end
@@ -304,5 +309,29 @@ class RailroadControl
       train.each_wagon { |wagon| puts "#{wagon.to_s}" }
       puts
     end
+  end
+
+  def create_cargo_wagon
+    CargoWagon.new(gets_volume)
+  end
+
+  def gets_volume
+    puts "Введите объeм:"
+    gets_wagon_attribute
+  end
+
+  def create_pass_wagon
+    PassWagon.new(gets_number_of_seats)
+  end
+
+  def gets_number_of_seats
+    puts "Введите кол-во мест в вагоне: "
+    gets_wagon_attribute
+  end
+
+  def gets_wagon_attribute
+    input = gets.chomp.lstrip.rstrip
+    raise StandardError, "Повторите ввод" if input.empty? || /\D/.match(input)
+    input.to_i
   end
 end
