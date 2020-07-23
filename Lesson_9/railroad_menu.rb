@@ -2,7 +2,6 @@ require 'yaml'
 require_relative 'station'
 
 class RailroadMenu
-
   attr_reader :action_menu, :exit_index
 
   def initialize
@@ -22,7 +21,7 @@ class RailroadMenu
       end
     end
   end
-  
+
   def parse_menu_from_file(file_name)
     raise StandardError, "Файл меню не найден (#{file_name})" unless File.exist?(file_name)
     raise StandardError, "Файл меню пустой (#{file_name})" if File.zero?(file_name)
@@ -46,5 +45,4 @@ class RailroadMenu
   def message(index)
     action_menu[index][:message]
   end
-
 end

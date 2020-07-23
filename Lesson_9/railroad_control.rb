@@ -77,7 +77,6 @@ class RailroadControl
 
   def print_trains_on_one_station
     raise StandardError, 'Нет станций' if stations.empty?
-
     station = gets_station
     puts "Станция: #{station.name} (поездов: #{station.trains.length})"
     print_trains_on_station(station)
@@ -85,7 +84,6 @@ class RailroadControl
 
   def print_trains_on_each_station
     raise StandardError, 'Нет станций' if stations.empty?
-
     stations.each do |station|
       puts "#{station.name}"
       print_trains_on_station(station)
@@ -94,39 +92,22 @@ class RailroadControl
   end
 
   def add_station_to_route
-    if routes.empty?
-      puts 'Список маршрутов пуст'
-      return
-    elsif stations.length  <=  2
-      puts 'Для добавления в маршрут необходимы хотя бы 3 станции'
-      return
-    else
-      route = gets_route
-      station = gets_station
-      raise StandardError, 'Маршрут уже содержит данную станцию' if route.stations.include?(station)
-
-      route.add_station(station)
-      puts "Станция '#{station.name}' добавлена в маршрут #{route.to_s}"
-    end
-
+    raise StandardError, 'Список маршрутов пуст' if routes.empty?
+    route = gets_route
+    station = gets_station
+    route.add_station(station)
+    puts "Станция '#{station.name}' добавлена в маршрут #{route.to_s}"
   end
+
 
   def delete_station_from_route
-    if routes.empty?
-      puts 'Список маршрутов пуст'
-      return
-    # elsif stations.length  <=  2
-    #   puts 'Для удаления из маршрута необходимо, чтобы он содержал хотя бы 1 станцию кроме конечных'
-    #   return
-    else
-      route = gets_route
-      station = gets_station
-      # это проверяется в классе Route
-      # raise StandardError, "Маршрут не содержит данную станцию" if !route.stations.include?(station)
-      route.delete_station(station)
-      puts "Станция '#{station.name}' удалена из маршрута #{route.to_s}"
-    end
+    raise StandardError, 'Список маршрутов пуст' if routes.empty?
+    route = gets_route
+    station = gets_station
+    route.delete_station(station)
+    puts "Станция '#{station.name}' удалена из маршрута #{route.to_s}"
   end
+
 
   def create_train
     type_index = gets_train_type_index
