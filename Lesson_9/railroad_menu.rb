@@ -2,7 +2,7 @@ require 'yaml'
 require_relative 'station'
 
 class RailroadMenu
-    
+
   attr_reader :action_menu, :exit_index
 
   def initialize
@@ -22,7 +22,8 @@ class RailroadMenu
       end
     end
   end
-    def parse_menu_from_file(file_name)
+  
+  def parse_menu_from_file(file_name)
     raise StandardError, "Файл меню не найден (#{file_name})" unless File.exist?(file_name)
     raise StandardError, "Файл меню пустой (#{file_name})" if File.zero?(file_name)
 
@@ -30,8 +31,8 @@ class RailroadMenu
     raise StandardError, 'Ошибка формата меню' unless menu_items.is_a?(Array)
 
     menu_items
-  rescue StandardError => error
-    puts error
+  rescue StandardError => e
+    puts e
   end
 
   def print_menu_item(index, item)
@@ -45,5 +46,5 @@ class RailroadMenu
   def message(index)
     action_menu[index][:message]
   end
-  
+
 end

@@ -68,7 +68,7 @@
   :title: Переместить поезд по маршруту вперёд
   :type: :message
 
-- :message: :move_train_backward
+- :message: :move_train_back
   :title: Переместить поезд по маршруту назад
   :type: :message
 
