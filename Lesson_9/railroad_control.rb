@@ -8,9 +8,11 @@ require_relative 'wagon'
 require_relative 'cargo_wagon'
 require_relative 'pass_wagon'
 require_relative 'route'
+require_relative 'seed'
 
 class RailroadControl
   attr_reader :stations, :routes, :trains
+  include Seed
 
   def initialize
     @stations = []
@@ -28,31 +30,6 @@ class RailroadControl
     menu.each { |key, value| puts "#{key} - #{value}" }
     puts 'Выбран пункт:'
     gets.chomp
-  end
-
-  # test object generation
-  def seed
-    cargo_test_train = CargoTrain.new('123-45', 'tesla')
-    cargo_test_wagon = CargoWagon.new(100)
-    cargo_test_train.add_wagon(cargo_test_wagon)
-    @trains << cargo_test_train
-    pass_test_train = PassTrain.new('543-21', 'bosh')
-    pass_test_wagon = PassWagon.new(45)
-    pass_test_train.add_wagon(pass_test_wagon)
-    @trains << pass_test_train
-    test_station_1 = Station.new('test-station-1')
-    @stations << test_station_1
-    test_station_2 = Station.new('test-station-2')
-    @stations << test_station_2
-    # test_station_3 = Station.new("test-station-3")
-    # @stations << test_station_3
-    route_test = Route.new(test_station_1, test_station_2)
-    @routes << route_test
-    puts
-    print_stations_only
-    print_routes
-    print_route_stations(routes[0])
-    print_trains
   end
 
   def create_station
@@ -99,7 +76,6 @@ class RailroadControl
     puts "Станция '#{station.name}' добавлена в маршрут #{route.to_s}"
   end
 
-
   def delete_station_from_route
     raise StandardError, 'Список маршрутов пуст' if routes.empty?
     route = gets_route
@@ -107,7 +83,6 @@ class RailroadControl
     route.delete_station(station)
     puts "Станция '#{station.name}' удалена из маршрута #{route.to_s}"
   end
-
 
   def create_train
     type_index = gets_train_type_index

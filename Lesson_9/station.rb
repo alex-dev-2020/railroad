@@ -5,7 +5,7 @@ class Station
   # include InstanceCounter
   # include Valid
   @@stations = []
-  RGXP_STATION_NAME_FORMAT = /^[a-zа-я][a-zа-я]{1,30}([ \-][a-zа-я]{1,30})?([ \-][a-zа-я]{1,30})?([ \-][\d]{1,4})?$/i
+  RGXP_STATION_NAME = /^[a-zа-я][a-zа-я]{1,30}([ \-][a-zа-я]{1,30})?([ \-][a-zа-я]{1,30})?([ \-][\d]{1,4})?$/i
 
   def initialize(name)
     @name = name
@@ -15,7 +15,7 @@ class Station
   end
 
   def validate!
-    raise StandardError, "Неправильный формат названия станции (#{name})" if name !~ RGXP_STATION_NAME_FORMAT
+    raise StandardError, 'Неправильный формат названия станции' if name !~ RGXP_STATION_NAME
   end
 
   def each_train

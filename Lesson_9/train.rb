@@ -11,7 +11,7 @@ class Train
   # include InstanceCounter
   # include Valid
   @@list = {}
-  RGXP_TRAIN_NUMBER_FORMAT = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i
+  RGXP_TRAIN_NUMBER = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i
   TYPES = [
     {
       type: 'CargoTrain',
@@ -50,7 +50,7 @@ class Train
   end
 
   def validate!
-    raise StandardError, "Неправильный формат номера (#{number})" if number !~ RGXP_TRAIN_NUMBER_FORMAT
+    raise StandardError, "Неправильный формат номера (#{number})" if number !~ RGXP_TRAIN_NUMBER
   end
 
   def each_wagon
