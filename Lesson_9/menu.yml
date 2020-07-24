@@ -68,7 +68,7 @@
   :title: Переместить поезд по маршруту вперёд
   :type: :message
 
-- :message: :move_train_backward
+- :message: :move_train_back
   :title: Переместить поезд по маршруту назад
   :type: :message
 
@@ -80,19 +80,19 @@
 - :type: :separator
   :title: Вагоны
 
-- :message: :add_wagon_to_train
+- :message: :add_wagon
   :title: Прицепить вагон к поезду
   :type: :message
 
-- :message: :delete_wagon_from_train
+- :message: :detach_wagon
   :title: Отцепить вагон от поезда
   :type: :message
 
-- :message: :use_wagon
+- :message: :load_wagon
   :title: Использовать место в вагоне
   :type: :message
 
-- :message: :free_wagon
+- :message: :unload_wagon
   :title: Освободить место в вагоне
   :type: :message
 

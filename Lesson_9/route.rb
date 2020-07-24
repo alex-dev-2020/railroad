@@ -2,8 +2,8 @@
 
 class Route
   attr_reader :stations
-#   include InstanceCounter
-#   include Valid
+  #   include InstanceCounter
+  #   include Valid
   @@list = []
 
   def initialize(first_station, last_station)
@@ -14,7 +14,7 @@ class Route
   end
 
   def validate!
-    raise StandardError, 'Начальная и конечная  станции маршрута должны различаться' if stations[0] == stations[1]
+    raise StandardError, 'Станции должны различаться' if stations[0] == stations[-1]
   end
 
   def to_s
@@ -26,16 +26,15 @@ class Route
   end
 
   def add_station(station)
-    raise StandardError, "Маршрут уже содержит станцию:'#{station.name}'" if stations.include? (station)
+    raise StandardError, "Маршрут уже содержит станцию:'#{station.name}'" if stations.include? station
 
     stations.insert(-2, station)
   end
 
   def delete_station(station)
-    raise StandardError, 'Конечные точки маршрута удалить нельзя' if station == stations.first || station == stations.last
-    raise StandardError, "Маршрут не содержит станцию'#{station.name}'" if !stations.include?(station)
+    raise StandardError, 'Конечные точки маршрута удалить нельзя' if station == stations[0] || station == stations[-1]
+    raise StandardError, "Маршрут не содержит станцию'#{station.name}'" unless stations.include? station
 
     stations.delete(station)
   end
-
 end
