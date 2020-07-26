@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # class Railroad
 
 require_relative 'pass_train'
@@ -9,6 +11,9 @@ require_relative 'cargo_wagon'
 require_relative 'pass_wagon'
 require_relative 'route'
 require_relative 'seed'
+require_relative 'instance_counter'
+
+# rubocop:disable Metrics/ClassLength:
 
 class RailroadControl
   attr_reader :stations, :routes, :trains
@@ -22,7 +27,7 @@ class RailroadControl
   end
 
   def validate!(index, object)
-    raise StandardError "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
+    raise "Индекс не существует (#{index})" if !index.is_a?(Integer) || object[index].nil?
   end
 
   # txt menu
@@ -54,6 +59,7 @@ class RailroadControl
 
   def print_trains_on_one_station
     raise StandardError, 'Нет станций' if stations.empty?
+
     station = gets_station
     puts "Станция: #{station.name} (поездов: #{station.trains.length})"
     print_trains_on_station(station)
@@ -61,6 +67,7 @@ class RailroadControl
 
   def print_trains_on_each_station
     raise StandardError, 'Нет станций' if stations.empty?
+
     stations.each do |station|
       puts "#{station.name}"
       print_trains_on_station(station)
@@ -70,6 +77,7 @@ class RailroadControl
 
   def add_station_to_route
     raise StandardError, 'Список маршрутов пуст' if routes.empty?
+
     route = gets_route
     station = gets_station
     route.add_station(station)
@@ -78,6 +86,7 @@ class RailroadControl
 
   def delete_station_from_route
     raise StandardError, 'Список маршрутов пуст' if routes.empty?
+
     route = gets_route
     station = gets_station
     route.delete_station(station)
@@ -139,53 +148,21 @@ class RailroadControl
   end
 
   def add_route_to_train
-    if trains.empty?
-      puts 'Список поездов пуст'
-      return
-    elsif routes.empty?
-      puts 'Список маршрутов пуст'
-      return
-    else
-      route = gets_route
+    raise StandardError, 'Список поездов пуст' if trains.empty?
+    raise StandardError, 'Список маршрутов пуст' if routes.empty?
 
-      train = gets_train
-
-      train.accept_route(route)
-
-      puts "Mаршрут '#{route.stations.first.name}' -> '#{route.stations.last.name}' назначен поезду '#{train.number}'"
-    end
+    route = gets_route
+    train = gets_train
+    train.accept_route(route)
+    puts "Mаршрут #{route.to_s} назначен поезду #{train.number}"
   end
 
   def move_train_forward
-    raise StandardError, 'Список поездов пуст' if trains.empty?
-    raise StandardError, 'Список маршрутов пуст' if routes.empty?
-
-    train = gets_train
-    raise StandardError, "Поезду '#{train.number}'не назначен  маршрут" if train.route.nil?
-
-    puts "Поезд #{train.number} двигается по маршруту:"
-    puts "'#{train.route.stations.first.name}'-> '#{train.route.stations.last.name}'"
-    puts 'Текущая станция:'
-    puts train.current_station.name
-    train.move_forward
-    puts 'Следующая станция'
-    puts train.current_station.name
+    move_train(:move_forward)
   end
 
   def move_train_back
-    raise StandardError, 'Список поездов пуст' if trains.empty?
-    raise StandardError, 'Список маршрутов пуст' if routes.empty?
-
-    train = gets_train
-    raise StandardError, "Поезду '#{train.number}'не назначен  маршрут" if train.route.nil?
-
-    puts "Поезд #{train.number} двигается по маршруту:"
-    puts "'#{train.route.stations.first.name}'-> '#{train.route.stations.last.name}'"
-    puts 'Текущая станция:'
-    puts train.current_station.name
-    train.move_back
-    puts 'Следующая станция'
-    puts train.current_station.name
+    move_train(:move_back)
   end
 
   def add_wagon
@@ -264,14 +241,14 @@ class RailroadControl
         unload_cargo_vagon(wagon)
       rescue StandardError => e
         puts e
-        return
+        nil
       end
     elsif wagon.class == PassWagon
       begin
         leave_seat(wagon)
       rescue StandardError => e
         puts e
-        return
+        nil
       end
     else
       puts 'Вагон неизвестного типа'
@@ -284,7 +261,7 @@ class RailroadControl
 
   def gets_station_name
     puts 'Введите название станции'
-    gets.chomp.lstrip.rstrip
+    gets.chomp.strip
   end
 
   def gets_station
@@ -345,13 +322,13 @@ class RailroadControl
   end
 
   def gets_integer
-    input = gets.chomp.lstrip.rstrip
-    return input.empty? || /\D/.match(input) ? 'Повторите ввод' : input.to_i
+    input = gets.chomp.strip
+    input.empty? || /\D/.match(input) ? 'Повторите ввод' : input.to_i
   end
 
   def gets_train_number
     puts 'Задайте номер поезда:'
-    gets.chomp.lstrip.rstrip
+    gets.chomp.strip
   end
 
   def gets_station_index
@@ -372,7 +349,7 @@ class RailroadControl
   end
 
   def print_trains_on_station(station)
-    station.each_train do |number, train|
+    station.each_train do |_number, train|
       puts "#{train.to_s}"
       train.each_wagon { |wagon| puts "#{wagon.to_s}" }
       puts
@@ -393,12 +370,12 @@ class RailroadControl
   end
 
   def gets_number_of_seats
-    puts 'Введите кол-во мест в вагоне: '
+    puts 'Введите кол-во мест в вагоне:'
     gets_wagon_attribute
   end
 
   def gets_wagon_attribute
-    input = gets.chomp.lstrip.rstrip
+    input = gets.chomp.strip
     raise StandardError, 'Повторите ввод' if input.empty? || /\D/.match(input)
 
     input.to_i
@@ -421,4 +398,20 @@ class RailroadControl
   def leave_seat(wagon)
     wagon.leave_seat
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def move_train(move_direction)
+    raise StandardError, 'Список поездов пуст' if trains.empty?
+    raise StandardError, 'Список маршрутов пуст' if routes.empty?
+
+    train = gets_train
+    raise StandardError, "Поезду #{train.number} не назначен  маршрут" if train.route.nil?
+
+    puts "Поезд #{train.number} двигается по маршруту #{train.route.to_s}"
+    puts "Текущая станция #{train.current_station.name}"
+    train.public_send move_direction
+    puts "Следующая станция #{train.current_station.name}"
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/ClassLength:
 end

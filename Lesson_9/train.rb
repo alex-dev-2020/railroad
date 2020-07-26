@@ -111,17 +111,13 @@ class Train
   def move_forward
     raise StandardError, "Это последняя станция маршрута  #{route}" if next_station.nil?
 
-    current_station.train_out(number)
-    @current_station_index += 1
-    current_station.train_in(self)
+    move(current_station_index + 1)
   end
 
   def move_back
     raise StandardError, "Это первая станция маршрута  #{route}" if previous_station.nil?
 
-    current_station.train_out(number)
-    @current_station_index -= 1
-    current_station.train_in(self)
+    move(current_station_index - 1)
   end
 
   # private
@@ -130,5 +126,11 @@ class Train
 
   def station(index)
     index >= 0 && index < route.stations.length ? route.stations[index] : nil
+  end
+
+  def move(station_index)
+    current_station.train_out(number)
+    @current_station_index = station_index
+    current_station.train_in(self)
   end
 end

@@ -7,7 +7,6 @@ module Seed
   end
 
   module ClassMethods
-
   end
 
   module InstanceMethods
@@ -24,7 +23,7 @@ module Seed
       @stations << test_station_1
       test_station_2 = Station.new('test-station-2')
       @stations << test_station_2
-      test_station_3 = Station.new("test-station-3")
+      test_station_3 = Station.new('test-station-3')
       @stations << test_station_3
       route_test = Route.new(test_station_1, test_station_2)
       @routes << route_test

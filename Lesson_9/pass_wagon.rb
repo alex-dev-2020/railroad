@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'wagon'
-# lines below included only for test purpose
 # require_relative 'instance_counter'
 # require_relative 'valid'
 
@@ -45,7 +44,9 @@ class PassWagon < Wagon
   end
 
   def to_s
-    "Вагон №'#{number}'тип'#{type}' занято '#{number_of_busy_seats}'мест, свободно'#{number_of_free_seats}'"
+    "Вагон '№#{number}' "\
+    "тип 'тип'#{type}' "\
+    "места своб./зан. '#{number_of_free_seats}/#{number_of_busy_seats}'"
   end
 
   protected

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # class Station
 
 class Station
@@ -5,7 +7,7 @@ class Station
   # include InstanceCounter
   # include Valid
   @@stations = []
-  RGXP_STATION_NAME = /^[a-zа-я][a-zа-я]{1,30}([ \-][a-zа-я]{1,30})?([ \-][a-zа-я]{1,30})?([ \-][\d]{1,4})?$/i
+  RGXP_NAME = /^[a-zа-я]{1,30}([ \-][a-zа-я]{1,30})?([ \-][a-zа-я]{1,30})?([ \-][\d]{1,4})?$/i
 
   def initialize(name)
     @name = name
@@ -15,7 +17,7 @@ class Station
   end
 
   def validate!
-    raise StandardError, 'Неправильный формат названия станции' if name !~ RGXP_STATION_NAME
+    raise StandardError, 'Неправильный формат названия станции' if name !~ RGXP_NAME
   end
 
   def each_train
@@ -30,15 +32,19 @@ class Station
     @trains[train.number] = train
   end
 
-  def trains_by_type(train_type)
-    @trains.select { |train| train.type == train_type }
-  end
-
   def train_out(train)
     trains.delete(train)
   end
 
-  # def to_s
-  #   self.name
-  # end
+  def trains_by_type(train_type)
+    @trains.select { |train| train.type == train_type }
+  end
+
+  def trains_count
+    trains.length
+  end
+
+  def to_s
+    name
+  end
 end
