@@ -4,7 +4,9 @@
 
 class Wagon
   attr_reader :type, :number
-  # include MadeBy
+  include InstanceCounter
+  include Valid
+  include MadeBy
 
   def generate_number
     srand.to_s.slice(0...10)

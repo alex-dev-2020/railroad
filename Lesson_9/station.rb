@@ -4,10 +4,10 @@
 
 class Station
   attr_reader :name, :trains
-  # include InstanceCounter
-  # include Valid
+  include InstanceCounter
+  include Valid
   @@stations = []
-  RGXP_NAME = /^[a-zа-я]{1,30}([ \-][a-zа-я]{1,30})?([ \-][a-zа-я]{1,30})?([ \-][\d]{1,4})?$/i
+  RGXP_NAME = /^[a-zа-я]{1,30}([ \-][a-zа-я]{1,30})?([ \-][a-zа-я]{1,30})?([ \-][\d]{1,4})?$/i.freeze
 
   def initialize(name)
     @name = name

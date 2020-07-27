@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
-# require_relative 'made_by'
-# require_relative 'instance_counter'
-# require_relative 'valid'
-# require_relative 'route'
+require_relative 'made_by'
+require_relative 'instance_counter'
+require_relative 'valid'
 
 class Train
   attr_reader :name, :type, :wagons, :current_station_index, :number, :list, :route
-  # include MadeBy
-  # include InstanceCounter
-  # include Valid
+  include MadeBy
+  include InstanceCounter
+  include Valid
   @@list = {}
-  RGXP_TRAIN_NUMBER = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i
+  RGXP_TRAIN_NUMBER = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i.freeze
   TYPES = [
     {
       type: 'CargoTrain',
@@ -21,7 +20,7 @@ class Train
       type: 'PassTrain',
       name: 'Пассажирский'
     }
-  ]
+  ].freeze
   MANUFACTURERS = [
     {
       name: 'Siemens',
@@ -35,7 +34,7 @@ class Train
       name: 'Tesla',
       maker: 'Tesla'
     }
-  ]
+  ].freeze
 
   def initialize(number, made_by)
     @number = number
@@ -46,7 +45,7 @@ class Train
     @route = nil
     validate!
     @@list[number] = self
-    # register_instance
+    register_instance
   end
 
   def validate!

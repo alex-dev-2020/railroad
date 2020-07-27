@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 require_relative 'wagon'
-# require_relative 'instance_counter'
-# require_relative 'valid'
+require_relative 'instance_counter'
+require_relative 'valid'
 
 class PassWagon < Wagon
   attr_reader :number_of_seats
-  # include InstanceCounter
-  # include Valid
 
   def initialize(number_of_seats)
     raise StandardError, 'Кол-во мест должно быть целое число' unless number_of_seats.is_a?(Integer)
@@ -15,7 +13,7 @@ class PassWagon < Wagon
 
     @number_of_seats = number_of_seats
     @number = generate_number
-    # register_instance
+    register_instance
     self.seats = []
   end
 

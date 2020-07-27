@@ -12,6 +12,8 @@ require_relative 'pass_wagon'
 require_relative 'route'
 require_relative 'seed'
 require_relative 'instance_counter'
+require_relative 'made_by'
+require_relative 'valid'
 
 # rubocop:disable Metrics/ClassLength:
 
