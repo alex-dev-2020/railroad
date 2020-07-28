@@ -7,9 +7,7 @@ class Station
   include InstanceCounter
   include Valid
   @@stations = []
-  # rubocop:disable Layout/LineLength
   RGXP_NAME = /^[a-zа-я]{1,30}([ \-][a-zа-я]{1,30})?([ \-][a-zа-я]{1,30})?([ \-][\d]{1,4})?$/i.freeze
-  # rubocop:enable Layout/LineLength
 
   def initialize(name)
     @name = name

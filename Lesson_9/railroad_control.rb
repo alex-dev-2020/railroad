@@ -71,7 +71,7 @@ class RailroadControl
     raise StandardError, 'Нет станций' if stations.empty?
 
     stations.each do |station|
-      puts "#{station.name}"
+      puts station.name.to_s
       print_trains_on_station(station)
       puts
     end
@@ -83,7 +83,7 @@ class RailroadControl
     route = gets_route
     station = gets_station
     route.add_station(station)
-    puts "Станция '#{station.name}' добавлена в маршрут #{route.to_s}"
+    puts "Станция '#{station.name}' добавлена в маршрут #{route}"
   end
 
   def delete_station_from_route
@@ -92,7 +92,7 @@ class RailroadControl
     route = gets_route
     station = gets_station
     route.delete_station(station)
-    puts "Станция '#{station.name}' удалена из маршрута #{route.to_s}"
+    puts "Станция '#{station.name}' удалена из маршрута #{route}"
   end
 
   def create_train
@@ -112,7 +112,7 @@ class RailroadControl
       retry
     end
 
-    puts "Создан поезд #{train.to_s}"
+    puts "Создан поезд #{train}"
     @trains << train
   end
 
@@ -143,7 +143,7 @@ class RailroadControl
   end
 
   def print_route_stations(route)
-    puts "Маршрут #{route.to_s} содержит следующие станции:"
+    puts "Маршрут #{route} содержит следующие станции:"
     route.stations.each_with_index do |station, index|
       puts "[#{index}] #{station.name}"
     end
@@ -156,7 +156,7 @@ class RailroadControl
     route = gets_route
     train = gets_train
     train.accept_route(route)
-    puts "Mаршрут #{route.to_s} назначен поезду #{train.number}"
+    puts "Mаршрут #{route} назначен поезду #{train.number}"
   end
 
   def move_train_forward
@@ -205,14 +205,14 @@ class RailroadControl
 
   def print_trains_wth_wagons
     train = gets_train
-    puts "Вагоны поезда #{train.to_s}:"
+    puts "Вагоны поезда #{train}:"
     print_wagons(train)
   end
 
   def print_wagons(train)
     raise StandardError, 'У данного поезда нет вагонов' if train.wagons.empty?
 
-    train.wagons.each_with_index { |wagon, index| puts "[#{index}] #{wagon.to_s}" }
+    train.wagons.each_with_index { |wagon, index| puts "[#{index}] #{wagon}" }
   end
 
   def load_wagon
@@ -232,7 +232,7 @@ class RailroadControl
         return
       end
     end
-    puts "#{wagon.to_s}"
+    puts wagon.to_s
   end
 
   def unload_wagon
@@ -255,7 +255,7 @@ class RailroadControl
     else
       puts 'Вагон неизвестного типа'
 
-      puts "#{wagon.to_s}"
+      puts wagon.to_s
     end
   end
 
@@ -352,8 +352,8 @@ class RailroadControl
 
   def print_trains_on_station(station)
     station.each_train do |_number, train|
-      puts "#{train.to_s}"
-      train.each_wagon { |wagon| puts "#{wagon.to_s}" }
+      puts train.to_s
+      train.each_wagon { |wagon| puts wagon.to_s }
       puts
     end
   end
@@ -409,7 +409,7 @@ class RailroadControl
     train = gets_train
     raise StandardError, "Поезду #{train.number} не назначен  маршрут" if train.route.nil?
 
-    puts "Поезд #{train.number} двигается по маршруту #{train.route.to_s}"
+    puts "Поезд #{train.number} двигается по маршруту #{train.route}"
     puts "Текущая станция #{train.current_station.name}"
     train.public_send move_direction
     puts "Следующая станция #{train.current_station.name}"

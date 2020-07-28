@@ -26,21 +26,15 @@ class Route
   end
 
   def add_station(station)
-    if stations.include? station
-      raise StandardError, "Маршрут уже содержит станцию:'#{station.name}'"
-    end
+    raise StandardError, "Маршрут уже содержит станцию:'#{station.name}'" if stations.include? station
 
     stations.insert(-2, station)
   end
 
   def delete_station(station)
     raise StandardError, 'Промежуточные станции в маршруте отсутствуют' unless stations.length > 2
-    unless stations.include? station
-      raise StandardError, "Маршрут не содержит станцию #{station.name}"
-    end
-    if station.trains_count.positive?
-      raise StandardError, "На станции '#{station.name}' размещены поезда"
-    end
+    raise StandardError, "Маршрут не содержит станцию #{station.name}" unless stations.include? station
+    raise StandardError, "На станции '#{station.name}' размещены поезда" if station.trains_count.positive?
 
     stations.delete(station)
   end
