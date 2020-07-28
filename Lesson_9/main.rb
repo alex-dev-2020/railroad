@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'railroad_control'
 require_relative 'railroad_menu'
 require_relative 'pass_train'

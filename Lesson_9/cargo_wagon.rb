@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 require_relative 'wagon'
-# lines below included only for test purpose
-# require_relative 'instance_counter'
-# require_relative 'valid'
+require_relative 'instance_counter'
+require_relative 'valid'
 
 class CargoWagon < Wagon
   attr_reader :total_volume
-  # include InstanceCounter
-  # include Valid
 
   def initialize(total_volume)
     raise StandardError, 'Объем при создании должен быть больше 0' if total_volume <= 0
@@ -16,11 +13,11 @@ class CargoWagon < Wagon
     @total_volume = total_volume
     @number = generate_number
     @volume = 0
-    # register_instance
+    register_instance
   end
 
   def load(volume)
-    raise StandardError, 'Вагон уже имеет максимальную загрузку' if self.volume + volume > total_volume
+    raise StandardError, 'Вагон полностью загружен' if self.volume + volume > total_volume
 
     self.volume += volume
   end
@@ -30,7 +27,7 @@ class CargoWagon < Wagon
   end
 
   def unload(volume)
-    raise StandardError, 'Нельзя выгрузить больше, чем имеется в вагоне' if (self.volume - volume).negative?
+    raise StandardError, 'Объем не может быть меньше 0' if (self.volume - volume).negative?
 
     self.volume -= volume
   end

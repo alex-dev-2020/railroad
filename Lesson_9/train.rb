@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
-# require_relative 'made_by'
-# require_relative 'instance_counter'
-# require_relative 'valid'
-# require_relative 'route'
+require_relative 'made_by'
+require_relative 'instance_counter'
+require_relative 'valid'
 
 class Train
   attr_reader :name, :type, :wagons, :current_station_index, :number, :list, :route
-  # include MadeBy
-  # include InstanceCounter
-  # include Valid
+  include MadeBy
+  include InstanceCounter
+  include Valid
   @@list = {}
-  RGXP_TRAIN_NUMBER_FORMAT = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i
+  RGXP_TRAIN_NUMBER = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i.freeze
   TYPES = [
     {
       type: 'CargoTrain',
@@ -21,7 +20,7 @@ class Train
       type: 'PassTrain',
       name: 'Пассажирский'
     }
-  ]
+  ].freeze
   MANUFACTURERS = [
     {
       name: 'Siemens',
@@ -35,7 +34,7 @@ class Train
       name: 'Tesla',
       maker: 'Tesla'
     }
-  ]
+  ].freeze
 
   def initialize(number, made_by)
     @number = number
@@ -46,11 +45,11 @@ class Train
     @route = nil
     validate!
     @@list[number] = self
-    # register_instance
+    register_instance
   end
 
   def validate!
-    raise StandardError, "Неправильный формат номера (#{number})" if number !~ RGXP_TRAIN_NUMBER_FORMAT
+    raise StandardError, "Неправильный формат номера (#{number})" if number !~ RGXP_TRAIN_NUMBER
   end
 
   def each_wagon
@@ -111,17 +110,13 @@ class Train
   def move_forward
     raise StandardError, "Это последняя станция маршрута  #{route}" if next_station.nil?
 
-    current_station.train_out(number)
-    @current_station_index += 1
-    current_station.train_in(self)
+    move(current_station_index + 1)
   end
 
   def move_back
     raise StandardError, "Это первая станция маршрута  #{route}" if previous_station.nil?
 
-    current_station.train_out(number)
-    @current_station_index -= 1
-    current_station.train_in(self)
+    move(current_station_index - 1)
   end
 
   # private
@@ -130,5 +125,11 @@ class Train
 
   def station(index)
     index >= 0 && index < route.stations.length ? route.stations[index] : nil
+  end
+
+  def move(station_index)
+    current_station.train_out(number)
+    @current_station_index = station_index
+    current_station.train_in(self)
   end
 end
