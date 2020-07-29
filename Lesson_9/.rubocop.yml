@@ -1,0 +1,27 @@
+AllCops:
+  Exclude:
+    - 'screencast.rb'
+    - 'sandbox.rb'
+    - 'string.rb'
+    - 'seed.rb'
+
+Lint/RedundantStringCoercion:
+  Enabled: false
+
+Style/RedundantInterpolation:
+  Enabled: false
+
+Style/ClassVars:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 100
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 20
+
+Documentation:
+  Enabled: false
