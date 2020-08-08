@@ -1,0 +1,121 @@
+#Главное меню
+
+#Станции
+- :type: :separator
+  :title: Станции
+
+- :message: :create_station
+  :title: Создать станцию
+  :type: :message
+
+- :message: :print_stations_only
+  :title: Вывести список станций
+  :type: :message
+
+- :message: :print_trains_on_one_station
+  :title: Вывести список поездов на станции
+  :type: :message
+
+- :message: :print_trains_on_each_station
+  :title: Вывести список поездов по станциям
+  :type: :message
+
+#Маршруты
+- :type: :separator
+  :title: Маршруты
+
+- :message: :create_route
+  :title: Создать маршрут
+  :type: :message
+
+- :message: :print_routes
+  :title: Вывести список маршрутов
+  :type: :message
+
+- :message: :print_routes_stations
+  :title: Вывести список станций в маршруте
+  :type: :message
+  
+# - :message: :print_routes_only
+#   :title: Вывести список станций в маршруте
+#   :type: :message
+
+- :message: :add_station_to_route
+  :title: Добавить станцию в маршрут
+  :type: :message
+
+- :message: :delete_station_from_route
+  :title: Удалить станцию из маршрута
+  :type: :message
+
+#Поезда
+- :type: :separator
+  :title: Поезда
+
+- :message: :create_train
+  :title: Создать поезд
+  :type: :message
+
+- :message: :print_trains
+  :title: Вывести список поездов
+  :type: :message
+
+- :message: :add_route_to_train
+  :title: Назначать маршрут поезду
+  :type: :message
+
+- :message: :move_train_forward
+  :title: Переместить поезд по маршруту вперёд
+  :type: :message
+
+- :message: :move_train_back
+  :title: Переместить поезд по маршруту назад
+  :type: :message
+
+- :message: :print_trains_wth_wagons
+  :title: Вывести список вагонов у поезда
+  :type: :message
+
+#Вагоны
+- :type: :separator
+  :title: Вагоны
+
+- :message: :add_wagon
+  :title: Прицепить вагон к поезду
+  :type: :message
+
+- :message: :detach_wagon
+  :title: Отцепить вагон от поезда
+  :type: :message
+
+- :message: :load_wagon
+  :title: Использовать место в вагоне
+  :type: :message
+
+- :message: :unload_wagon
+  :title: Освободить место в вагоне
+  :type: :message
+
+#Статистика
+- :type: :separator
+  :title: Статистика
+
+- :message: :print_extended_statistic
+  :title: Вывести статистику
+  :type: :message
+
+#Stuff only 
+- :type: :separator
+  :title: Генерация тестовых объектов
+- :type: :separator
+  :title: Генерация тестовых объектов
+  :message: :seed
+  :type: :message
+  
+#Выход
+- :type: :separator
+  :title: Выход
+  
+- :type: :separator
+  :type: :exit
+  :title: Выход
