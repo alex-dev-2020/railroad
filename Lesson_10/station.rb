@@ -5,11 +5,15 @@
 class Station
   attr_reader :name, :trains
   include InstanceCounter
-  include Valid
+  # include Valid
+  include Validation
   @@stations = []
   # rubocop:disable Layout/LineLength
-  RGXP_NAME = /^[a-zа-я]{1,30}([ \-][a-zа-я]{1,30})?([ \-][a-zа-я]{1,30})?([ \-][\d]{1,4})?$/i.freeze
+  NAME_FORMAT = /^[a-zа-я]{1,30}([ \-][a-zа-я]{1,30})?([ \-][a-zа-я]{1,30})?([ \-][\d]{1,4})?$/i.freeze
   # rubocop:enable Layout/LineLength
+
+  validate :name, :type, String
+  validate :name, :format, NAME_FORMAT, message: 'Неверный формат названия станции'
 
   def initialize(name)
     @name = name
@@ -18,9 +22,9 @@ class Station
     register_instance
   end
 
-  def validate!
-    raise StandardError, 'Неправильный формат названия станции' if name !~ RGXP_NAME
-  end
+  # def validate!
+  #   raise StandardError, 'Неправильный формат названия станции' if name !~ RGXP_NAME
+  # end
 
   def each_train
     trains.each { |train| yield(train) } if block_given?

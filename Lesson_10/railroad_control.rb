@@ -13,13 +13,15 @@ require_relative 'route'
 require_relative 'seed'
 require_relative 'instance_counter'
 require_relative 'made_by'
-require_relative 'valid'
-
+# require_relative 'valid'
+require_relative 'accessors'
+# require_relative 'validation'
 # rubocop:disable Metrics/ClassLength:
 
 class RailroadControl
-  attr_reader :stations, :routes, :trains
   include Seed
+  attr_reader :stations, :routes, :trains
+
 
   def initialize
     @stations = []
@@ -97,20 +99,19 @@ class RailroadControl
 
   def create_train
     type_index = gets_train_type_index
-    maker_index = gets_train_manufacturer
+    maker = gets_train_manufacturer
     train_number = gets_train_number
 
-    begin
-      case Train::TYPES[type_index][:type]
-      when 'CargoTrain'
-        train = CargoTrain.new(train_number, maker_index)
-      when 'PassTrain'
-        train = PassTrain.new(train_number, maker_index)
-      end
-    rescue StandardError => e
-      puts e
-      retry
-    end
+    #(debug only)
+    puts Train::TYPES[type_index][:type]
+
+    case Train::TYPES[type_index][:type]
+     when 'CargoTrain'
+       train = CargoTrain.new(train_number, maker)
+     when 'PassTrain'
+       train = PassTrain.new(train_number, maker)
+     end
+
 
     puts "Создан поезд #{train.to_s}"
     @trains << train
@@ -259,6 +260,17 @@ class RailroadControl
     end
   end
 
+  def speed_history
+    train = gets_train
+    puts "Скоростной режим поезда #{train} #{train.speed_history}"
+  end
+
+  def wagon_using_history
+    train = gets_train
+    wagon = gets_wagon
+    puts "Статистика использования вагонa #{wagon.wagon_using_history}"
+  end
+
   private
 
   def gets_station_name
@@ -311,9 +323,15 @@ class RailroadControl
     end
   end
 
+
   def gets_train_manufacturer
+    maker_key = Train::MANUFACTURERS[gets_train_manufacturer_index]
+    maker = maker_key[:name]
+  end
+
+  def gets_train_manufacturer_index
     train_manufacturers
-    puts 'Введите индекс производителя поезда:'
+    puts "Введите индекс производителя поезда:"
     gets_integer
   end
 
@@ -330,7 +348,7 @@ class RailroadControl
 
   def gets_train_number
     puts 'Задайте номер поезда:'
-    gets.chomp.strip
+    gets.chomp.strip.to_i
   end
 
   def gets_station_index
@@ -414,6 +432,7 @@ class RailroadControl
     train.public_send move_direction
     puts "Следующая станция #{train.current_station.name}"
   end
+
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/ClassLength:
 end

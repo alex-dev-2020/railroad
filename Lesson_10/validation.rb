@@ -10,7 +10,9 @@ module Validation
   module InstanceMethods
     def validate!
       validations = self.class.instance_variable_get("@validations")
-
+      # only for test
+      #
+      puts validations
       errors = []
       validations.each do |validation|
         value = instance_variable_get("@#{validation[:attribute]}")
@@ -47,6 +49,11 @@ module Validation
       params[:message] unless value.is_a?(params[:param])
     end
 
+    # def maker(value, params)
+    #   params[:message] ||= "Ожидается тип #{params[:param]}"
+    #   params[:message] unless value.is_a?(params[:param])
+    # end
+
     # этого нет в задании
 
     #   def first_last_uniq(value)
@@ -65,10 +72,10 @@ module Validation
       @validations ||= []
 
       @validations << {
-        attribute: params[0],
-        type: params[1],
-        param: params[2] || nil,
-        message: params.last.is_a?(Hash) && params.last.key?(:message) ? params.last[:message] : nil,
+          attribute: params[0],
+          type: params[1],
+          param: params[2] || nil,
+          message: params.last.is_a?(Hash) && params.last.key?(:message) ? params.last[:message] : nil,
       }
     end
   end

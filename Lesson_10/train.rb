@@ -1,40 +1,52 @@
 # frozen_string_literal: true
 
-require_relative 'made_by'
-require_relative 'instance_counter'
-require_relative 'valid'
+require_relative "made_by"
+require_relative "instance_counter"
+require_relative "validation"
+require_relative "accessors"
 
 class Train
-  attr_reader :name, :type, :wagons, :current_station_index, :number, :list, :route
+  include Accessors
   include MadeBy
   include InstanceCounter
-  include Valid
+  include Validation
+
+  attr_reader :name, :type, :wagons, :current_station_index, :number, :list, :route
+  attr_accessor_with_history :speed_history
+
   @@list = {}
-  RGXP_TRAIN_NUMBER = /^[a-zа-я\d]{3}-?[a-zа-я\d]{2}$/i.freeze
   TYPES = [
-    {
-      type: 'CargoTrain',
-      name: 'Грузовой'
-    },
-    {
-      type: 'PassTrain',
-      name: 'Пассажирский'
-    }
+      {
+          type: 'CargoTrain',
+          name: 'Грузовой'
+      },
+      {
+          type: 'PassTrain',
+          name: 'Пассажирский'
+      }
   ].freeze
+
   MANUFACTURERS = [
-    {
-      name: 'Siemens',
-      maker: 'Siemens'
-    },
-    {
-      name: 'Bosh',
-      maker: 'Bosh'
-    },
-    {
-      name: 'Tesla',
-      maker: 'Tesla'
-    }
+      {
+          name: 'Siemens',
+          maker: 'Siemens'
+      },
+      {
+          name: 'Bosh',
+          maker: 'Bosh'
+      },
+      {
+          name: 'Tesla',
+          maker: 'Tesla'
+      }
   ].freeze
+
+
+  NUMBER_FORMAT = /^[a-zа-я\d]{1,3}-?[a-zа-я\d]{1,5}$/i
+  MAKER_FORMAT = /^[a-zа-я]{1,10}$/i
+
+  validate :number, :format, NUMBER_FORMAT, message: "Неверный формат номера"
+  validate :made_by, :format, MAKER_FORMAT, message: "Неверный формат названия"
 
   def initialize(number, made_by)
     @number = number
@@ -46,10 +58,6 @@ class Train
     validate!
     @@list[number] = self
     register_instance
-  end
-
-  def validate!
-    raise StandardError, "Неправильный формат номера (#{number})" if number !~ RGXP_TRAIN_NUMBER
   end
 
   def each_wagon
@@ -78,10 +86,11 @@ class Train
   end
 
   def to_s
-    "Поезд '№#{number}' тип '#{self.class}' вагонов '#{wagons_count}'"
+    "Поезд '№#{number}' тип '#{self.class}', производитель #{self.made_by}, вагонов '#{wagons_count}'"
   end
 
   def accept_route(route)
+    # validate! (route)
     @route = route
     @current_station_index = 0
     current_station.train_in(self)

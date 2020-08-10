@@ -76,6 +76,10 @@
   :title: Вывести список вагонов у поезда
   :type: :message
 
+  :message: :speed_history
+  :title: Скоростной режим поездов
+  :type: :message
+
 #Вагоны
 - :type: :separator
   :title: Вагоны
@@ -95,6 +99,11 @@
 - :message: :unload_wagon
   :title: Освободить место в вагоне
   :type: :message
+
+  :message: :wagon_using_history
+  :title: Статистика использования вагонов
+  :type: :message
+
 
 #Статистика
 - :type: :separator

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'wagon'
-require_relative 'instance_counter'
-require_relative 'valid'
 
 class CargoWagon < Wagon
   attr_reader :total_volume
