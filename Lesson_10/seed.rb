@@ -29,8 +29,8 @@ module Seed
       # @routes << route_test
       puts
       print_stations_only
-      print_routes
-      print_route_stations(routes[0])
+      # print_routes
+      # print_route_stations(routes[0])
       print_trains
     end
   end

@@ -6,8 +6,8 @@ require_relative "validation"
 class CargoTrain < Train
   include Validation
 
-  validate :number, :format, NUMBER_FORMAT, message: "Неверный формат номера"
-  validate :made_by, :format, MAKER_FORMAT, message: "Неверный формат названия"
+  # validate :number, :format, NUMBER_FORMAT, message: "Неверный формат номера"
+  # validate :made_by, :format, MAKER_FORMAT, message: "Неверный формат названия"
 
   def type
     :cargo

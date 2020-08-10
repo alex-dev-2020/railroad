@@ -11,8 +11,7 @@ module Validation
     def validate!
       validations = self.class.instance_variable_get("@validations")
       # only for test
-      #
-      puts validations
+      # puts validations
       errors = []
       validations.each do |validation|
         value = instance_variable_get("@#{validation[:attribute]}")
@@ -68,6 +67,11 @@ module Validation
   end
 
   module ClassMethods
+    #  наследование параметров валидаций
+    def inherited(klass)
+      klass.instance_variable_set(:@validations, klass.superclass.instance_variable_get(:@validations))
+    end
+
     def validate(*params)
       @validations ||= []
 
