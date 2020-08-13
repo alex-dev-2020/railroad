@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 require_relative 'wagon'
+require_relative 'instance_counter'
+require_relative 'accessors'
 
 class CargoWagon < Wagon
+  include Accessors
   attr_reader :total_volume
+  attr_accessor_with_history  :volume_use_dynamic
+
 
   def initialize(total_volume)
     raise StandardError, 'Объем при создании должен быть больше 0' if total_volume <= 0

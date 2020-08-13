@@ -103,7 +103,7 @@ class RailroadControl
     train_number = gets_train_number
 
     #(debug only)
-    puts Train::TYPES[type_index][:type]
+    # puts Train::TYPES[type_index][:type]
 
     case Train::TYPES[type_index][:type]
      when 'CargoTrain'

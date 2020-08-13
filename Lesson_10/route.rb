@@ -1,20 +1,24 @@
 # frozen_string_literal: true
 
+require_relative 'validation'
+
 class Route
   attr_reader :stations
   include InstanceCounter
-  include Valid
+  include Validation
   @@list = []
+
+  # в класе, но до инициализации прописываем валидации
+  validate :stations, :first_last_uniq, message: 'Первая и последняя станции должны быть разными'
+  validate :stations, :each_type, Station
 
   def initialize(first_station, last_station)
     @stations = [first_station, last_station]
+    # debug only
+    puts stations
     validate!
-    @@list << self
-    # register_instance
-  end
-
-  def validate!
-    raise StandardError, 'Станции должны различаться' if stations[0] == stations[-1]
+    # @@list << self
+    register_instance
   end
 
   def to_s

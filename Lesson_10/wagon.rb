@@ -6,8 +6,6 @@ require_relative 'accessors'
 
 class Wagon
   include InstanceCounter
-  # include Valid
-  include Validation
   include MadeBy
   include Accessors
 

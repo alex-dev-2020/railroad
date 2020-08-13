@@ -10,7 +10,7 @@ module Validation
   module InstanceMethods
     def validate!
       validations = self.class.instance_variable_get("@validations")
-      # only for test
+      # line below debug only
       # puts validations
       errors = []
       validations.each do |validation|
@@ -48,22 +48,16 @@ module Validation
       params[:message] unless value.is_a?(params[:param])
     end
 
-    # def maker(value, params)
-    #   params[:message] ||= "Ожидается тип #{params[:param]}"
-    #   params[:message] unless value.is_a?(params[:param])
-    # end
+    def first_last_uniq(value, params)
+      params[:message] ||= "Первый и последний эл-ты идентичны"
+      params[:message] if value.first == value.last
+    end
 
-    # этого нет в задании
+    def each_type(value, params)
+      params[:message] ||= "Содержит тип, отличающийся от #{params[:param]}"
+      params[:message] if value.reject { |v| v.is_a?(params[:param]) }.length.nil?
+    end
 
-    #   def first_last_uniq(value)
-    #     params[:message] ||= "Первый и последний эл-ты идентичны"
-    #     params[:message] if value.first == value.last
-    #   end
-
-    #   def each_type(value, params)
-    #     params[:message] ||= "Содержит тип, отличающийся от #{params[:param]}"
-    #     params[:message] if value.reject { |v| v.is_a?(params[:param]) }.length.empty?
-    #   end
   end
 
   module ClassMethods
@@ -75,11 +69,11 @@ module Validation
     def validate(*params)
       @validations ||= []
 
-      @validations << {
+      array = @validations << {
           attribute: params[0],
           type: params[1],
           param: params[2] || nil,
-          message: params.last.is_a?(Hash) && params.last.key?(:message) ? params.last[:message] : nil,
+          message: params.last.is_a?(Hash) && params.last.key?(:message) ? params.last[:message] : nil
       }
     end
   end

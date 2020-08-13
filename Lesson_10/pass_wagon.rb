@@ -2,10 +2,11 @@
 
 require_relative 'wagon'
 require_relative 'instance_counter'
-require_relative 'valid'
+require_relative 'accessors'
 
 class PassWagon < Wagon
   attr_reader :number_of_seats
+  attr_accessor_with_history :volume_use_dynamic
 
   def initialize(number_of_seats)
     raise StandardError, 'Кол-во мест должно быть целое число' unless number_of_seats.is_a?(Integer)

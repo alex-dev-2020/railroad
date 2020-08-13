@@ -22,10 +22,6 @@ class Station
     register_instance
   end
 
-  # def validate!
-  #   raise StandardError, 'Неправильный формат названия станции' if name !~ RGXP_NAME
-  # end
-
   def each_train
     trains.each { |train| yield(train) } if block_given?
   end
