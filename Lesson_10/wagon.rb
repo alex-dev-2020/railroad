@@ -10,8 +10,7 @@ class Wagon
   include Accessors
 
   attr_reader :type, :number
-  attr_accessor_with_history :wagon_using_history
-
+  attr_accessor_with_history :load_using
 
   def generate_number
     srand.to_s.slice(0...10)

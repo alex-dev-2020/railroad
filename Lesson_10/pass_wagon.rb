@@ -6,7 +6,7 @@ require_relative 'accessors'
 
 class PassWagon < Wagon
   attr_reader :number_of_seats
-  attr_accessor_with_history :volume_use_dynamic
+  attr_accessor_with_history :load_using
 
   def initialize(number_of_seats)
     raise StandardError, 'Кол-во мест должно быть целое число' unless number_of_seats.is_a?(Integer)
@@ -26,6 +26,7 @@ class PassWagon < Wagon
     raise StandardError, 'Нет свободных мест' if number_of_busy_seats >= number_of_seats
 
     seats << 1
+    self.load_using = self.seats
   end
 
   def number_of_busy_seats
@@ -36,6 +37,7 @@ class PassWagon < Wagon
     raise StandardError, 'Все места свободны' if number_of_free_seats == number_of_seats
 
     seats.pop
+    self.load_using = self.seats
   end
 
   def number_of_free_seats

@@ -35,10 +35,6 @@
 - :message: :print_routes_stations
   :title: Вывести список станций в маршруте
   :type: :message
-  
-# - :message: :print_routes_only
-#   :title: Вывести список станций в маршруте
-#   :type: :message
 
 - :message: :add_station_to_route
   :title: Добавить станцию в маршрут
@@ -76,8 +72,8 @@
   :title: Вывести список вагонов у поезда
   :type: :message
 
-  :message: :speed_history
-  :title: Скоростной режим поездов
+- :message: :station_history
+  :title: История перемещений поездов
   :type: :message
 
 #Вагоны
@@ -100,31 +96,22 @@
   :title: Освободить место в вагоне
   :type: :message
 
-  :message: :wagon_using_history
+- :message: :wagon_using_history
   :title: Статистика использования вагонов
   :type: :message
 
-
-#Статистика
-- :type: :separator
-  :title: Статистика
-
-- :message: :print_extended_statistic
-  :title: Вывести статистику
-  :type: :message
-
-#Stuff only 
+#Stuff only
 - :type: :separator
   :title: Генерация тестовых объектов
 - :type: :separator
   :title: Генерация тестовых объектов
   :message: :seed
   :type: :message
-  
+
 #Выход
 - :type: :separator
   :title: Выход
-  
+
 - :type: :separator
   :type: :exit
   :title: Выход

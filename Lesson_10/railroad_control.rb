@@ -22,7 +22,6 @@ class RailroadControl
   include Seed
   attr_reader :stations, :routes, :trains
 
-
   def initialize
     @stations = []
     @routes = []
@@ -102,16 +101,15 @@ class RailroadControl
     maker = gets_train_manufacturer
     train_number = gets_train_number
 
-    #(debug only)
+    # (debug only)
     # puts Train::TYPES[type_index][:type]
 
     case Train::TYPES[type_index][:type]
-     when 'CargoTrain'
-       train = CargoTrain.new(train_number, maker)
-     when 'PassTrain'
-       train = PassTrain.new(train_number, maker)
-     end
-
+    when 'CargoTrain'
+      train = CargoTrain.new(train_number, maker)
+    when 'PassTrain'
+      train = PassTrain.new(train_number, maker)
+    end
 
     puts "Создан поезд #{train.to_s}"
     @trains << train
@@ -260,15 +258,21 @@ class RailroadControl
     end
   end
 
-  def speed_history
+  def station_history
     train = gets_train
-    puts "Скоростной режим поезда #{train} #{train.speed_history}"
+    puts "История перемещения поезда #{train}"
+    train.visited_station_history.each_with_index do |station, index|
+      puts "[#{index}] #{station.name}"
+    end
+
   end
 
   def wagon_using_history
-    train = gets_train
     wagon = gets_wagon
-    puts "Статистика использования вагонa #{wagon.wagon_using_history}"
+    puts "Статистика использования вагонa #{wagon.number}"
+    wagon.load_using_history.each_with_index do |load, index|
+      puts "[#{index}] [#{load}]"
+    end
   end
 
   private
@@ -323,7 +327,6 @@ class RailroadControl
     end
   end
 
-
   def gets_train_manufacturer
     maker_key = Train::MANUFACTURERS[gets_train_manufacturer_index]
     maker = maker_key[:name]
@@ -331,7 +334,7 @@ class RailroadControl
 
   def gets_train_manufacturer_index
     train_manufacturers
-    puts "Введите индекс производителя поезда:"
+    puts 'Введите индекс производителя поезда:'
     gets_integer
   end
 
@@ -369,7 +372,7 @@ class RailroadControl
   end
 
   def print_trains_on_station(station)
-    station.each_train do |_number, train|
+    station.each_train do | number, train|
       puts "#{train.to_s}"
       train.each_wagon { |wagon| puts "#{wagon.to_s}" }
       puts

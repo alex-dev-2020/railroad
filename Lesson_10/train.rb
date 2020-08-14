@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "made_by"
-require_relative "instance_counter"
-require_relative "validation"
-require_relative "accessors"
+require_relative 'made_by'
+require_relative 'instance_counter'
+require_relative 'validation'
+require_relative 'accessors'
 
 class Train
   include Accessors
@@ -12,7 +12,7 @@ class Train
   include Validation
 
   attr_reader :name, :type, :wagons, :current_station_index, :number, :list, :route
-  attr_accessor_with_history :speed_history
+  attr_accessor_with_history :visited_station
 
   @@list = {}
   TYPES = [
@@ -41,12 +41,11 @@ class Train
       }
   ].freeze
 
+  NUMBER_FORMAT = /^[a-zа-я\d]{1,3}-?[a-zа-я\d]{1,5}$/i.freeze
+  MAKER_FORMAT = /^[a-zа-я]{1,10}$/i.freeze
 
-  NUMBER_FORMAT = /^[a-zа-я\d]{1,3}-?[a-zа-я\d]{1,5}$/i
-  MAKER_FORMAT = /^[a-zа-я]{1,10}$/i
-
-  validate :number, :format, NUMBER_FORMAT, message: "Неверный формат номера"
-  validate :made_by, :format, MAKER_FORMAT, message: "Неверный формат названия"
+  validate :number, :format, NUMBER_FORMAT, message: 'Неверный формат номера'
+  validate :made_by, :format, MAKER_FORMAT, message: 'Неверный формат названия'
 
   def initialize(number, made_by)
     @number = number
@@ -86,7 +85,7 @@ class Train
   end
 
   def to_s
-    "Поезд '№#{number}' тип '#{self.class}', производитель #{self.made_by}, вагонов '#{wagons_count}'"
+    "Поезд '№#{number}' тип '#{self.class}', производитель #{made_by}, вагонов '#{wagons_count}'"
   end
 
   def accept_route(route)
@@ -118,14 +117,14 @@ class Train
 
   def move_forward
     raise StandardError, "Это последняя станция маршрута  #{route}" if next_station.nil?
-
     move(current_station_index + 1)
+    self.visited_station = self.current_station
   end
 
   def move_back
     raise StandardError, "Это первая станция маршрута  #{route}" if previous_station.nil?
-
     move(current_station_index - 1)
+    self.visited_station = self.current_station
   end
 
   # private

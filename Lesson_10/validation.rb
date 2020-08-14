@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Validation
   def self.included(base)
     base.extend(ClassMethods)
@@ -9,7 +11,7 @@ module Validation
 
   module InstanceMethods
     def validate!
-      validations = self.class.instance_variable_get("@validations")
+      validations = self.class.instance_variable_get('@validations')
       # line below debug only
       # puts validations
       errors = []
@@ -21,6 +23,7 @@ module Validation
       end
 
       raise ValidationError, errors unless errors.empty?
+
       true
     end
 
@@ -34,7 +37,7 @@ module Validation
     private
 
     def presence(value)
-      params[:message] ||= "Пустая строка или nil"
+      params[:message] ||= 'Пустая строка или nil'
       params[:message] if value.nil? || value.empty?
     end
 
@@ -49,7 +52,7 @@ module Validation
     end
 
     def first_last_uniq(value, params)
-      params[:message] ||= "Первый и последний эл-ты идентичны"
+      params[:message] ||= 'Первый и последний эл-ты идентичны'
       params[:message] if value.first == value.last
     end
 
@@ -57,7 +60,6 @@ module Validation
       params[:message] ||= "Содержит тип, отличающийся от #{params[:param]}"
       params[:message] if value.reject { |v| v.is_a?(params[:param]) }.length.nil?
     end
-
   end
 
   module ClassMethods
@@ -69,11 +71,11 @@ module Validation
     def validate(*params)
       @validations ||= []
 
-      array = @validations << {
-          attribute: params[0],
-          type: params[1],
-          param: params[2] || nil,
-          message: params.last.is_a?(Hash) && params.last.key?(:message) ? params.last[:message] : nil
+      @validations << {
+        attribute: params[0],
+        type: params[1],
+        param: params[2] || nil,
+        message: params.last.is_a?(Hash) && params.last.key?(:message) ? params.last[:message] : nil
       }
     end
   end

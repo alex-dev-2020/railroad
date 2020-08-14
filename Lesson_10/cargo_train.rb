@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'train'
-require_relative "validation"
+require_relative 'validation'
 
 class CargoTrain < Train
   include Validation
