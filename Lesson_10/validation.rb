@@ -12,8 +12,6 @@ module Validation
   module InstanceMethods
     def validate!
       validations = self.class.instance_variable_get('@validations')
-      # line below debug only
-      # puts validations
       errors = []
       validations.each do |validation|
         value = instance_variable_get("@#{validation[:attribute]}")
@@ -63,10 +61,14 @@ module Validation
   end
 
   module ClassMethods
-    #  наследование параметров валидаций
+    # inheritance validation values
+
+    # rubocop:disable Layout/LineLength:
     def inherited(klass)
       klass.instance_variable_set(:@validations, klass.superclass.instance_variable_get(:@validations))
     end
+
+    # rubocop:enable  Layout/LineLength:
 
     def validate(*params)
       @validations ||= []

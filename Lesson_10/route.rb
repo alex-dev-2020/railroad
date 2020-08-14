@@ -8,7 +8,6 @@ class Route
   include Validation
   @@list = []
 
-  # в класе, но до инициализации прописываем валидации
   validate :stations, :first_last_uniq, message: 'Первая и последняя станции должны быть разными'
   validate :stations, :each_type, Station
 
@@ -17,7 +16,7 @@ class Route
     # debug only
     puts stations
     validate!
-    # @@list << self
+    @@list << self
     register_instance
   end
 

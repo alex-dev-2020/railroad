@@ -31,13 +31,13 @@ class CargoWagon < Wagon
 
   def unload(volume)
     raise StandardError, 'Объем не может быть меньше 0' if (self.volume - volume).negative?
+
     self.volume -= volume
     self.load_using = self.volume
   end
 
   def free_volume
     total_volume - self.volume
-    self.load_using = self.volume
   end
 
   def occupied_volume

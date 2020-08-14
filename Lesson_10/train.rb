@@ -16,29 +16,29 @@ class Train
 
   @@list = {}
   TYPES = [
-      {
-          type: 'CargoTrain',
-          name: 'Грузовой'
-      },
-      {
-          type: 'PassTrain',
-          name: 'Пассажирский'
-      }
+    {
+      type: 'CargoTrain',
+      name: 'Грузовой'
+    },
+    {
+      type: 'PassTrain',
+      name: 'Пассажирский'
+    }
   ].freeze
 
   MANUFACTURERS = [
-      {
-          name: 'Siemens',
-          maker: 'Siemens'
-      },
-      {
-          name: 'Bosh',
-          maker: 'Bosh'
-      },
-      {
-          name: 'Tesla',
-          maker: 'Tesla'
-      }
+    {
+      name: 'Siemens',
+      maker: 'Siemens'
+    },
+    {
+      name: 'Bosh',
+      maker: 'Bosh'
+    },
+    {
+      name: 'Tesla',
+      maker: 'Tesla'
+    }
   ].freeze
 
   NUMBER_FORMAT = /^[a-zа-я\d]{1,3}-?[a-zа-я\d]{1,5}$/i.freeze
@@ -117,14 +117,16 @@ class Train
 
   def move_forward
     raise StandardError, "Это последняя станция маршрута  #{route}" if next_station.nil?
+
     move(current_station_index + 1)
-    self.visited_station = self.current_station
+    self.visited_station = current_station
   end
 
   def move_back
     raise StandardError, "Это первая станция маршрута  #{route}" if previous_station.nil?
+
     move(current_station_index - 1)
-    self.visited_station = self.current_station
+    self.visited_station = current_station
   end
 
   # private

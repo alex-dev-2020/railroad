@@ -13,10 +13,9 @@ require_relative 'route'
 require_relative 'seed'
 require_relative 'instance_counter'
 require_relative 'made_by'
-# require_relative 'valid'
 require_relative 'accessors'
-# require_relative 'validation'
-# rubocop:disable Metrics/ClassLength:
+
+# rubocop:disable Metrics/ClassLength
 
 class RailroadControl
   include Seed
@@ -100,9 +99,6 @@ class RailroadControl
     type_index = gets_train_type_index
     maker = gets_train_manufacturer
     train_number = gets_train_number
-
-    # (debug only)
-    # puts Train::TYPES[type_index][:type]
 
     case Train::TYPES[type_index][:type]
     when 'CargoTrain'
@@ -264,7 +260,6 @@ class RailroadControl
     train.visited_station_history.each_with_index do |station, index|
       puts "[#{index}] #{station.name}"
     end
-
   end
 
   def wagon_using_history
@@ -329,7 +324,7 @@ class RailroadControl
 
   def gets_train_manufacturer
     maker_key = Train::MANUFACTURERS[gets_train_manufacturer_index]
-    maker = maker_key[:name]
+    maker_key[:name]
   end
 
   def gets_train_manufacturer_index
@@ -372,7 +367,7 @@ class RailroadControl
   end
 
   def print_trains_on_station(station)
-    station.each_train do | number, train|
+    station.each_train do |_number, train|
       puts "#{train.to_s}"
       train.each_wagon { |wagon| puts "#{wagon.to_s}" }
       puts
@@ -437,5 +432,5 @@ class RailroadControl
   end
 
   # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/ClassLength:
+  # rubocop:enable Metrics/ClassLength
 end
